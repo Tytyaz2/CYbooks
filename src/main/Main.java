@@ -1,13 +1,22 @@
 package main;
 
 import javafx.application.Application;
-import main.views.Connexion;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-public class Main {
+public class Main extends Application {
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("views/connexion.fxml"));
+        primaryStage.setTitle("Connexion");
+        primaryStage.setScene(new Scene(root));
+        primaryStage.show();
+    }
+
     public static void main(String[] args) {
-
-        // Lancer l'application JavaFX en appelant la méthode launch()
-        Application.launch(Connexion.class, args);
+        launch(args);
     }
 }
-
