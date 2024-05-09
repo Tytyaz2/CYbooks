@@ -12,6 +12,14 @@ public class Connexion extends Application {
     private Stage primaryStage;
     private VBox root;
 
+
+    // Constructeur sans paramètres
+    public Connexion() {
+        // Vous pouvez initialiser des champs ou effectuer d'autres actions ici si nécessaire
+    }
+
+
+
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
