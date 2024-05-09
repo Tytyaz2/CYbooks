@@ -1,3 +1,5 @@
+package main;
+
 import javafx.application.Application;
 import main.views.Connexion;
 
