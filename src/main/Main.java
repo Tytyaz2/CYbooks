@@ -1,29 +1,23 @@
 package main;
 
 import javafx.application.Application;
-import main.views.Connexion;
-import main.models.DatabaseConnection;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-import java.sql.SQLException;
+public class Main extends Application {
 
-public class Main {
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("views/connexion.fxml"));
+        primaryStage.setTitle("Connexion");
+        primaryStage.setScene(new Scene(root));
+        primaryStage.show();
+    }
+
     public static void main(String[] args) {
-        try {
-            String[] columns = {"test1", "test2", "test3", "test4"};
-            Object[] values = {1, 23, 45, 5};
-
-
-            DatabaseConnection.insertData("test", columns, values);
-
-            System.out.println("Insertion de données réussie !");
-
-            // Lancer l'application JavaFX en appelant la méthode launch()
-            Application.launch(Connexion.class, args);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Une erreur s'est produite lors de l'insertion des données.");
-        }
+        launch(args);
     }
 
 }
