@@ -30,6 +30,9 @@ public class MainControllers {
     @FXML
     private TableColumn<DataModel, String> test4Column;
 
+    // Garder les méthodes qui ne changent pas
+    // ...
+
     private void loadData() {
         List<DataModel> data = new ArrayList<>();
         Connection connection = null;
@@ -74,6 +77,12 @@ public class MainControllers {
 
     @FXML
     public void initialize() {
+        // Associer les colonnes du TableView aux propriétés du modèle de données
+        test1Column.setCellValueFactory(cellData -> cellData.getValue().test1Property());
+        test2Column.setCellValueFactory(cellData -> cellData.getValue().test2Property());
+        test3Column.setCellValueFactory(cellData -> cellData.getValue().test3Property());
+        test4Column.setCellValueFactory(cellData -> cellData.getValue().test4Property());
+
         // Charger les données dans TableView
         loadData();
     }

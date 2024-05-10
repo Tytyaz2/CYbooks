@@ -17,10 +17,10 @@
       <Text layoutX="882.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 40;" text="CYbooks" />
        <TableView fx:id="tableView" layoutX="14.0" layoutY="366.0" prefHeight="662.0" prefWidth="591.0">
         <columns>
-          <TableColumn prefWidth="140.53610801696777" text="Nom" />
-          <TableColumn prefWidth="147.46389770507812" text="Prenom" />
-            <TableColumn minWidth="0.0" prefWidth="105.89697265625" text="Mail" />
-            <TableColumn prefWidth="194.96904698932588" text="lala" />
+          <TableColumn  fx:id="test1Column" prefWidth="140.53610801696777" text="Nom" />
+          <TableColumn fx:id="test2Column" prefWidth="147.46389770507812" text="Prenom" />
+            <TableColumn fx:id="test3Column" minWidth="0.0" prefWidth="105.89697265625" text="Mail" />
+            <TableColumn fx:id="test4Column" prefWidth="194.96904698932588" text="lala" />
         </columns>
       </TableView>
       <TableView layoutX="1315.0" layoutY="366.0" prefHeight="662.0" prefWidth="590.0">
