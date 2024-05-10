@@ -1,44 +1,24 @@
 package main.views;
 
 import javafx.application.Application;
-import javafx.geometry.Pos;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Connexion extends Application {
 
-    private Stage primaryStage;
-    private VBox root;
-
-
-    // Constructeur sans paramètres
-    public Connexion() {
-        // Vous pouvez initialiser des champs ou effectuer d'autres actions ici si nécessaire
-    }
-
-
-
     @Override
-    public void start(Stage primaryStage) {
-        this.primaryStage = primaryStage;
+    public void start(Stage primaryStage) throws Exception {
+        // Charger le fichier FXML
+        Parent root = FXMLLoader.load(getClass().getResource("pageprincipal.fxml"));
 
-        // Créer le bandeau CYBOOKS
-        Label labelCybooks = new Label("CYBOOKS");
-        labelCybooks.setStyle("-fx-font-size: 24pt; -fx-font-weight: bold;top:0%;");
-
-        // Créer le conteneur racine
-        root = new VBox();
-        root.setAlignment(Pos.CENTER);
-        root.getChildren().add(labelCybooks);
-
-        // Créer la scène principale
+        // Créer une scène
         Scene scene = new Scene(root, 1920, 1080);
 
-        // Configurer et afficher la scène principale
+        // Définir la scène et afficher la fenêtre principale
         primaryStage.setScene(scene);
-        primaryStage.setTitle("CYBOOKS Application");
+        primaryStage.setTitle("pageadherent");
         primaryStage.show();
     }
 

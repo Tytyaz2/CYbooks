@@ -25,4 +25,5 @@ public class Main {
             System.out.println("Une erreur s'est produite lors de l'insertion des données.");
         }
     }
+
 }
