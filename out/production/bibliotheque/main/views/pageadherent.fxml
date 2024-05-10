@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Text layoutX="883.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 40;" text="CYBooks" />
+      <Label layoutX="1019.0" layoutY="437.0" style="-fx-font-size: 15;" text="Label" />
+      <Label layoutX="1019.0" layoutY="485.0" style="-fx-font-size: 15;" text="Label" />
+      <Label layoutX="1019.0" layoutY="532.0" style="-fx-font-size: 15;" text="Label" />
+      <Label layoutX="1019.0" layoutY="573.0" style="-fx-font-size: 15;" text="Label" />
+      <Text layoutX="864.0" layoutY="452.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15;" text="Nom" />
+      <Text layoutX="864.0" layoutY="501.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15;" text="Prenom" />
+      <Text layoutX="864.0" layoutY="548.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15;" text="Mail" />
+      <Text layoutX="864.0" layoutY="589.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15;" text="Statut" />
+      <Text layoutX="864.0" layoutY="638.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15;" text="Nombre d'emprunt" />
+      <Label layoutX="1019.0" layoutY="622.0" style="-fx-font-size: 15;" text="Label" />
+      <Button layoutX="1599.0" layoutY="247.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="171.0" text="modifier " />
+   </children>
+</AnchorPane>
