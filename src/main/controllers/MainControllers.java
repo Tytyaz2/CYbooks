@@ -13,8 +13,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.models.DataModel;
-
 public class MainControllers {
 
     @FXML
@@ -32,12 +30,6 @@ public class MainControllers {
     @FXML
     private TableColumn<DataModel, String> test4Column;
 
-    @FXML
-    public void initialize() {
-        // Load data into TableView
-        loadData();
-    }
-
     private void loadData() {
         List<DataModel> data = new ArrayList<>();
         Connection connection = null;
@@ -45,15 +37,15 @@ public class MainControllers {
         ResultSet resultSet = null;
 
         try {
-            // Get database connection
+            // Utiliser la méthode getConnection() de DatabaseConnection
             connection = DatabaseConnection.getConnection();
 
-            // Execute query to fetch data
+            // Exécuter la requête pour récupérer les données
             String query = "SELECT * FROM test";
             preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
 
-            // Iterate through result set and add data to list
+            // Itérer à travers le jeu de résultats et ajouter les données à la liste
             while (resultSet.next()) {
                 DataModel model = new DataModel(
                         resultSet.getString("test1"),
@@ -63,13 +55,13 @@ public class MainControllers {
                 data.add(model);
             }
 
-            // Populate TableView with data
+            // Peupler TableView avec les données
             tableView.getItems().addAll(data);
 
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            // Close resources
+            // Fermer les ressources
             try {
                 if (resultSet != null) resultSet.close();
                 if (preparedStatement != null) preparedStatement.close();
@@ -78,5 +70,11 @@ public class MainControllers {
                 e.printStackTrace();
             }
         }
+    }
+
+    @FXML
+    public void initialize() {
+        // Charger les données dans TableView
+        loadData();
     }
 }

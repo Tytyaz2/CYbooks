@@ -21,8 +21,4 @@ public class Connexion extends Application {
         primaryStage.setTitle("pageadherent");
         primaryStage.show();
     }
-
-    public static void main(String[] args) {
-        launch(args);
-    }
 }

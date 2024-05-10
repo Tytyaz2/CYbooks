@@ -15,7 +15,7 @@
       <TextArea layoutX="1316.0" layoutY="320.0" prefHeight="45.0" prefWidth="589.0" />
       <Text layoutX="1567.0" layoutY="309.0" strokeType="OUTSIDE" strokeWidth="0.0" text="rechercher livre" textAlignment="CENTER" wrappingWidth="105.73839569091797" />
       <Text layoutX="882.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 40;" text="CYbooks" />
-      <TableView layoutX="14.0" layoutY="366.0" prefHeight="662.0" prefWidth="591.0">
+       <TableView fx:id="tableView" layoutX="14.0" layoutY="366.0" prefHeight="662.0" prefWidth="591.0">
         <columns>
           <TableColumn prefWidth="140.53610801696777" text="Nom" />
           <TableColumn prefWidth="147.46389770507812" text="Prenom" />
