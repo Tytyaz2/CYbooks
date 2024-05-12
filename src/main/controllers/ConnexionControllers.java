@@ -14,7 +14,7 @@ public class ConnexionControllers extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/main/views/connexion.fxml"));
 
         // Créer une scène
-        Scene scene = new Scene(root, 1920, 1080);
+        Scene scene = new Scene(root, 1280, 720);
 
         // Définir la scène et afficher la fenêtre principale
         primaryStage.setScene(scene);
