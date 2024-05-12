@@ -7,15 +7,15 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="connecter" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controllers.ConnexionController">
+<AnchorPane fx:id="connecter" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controllers.ConnexionController">
    <children>
-      <Label layoutX="841.0" layoutY="485.0" text="Identifiant:" />
-      <TextField fx:id="usernameField" layoutX="929.0" layoutY="481.0" prefWidth="150.0" />
+      <Label layoutX="521.0" layoutY="305.0" text="Identifiant:" />
+      <TextField fx:id="usernameField" layoutX="609.0" layoutY="301.0" prefWidth="150.0" />
 
-      <Label layoutX="841.0" layoutY="525.0" text="Mot de passe:" />
-      <PasswordField fx:id="passwordField" layoutX="929.0" layoutY="521.0" prefWidth="150.0" />
+      <Label layoutX="521.0" layoutY="345.0" text="Mot de passe:" />
+      <PasswordField fx:id="passwordField" layoutX="609.0" layoutY="341.0" prefWidth="150.0" />
 
-      <Button layoutX="929.0" layoutY="573.0" onAction="#handleLogin" text="Se connecter" />
-      <Text layoutX="773.0" layoutY="71.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 25;" text="CYbooks" textAlignment="CENTER" wrappingWidth="396.0115623474121" />
+      <Button layoutX="609.0" layoutY="393.0" onAction="#handleLogin" text="Se connecter" />
+      <Text layoutX="442.0" layoutY="64.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 25;" text="CYbooks" textAlignment="CENTER" wrappingWidth="396.0115623474121" />
    </children>
 </AnchorPane>

@@ -94,7 +94,7 @@ public class AdherentController {
             // Exécuter la requête pour récupérer les livres empruntés par l'utilisateur
             String query = "SELECT * FROM utilisateurs WHERE id = ?";
             preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(user.getId(), userId);
+            preparedStatement.setInt(1, userId);
             resultSet = preparedStatement.executeQuery();
 
             // Itérer à travers le jeu de résultats et ajouter les livres à la liste

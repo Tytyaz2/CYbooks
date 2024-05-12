@@ -1,7 +1,7 @@
 package main;
 
 import javafx.application.Application;
-import main.views.Connexion;
+import main.controllers.ConnexionControllers;
 import main.models.DatabaseConnection;
 
 import java.sql.SQLException;
@@ -9,12 +9,12 @@ import java.sql.SQLException;
 public class Main {
     public static void main(String[] args) {
         try {
-            DatabaseConnection.insertUserData("Soares","Flavio","saores.flavio2002@gmail.com","Le Petit Prince","Saint-Exupery","2305126516065","2024-06-12","2024-06-13");
+            DatabaseConnection.insertUserData("Soares","Flavio","soares.flavio2002@gmail.com","Le Petit Prince","Saint-Exupery","2305126516065","2024-06-12","2024-06-13");
 
             System.out.println("Insertion de données réussie !");
 
             // Lancer l'application JavaFX en appelant la méthode launch()
-            Application.launch(Connexion.class, args);
+            Application.launch(ConnexionControllers.class, args);
 
         } catch (SQLException e) {
             e.printStackTrace();

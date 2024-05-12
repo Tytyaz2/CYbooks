@@ -7,22 +7,22 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controllers.MainControllers">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controllers.MainControllers">
     <children>
-        <Button layoutX="838.0" layoutY="276.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="244.0" style="-fx-font-size: 20;" text="Nouvel adhérent" />
-        <TextArea layoutX="14.0" layoutY="320.0" prefHeight="45.0" prefWidth="589.0" />
-        <Text layoutX="256.0" layoutY="309.0" strokeType="OUTSIDE" strokeWidth="0.0" text="rechercher adhérent" textAlignment="CENTER" wrappingWidth="105.73839569091797" />
-        <TextArea layoutX="1316.0" layoutY="320.0" prefHeight="45.0" prefWidth="589.0" />
-        <Text layoutX="1567.0" layoutY="309.0" strokeType="OUTSIDE" strokeWidth="0.0" text="rechercher livre" textAlignment="CENTER" wrappingWidth="105.73839569091797" />
-        <Text layoutX="882.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 40;" text="CYbooks" />
-        <TableView fx:id="userTableView" layoutX="14.0" layoutY="366.0" onMouseClicked="#handleUserClick" prefHeight="662.0" prefWidth="591.0">
+        <Button layoutX="537.0" layoutY="547.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="201.0" style="-fx-font-size: 20;" text="Nouvel adhérent" />
+        <TextArea layoutX="106.0" layoutY="95.0" prefHeight="48.0" prefWidth="332.0" />
+        <Text layoutX="219.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="rechercher adhérent" textAlignment="CENTER" wrappingWidth="105.73839569091797" />
+        <TextArea layoutX="821.0" layoutY="96.0" prefHeight="46.0" prefWidth="333.0" />
+        <Text layoutX="935.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="rechercher livre" textAlignment="CENTER" wrappingWidth="105.73839569091797" />
+        <Text layoutX="563.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 40;" text="CYbooks" />
+        <TableView fx:id="userTableView" layoutX="46.0" layoutY="141.0" onMouseClicked="#handleUserClick" prefHeight="494.0" prefWidth="480.0">
             <columns>
                 <TableColumn fx:id="test1Column" prefWidth="140.53610801696777" text="Nom" />
                 <TableColumn fx:id="test2Column" prefWidth="147.46389770507812" text="Prenom" />
-                <TableColumn fx:id="test3Column" minWidth="0.0" prefWidth="301.8557047041696" text="Mail" />
+                <TableColumn fx:id="test3Column" minWidth="0.0" prefWidth="186.06185913085938" text="Mail" />
             </columns>
         </TableView>
-        <TableView fx:id="bookTableView" layoutX="1315.0" layoutY="366.0" prefHeight="662.0" prefWidth="590.0">
+        <TableView fx:id="bookTableView" layoutX="748.0" layoutY="148.0" prefHeight="496.0" prefWidth="480.0">
             <columns>
                 <TableColumn prefWidth="173.1959228515625" text="Titre" />
                 <TableColumn prefWidth="162.309326171875" text="Auteur" />
@@ -30,9 +30,9 @@
                 <TableColumn prefWidth="234.55712890625" text="lala" />
             </columns>
         </TableView>
-        <Button layoutX="553.0" layoutY="1041.0" mnemonicParsing="false" text="suivant" />
-        <Button layoutX="14.0" layoutY="1041.0" mnemonicParsing="false" text="precedent" />
-        <Button layoutX="1315.0" layoutY="1041.0" mnemonicParsing="false" text="precedent" />
-        <Button layoutX="1852.0" layoutY="1041.0" mnemonicParsing="false" text="suivant" />
+        <Button layoutX="472.0" layoutY="664.0" mnemonicParsing="false" text="suivant" />
+        <Button layoutX="46.0" layoutY="664.0" mnemonicParsing="false" text="precedent" />
+        <Button layoutX="748.0" layoutY="664.0" mnemonicParsing="false" text="precedent" />
+        <Button layoutX="1174.0" layoutY="664.0" mnemonicParsing="false" text="suivant" />
     </children>
 </AnchorPane>
