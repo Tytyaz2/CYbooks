@@ -9,11 +9,7 @@ import java.sql.SQLException;
 public class Main {
     public static void main(String[] args) {
         try {
-            String[] columns = {"test1", "test2", "test3", "test4"};
-            Object[] values = {1, 23, 45, 5};
-
-
-            DatabaseConnection.insertData("test", columns, values);
+            DatabaseConnection.insertUserData("Soares","Flavio","saores.flavio2002@gmail.com","Le Petit Prince","Saint-Exupery","2305126516065","2024-06-12","2024-06-13");
 
             System.out.println("Insertion de données réussie !");
 

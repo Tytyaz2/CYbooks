@@ -2,23 +2,33 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controllers.AdherentController">
    <children>
       <Text layoutX="883.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 40;" text="CYBooks" />
-      <Label layoutX="1019.0" layoutY="437.0" style="-fx-font-size: 15;" text="Label" />
-      <Label layoutX="1019.0" layoutY="485.0" style="-fx-font-size: 15;" text="Label" />
-      <Label layoutX="1019.0" layoutY="532.0" style="-fx-font-size: 15;" text="Label" />
-      <Label layoutX="1019.0" layoutY="573.0" style="-fx-font-size: 15;" text="Label" />
-      <Text layoutX="864.0" layoutY="452.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15;" text="Nom" />
-      <Text layoutX="864.0" layoutY="501.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15;" text="Prenom" />
-      <Text layoutX="864.0" layoutY="548.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15;" text="Mail" />
-      <Text layoutX="864.0" layoutY="589.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15;" text="Statut" />
-      <Text layoutX="864.0" layoutY="638.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15;" text="Nombre d'emprunt" />
-      <Label layoutX="1019.0" layoutY="622.0" style="-fx-font-size: 15;" text="Label" />
-      <Button layoutX="1599.0" layoutY="247.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="171.0" text="modifier " />
+      <Label fx:id="nomLabel" layoutX="344.0" layoutY="317.0" style="-fx-font-size: 15;" />
+      <Label fx:id="prenomLabel" layoutX="344.0" layoutY="365.0" style="-fx-font-size: 15;" />
+      <Label fx:id="mailLabel" layoutX="344.0" layoutY="412.0" style="-fx-font-size: 15;" />
+      <Label fx:id="nbEmpruntsLabel" layoutX="344.0" layoutY="452.0" style="-fx-font-size: 15;" />
+      <Text layoutX="189.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15;" text="Nom" />
+      <Text layoutX="189.0" layoutY="381.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15;" text="Prenom" />
+      <Text layoutX="189.0" layoutY="428.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15;" text="Mail" />
+      <Text layoutX="189.0" layoutY="468.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15;" text="Nombre d'emprunt" />
+      <Button layoutX="215.0" layoutY="885.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="171.0" text="modifier " />
+            <TableView fx:id="livresTableView" layoutX="917.0" layoutY="183.0" prefHeight="637.0" prefWidth="971.0">
+               <columns>
+                  <TableColumn fx:id="titreColumn" prefWidth="300.86590576171875" text="Titre" />
+                  <TableColumn fx:id="auteurColumn" minWidth="1.9793701171875" prefWidth="164.28857421875" text="Auteur" />
+                  <TableColumn fx:id="isbnColumn" minWidth="0.0" prefWidth="258.3094482421875" text="ISBN" />
+                  <TableColumn fx:id="dateEmpruntColumn" prefWidth="131.6287841796875" text="Date d'emprunt" />
+                  <TableColumn fx:id="dateRenduColumn" prefWidth="118.7626953125" text="Date de rendu" />
+               </columns>
+            </TableView>
+      <Button layoutX="1403.0" layoutY="914.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="171.0" text="Historique" />
+      <Button layoutX="1651.0" layoutY="914.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="171.0" text="Rendre" />
    </children>
 </AnchorPane>

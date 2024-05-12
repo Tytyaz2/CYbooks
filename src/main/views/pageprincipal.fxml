@@ -8,32 +8,31 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controllers.MainControllers">
-   <children>
-      <Button layoutX="838.0" layoutY="276.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="244.0" style="-fx-font-size: 20;" text="Nouvel adhérent" />
-      <TextArea layoutX="14.0" layoutY="320.0" prefHeight="45.0" prefWidth="589.0" />
-      <Text layoutX="256.0" layoutY="309.0" strokeType="OUTSIDE" strokeWidth="0.0" text="rechercher adhérent" textAlignment="CENTER" wrappingWidth="105.73839569091797" />
-      <TextArea layoutX="1316.0" layoutY="320.0" prefHeight="45.0" prefWidth="589.0" />
-      <Text layoutX="1567.0" layoutY="309.0" strokeType="OUTSIDE" strokeWidth="0.0" text="rechercher livre" textAlignment="CENTER" wrappingWidth="105.73839569091797" />
-      <Text layoutX="882.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 40;" text="CYbooks" />
-       <TableView fx:id="tableView" layoutX="14.0" layoutY="366.0" prefHeight="662.0" prefWidth="591.0">
-        <columns>
-          <TableColumn  fx:id="test1Column" prefWidth="140.53610801696777" text="Nom" />
-          <TableColumn fx:id="test2Column" prefWidth="147.46389770507812" text="Prenom" />
-            <TableColumn fx:id="test3Column" minWidth="0.0" prefWidth="105.89697265625" text="Mail" />
-            <TableColumn fx:id="test4Column" prefWidth="194.96904698932588" text="lala" />
-        </columns>
-      </TableView>
-      <TableView layoutX="1315.0" layoutY="366.0" prefHeight="662.0" prefWidth="590.0">
-         <columns>
-            <TableColumn prefWidth="173.1959228515625" text="Titre" />
-            <TableColumn prefWidth="162.309326171875" text="Auteur" />
-            <TableColumn prefWidth="106.88623046875" text="Stock" />
-            <TableColumn prefWidth="234.55712890625" text="lala" />
-         </columns>
-      </TableView>
-      <Button layoutX="553.0" layoutY="1041.0" mnemonicParsing="false" text="suivant" />
-      <Button layoutX="14.0" layoutY="1041.0" mnemonicParsing="false" text="precedent" />
-      <Button layoutX="1315.0" layoutY="1041.0" mnemonicParsing="false" text="precedent" />
-      <Button layoutX="1852.0" layoutY="1041.0" mnemonicParsing="false" text="suivant" />
-   </children>
+    <children>
+        <Button layoutX="838.0" layoutY="276.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="244.0" style="-fx-font-size: 20;" text="Nouvel adhérent" />
+        <TextArea layoutX="14.0" layoutY="320.0" prefHeight="45.0" prefWidth="589.0" />
+        <Text layoutX="256.0" layoutY="309.0" strokeType="OUTSIDE" strokeWidth="0.0" text="rechercher adhérent" textAlignment="CENTER" wrappingWidth="105.73839569091797" />
+        <TextArea layoutX="1316.0" layoutY="320.0" prefHeight="45.0" prefWidth="589.0" />
+        <Text layoutX="1567.0" layoutY="309.0" strokeType="OUTSIDE" strokeWidth="0.0" text="rechercher livre" textAlignment="CENTER" wrappingWidth="105.73839569091797" />
+        <Text layoutX="882.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 40;" text="CYbooks" />
+        <TableView fx:id="userTableView" layoutX="14.0" layoutY="366.0" onMouseClicked="#handleUserClick" prefHeight="662.0" prefWidth="591.0">
+            <columns>
+                <TableColumn fx:id="test1Column" prefWidth="140.53610801696777" text="Nom" />
+                <TableColumn fx:id="test2Column" prefWidth="147.46389770507812" text="Prenom" />
+                <TableColumn fx:id="test3Column" minWidth="0.0" prefWidth="301.8557047041696" text="Mail" />
+            </columns>
+        </TableView>
+        <TableView fx:id="bookTableView" layoutX="1315.0" layoutY="366.0" prefHeight="662.0" prefWidth="590.0">
+            <columns>
+                <TableColumn prefWidth="173.1959228515625" text="Titre" />
+                <TableColumn prefWidth="162.309326171875" text="Auteur" />
+                <TableColumn prefWidth="106.88623046875" text="Stock" />
+                <TableColumn prefWidth="234.55712890625" text="lala" />
+            </columns>
+        </TableView>
+        <Button layoutX="553.0" layoutY="1041.0" mnemonicParsing="false" text="suivant" />
+        <Button layoutX="14.0" layoutY="1041.0" mnemonicParsing="false" text="precedent" />
+        <Button layoutX="1315.0" layoutY="1041.0" mnemonicParsing="false" text="precedent" />
+        <Button layoutX="1852.0" layoutY="1041.0" mnemonicParsing="false" text="suivant" />
+    </children>
 </AnchorPane>
