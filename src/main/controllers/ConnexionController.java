@@ -1,5 +1,6 @@
 package main.controllers;
 
+import javafx.application.Application;
 import main.models.Authentication;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -11,7 +12,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
 
-public class ConnexionController {
+public class ConnexionController extends Application {
 
     @FXML
     private TextField usernameField;
@@ -53,5 +54,19 @@ public class ConnexionController {
             alert.setContentText("Identifiant ou mot de passe incorrect.");
             alert.showAndWait();
         }
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        // Charger le fichier FXML
+        Parent root = FXMLLoader.load(getClass().getResource("/main/views/connexion.fxml"));
+
+        // Créer une scène
+        Scene scene = new Scene(root, 1280, 720);
+
+        // Définir la scène et afficher la fenêtre principale
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("connexion");
+        primaryStage.show();
     }
 }

@@ -10,22 +10,22 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controllers.AdherentController">
    <children>
       <Text layoutX="883.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 40;" text="CYBooks" />
-      <Label fx:id="nomLabel" layoutX="344.0" layoutY="317.0" style="-fx-font-size: 15;" />
-      <Label fx:id="prenomLabel" layoutX="344.0" layoutY="365.0" style="-fx-font-size: 15;" />
-      <Label fx:id="mailLabel" layoutX="344.0" layoutY="412.0" style="-fx-font-size: 15;" />
-      <Label fx:id="nbEmpruntsLabel" layoutX="344.0" layoutY="452.0" style="-fx-font-size: 15;" />
-      <Text layoutX="189.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15;" text="Nom" />
-      <Text layoutX="189.0" layoutY="381.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15;" text="Prenom" />
-      <Text layoutX="189.0" layoutY="428.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15;" text="Mail" />
-      <Text layoutX="189.0" layoutY="468.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15;" text="Nombre d'emprunt" />
+      <Label fx:id="nomLabel" layoutX="272.0" layoutY="267.0" style="-fx-font-size: 15;" />
+      <Label fx:id="prenomLabel" layoutX="272.0" layoutY="315.0" style="-fx-font-size: 15;" />
+      <Label fx:id="mailLabel" layoutX="272.0" layoutY="362.0" style="-fx-font-size: 15;" />
+      <Label fx:id="nbEmpruntsLabel" layoutX="272.0" layoutY="402.0" style="-fx-font-size: 15;" />
+      <Text layoutX="117.0" layoutY="282.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15;" text="Nom" />
+      <Text layoutX="117.0" layoutY="331.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15;" text="Prenom" />
+      <Text layoutX="117.0" layoutY="378.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15;" text="Mail" />
+      <Text layoutX="117.0" layoutY="418.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15;" text="Nombre d'emprunt" />
       <Button layoutX="117.0" layoutY="635.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="171.0" text="modifier " />
-            <TableView fx:id="livresTableView" layoutX="607.0" layoutY="123.0" prefHeight="443.0" prefWidth="635.0">
+            <TableView fx:id="livresTableView" layoutX="522.0" layoutY="123.0" prefHeight="443.0" prefWidth="722.0">
                <columns>
-                  <TableColumn fx:id="titreColumn" prefWidth="300.86590576171875" text="Titre" />
-                  <TableColumn fx:id="auteurColumn" minWidth="1.9793701171875" prefWidth="164.28857421875" text="Auteur" />
-                  <TableColumn fx:id="isbnColumn" minWidth="0.0" prefWidth="258.3094482421875" text="ISBN" />
-                  <TableColumn fx:id="dateEmpruntColumn" prefWidth="131.6287841796875" text="Date d'emprunt" />
-                  <TableColumn fx:id="dateRenduColumn" prefWidth="118.7626953125" text="Date de rendu" />
+                  <TableColumn fx:id="titreColumn" prefWidth="217.73193359375" text="Titre" />
+                  <TableColumn fx:id="auteurColumn" minWidth="1.9793701171875" prefWidth="188.0411376953125" text="Auteur" />
+                  <TableColumn fx:id="isbnColumn" minWidth="0.0" prefWidth="207.83502197265625" text="ISBN" />
+                  <TableColumn fx:id="dateEmpruntColumn" prefWidth="108.865966796875" text="Date d'emprunt" />
+                  <TableColumn fx:id="dateRenduColumn" prefWidth="254.3505859375" text="Date de rendu" />
                </columns>
             </TableView>
       <Button layoutX="865.0" layoutY="635.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="171.0" text="Historique" />

@@ -11,7 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.control.TableColumn;
 import javafx.stage.Stage;
 import main.models.DatabaseConnection;
-import main.models.DataUserModel;
+import main.models.Utilisateur;
 
 
 import java.io.IOException;
@@ -25,22 +25,22 @@ import java.util.List;
 public class MainControllers {
 
     @FXML
-    private TableView<DataUserModel> userTableView;
+    private TableView<Utilisateur> userTableView;
 
     @FXML
-    private TableColumn<DataUserModel, String> test1Column;
+    private TableColumn<Utilisateur, String> test1Column;
 
     @FXML
-    private TableColumn<DataUserModel, String> test2Column;
+    private TableColumn<Utilisateur, String> test2Column;
 
     @FXML
-    private TableColumn<DataUserModel, String> test3Column;
+    private TableColumn<Utilisateur, String> test3Column;
 
-    private DataUserModel selectedUser;
+    private Utilisateur selectedUser;
 
 
-    private void loadData() {
-        List<DataUserModel> data = new ArrayList<>();
+    private void loadData() throws SQLException {
+        List<Utilisateur> data = new ArrayList<>();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -50,13 +50,13 @@ public class MainControllers {
             connection = DatabaseConnection.getConnection();
 
             // Exécuter la requête pour récupérer les données
-            String query = "SELECT * FROM utilisateurs";
+            String query = "SELECT * FROM utilisateur";
             preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
 
             // Itérer à travers le jeu de résultats et ajouter les données à la liste
             while (resultSet.next()) {
-                DataUserModel model = new DataUserModel(
+                Utilisateur model = new Utilisateur(
                         resultSet.getInt("id"),
                         resultSet.getString("nom"),
                         resultSet.getString("prenom"),
@@ -79,10 +79,23 @@ public class MainControllers {
                 e.printStackTrace();
             }
         }
+
+
+    }
+
+    // Méthode pour rafraîchir les données des adhérents
+    public void refreshUserData() throws SQLException {
+        // Effacez les données actuelles de la table
+        userTableView.getItems().clear();
+
+        // Rechargez les données depuis la base de données et ajoutez-les à la table
+        // Utilisez une méthode de votre classe DatabaseConnection pour récupérer les données
+        List<Utilisateur> userList = DatabaseConnection.getAllUtilisateur();
+        userTableView.getItems().addAll(userList);
     }
 
     @FXML
-    public void initialize() {
+    public void initialize() throws SQLException {
         // Associer les colonnes du TableView aux propriétés du modèle de données
         test1Column.setCellValueFactory(cellData -> cellData.getValue().nomProperty());
         test2Column.setCellValueFactory(cellData -> cellData.getValue().prenomProperty());
@@ -123,7 +136,28 @@ public class MainControllers {
             }
         }
     }
-    public DataUserModel getSelectedUser() {
+
+    public Utilisateur getSelectedUser() {
         return selectedUser;
+    }
+
+    @FXML
+    public void handleNewAdherentButtonClick(ActionEvent event) {
+        showNewAdherentPage();
+    }
+
+    public void showNewAdherentPage() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/newAdherent.fxml"));
+        Parent root;
+        try {
+            root = loader.load();
+            NewAdherentController controller = loader.getController();
+            controller.setMainController(this);
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

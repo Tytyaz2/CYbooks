@@ -3,7 +3,7 @@ package main.models;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class DataUserModel {
+public class Utilisateur {
 
 
     private final int id;
@@ -11,7 +11,7 @@ public class DataUserModel {
     private final StringProperty prenom;
     private final StringProperty email;
 
-    public DataUserModel(int id, String nom, String prenom, String email) {
+    public Utilisateur(int id, String nom, String prenom, String email) {
         this.id = id;
         this.nom = new SimpleStringProperty(nom);
         this.prenom = new SimpleStringProperty(prenom);
