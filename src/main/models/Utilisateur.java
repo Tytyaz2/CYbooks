@@ -11,7 +11,7 @@ public class Utilisateur {
     private int statut;
     private int MaxEmprunt;
 
-    public Utilisateur( String nom, String prenom, String email, int statut, int MaxEmprunt) {
+    public Utilisateur( String email, String prenom, String nom, int statut, int MaxEmprunt) {
         this.nom = nom;
         this.prenom =prenom;
         this.email =email;
