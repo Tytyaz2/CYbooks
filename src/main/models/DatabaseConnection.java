@@ -203,7 +203,7 @@ public class DatabaseConnection {
                 int MaxEmprunt = resultSet.getInt("MaxEmprunt");
 
                 // Créer un nouvel objet User et l'ajouter à la liste
-                Utilisateur user = new Utilisateur(nom, prenom, email, statut, MaxEmprunt);
+                Utilisateur user = new Utilisateur(email, prenom, nom, statut, MaxEmprunt);
                 userList.add(user);
             }
         } finally {
