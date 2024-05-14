@@ -18,7 +18,8 @@ import main.models.Book;
 import main.models.BookSearch;
 import main.models.DatabaseConnection;
 import main.models.Utilisateur;
-
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -149,6 +150,20 @@ public class MainControllers {
         userTableView.getItems().addAll(userList);
     }
 
+
+    @FXML
+    private RadioButton searchbyauthor;
+
+    @FXML
+    private RadioButton searchbytitle;
+
+    @FXML
+    private RadioButton searchbyisbn;
+
+    private ToggleGroup searchToggleGroup;
+
+
+
     @FXML
     public void initialize() throws SQLException {
         // Associer les colonnes du TableView aux propriétés du modèle de données
@@ -159,7 +174,47 @@ public class MainControllers {
         // Charger les données dans TableView
         loadData();
 
+        // Créer un groupe de bascule pour les boutons radio de recherche
+        searchToggleGroup = new ToggleGroup();
+
+        // Ajouter les boutons radio au groupe de bascule
+        searchbyauthor.setToggleGroup(searchToggleGroup);
+        searchbytitle.setToggleGroup(searchToggleGroup);
+        searchbyisbn.setToggleGroup(searchToggleGroup);
+
+        // Ajouter des écouteurs de changement pour les boutons radio
+        searchToggleGroup.selectedToggleProperty().addListener((observable, oldToggle, newToggle) -> {
+            if (newToggle == searchbyauthor) {
+                // Appeler la méthode de recherche par auteur
+                loadBooksByAuthor();
+            } else if (newToggle == searchbytitle) {
+                // Appeler la méthode de recherche par titre
+                loadBooksByTitle();
+            } else if (newToggle == searchbyisbn) {
+                // Appeler la méthode de recherche par ISBN
+                loadBooksByISBN();
+            }
+        });
     }
+
+    private void loadBooksByAuthor() {
+        String author = SearchBook.getText();
+        List<Book> books = bookSearch.searchByAuthor(author, startIndex, pageSize);
+        bookTableView.getItems().setAll(books);
+    }
+
+    private void loadBooksByTitle() {
+        String title = SearchBook.getText();
+        List<Book> books = bookSearch.searchByTitle(title, startIndex, pageSize);
+        bookTableView.getItems().setAll(books);
+    }
+
+    private void loadBooksByISBN() {
+        String isbn = SearchBook.getText();
+        List<Book> books = bookSearch.searchByISBN(isbn, startIndex, pageSize);
+        bookTableView.getItems().setAll(books);
+    }
+
 
     @FXML
     public void handleUserClick(MouseEvent mouseEvent) {
