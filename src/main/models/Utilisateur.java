@@ -1,60 +1,49 @@
 package main.models;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+
 
 public class Utilisateur {
+//changer les string property et pas de javafx
 
+    private  String nom;
+    private  String prenom;
+    private  String email;
+    private int statut;
+    private int MaxEmprunt;
 
-    private final int id;
-    private final StringProperty nom;
-    private final StringProperty prenom;
-    private final StringProperty email;
-
-    public Utilisateur(int id, String nom, String prenom, String email) {
-        this.id = id;
-        this.nom = new SimpleStringProperty(nom);
-        this.prenom = new SimpleStringProperty(prenom);
-        this.email = new SimpleStringProperty(email);
+    public Utilisateur( String nom, String prenom, String email, int statut, int MaxEmprunt) {
+        this.nom = nom;
+        this.prenom =prenom;
+        this.email =email;
+        this.statut = statut;
+        this.MaxEmprunt = MaxEmprunt;
     }
 
-    public StringProperty nomProperty() {
+
+    public String getNom() {
         return nom;
     }
 
-    public String getNom() {
-        return nom.get();
-    }
-
-    public void setNom(String nom) {
-        this.nom.set(nom);
-    }
-
-    public StringProperty prenomProperty() {
+    public String getPrenom() {
         return prenom;
     }
 
-    public String getPrenom() {
-        return prenom.get();
-    }
-
-    public void setPrenom(String prenom) {
-        this.prenom.set(prenom);
-    }
-
-    public StringProperty emailProperty() {
+    public String getEmail() {
         return email;
     }
 
-    public String getEmail() {
-        return email.get();
+    public int getStatut() {
+        return statut;
+    }
+    public void setStatut(int statut) {
+        this.statut = statut;
     }
 
-    public void setEmail(String email) {
-        this.email.set(email);
+    public int getMaxEmprunt() {
+        return MaxEmprunt;
     }
 
-    public int getId() {
-        return id;
+    public void setMaxEmprunt(int maxEmprunt) {
+        MaxEmprunt = maxEmprunt;
     }
 }

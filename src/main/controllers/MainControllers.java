@@ -1,5 +1,6 @@
 package main.controllers;
 
+import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.TableColumn;
 import javafx.stage.Stage;
@@ -57,10 +59,11 @@ public class MainControllers {
             // Itérer à travers le jeu de résultats et ajouter les données à la liste
             while (resultSet.next()) {
                 Utilisateur model = new Utilisateur(
-                        resultSet.getInt("id"),
                         resultSet.getString("nom"),
                         resultSet.getString("prenom"),
-                        resultSet.getString("email"));
+                        resultSet.getString("email"),
+                        resultSet.getInt("statut"),
+                        resultSet.getInt("MaxEmprunt"));
                 data.add(model);
             }
 
@@ -97,9 +100,9 @@ public class MainControllers {
     @FXML
     public void initialize() throws SQLException {
         // Associer les colonnes du TableView aux propriétés du modèle de données
-        test1Column.setCellValueFactory(cellData -> cellData.getValue().nomProperty());
-        test2Column.setCellValueFactory(cellData -> cellData.getValue().prenomProperty());
-        test3Column.setCellValueFactory(cellData -> cellData.getValue().emailProperty());
+        test1Column.setCellValueFactory(new PropertyValueFactory<>("nom"));
+        test2Column.setCellValueFactory(new PropertyValueFactory<>("prenom"));
+        test3Column.setCellValueFactory(new PropertyValueFactory<>("email"));
 
         // Charger les données dans TableView
         loadData();

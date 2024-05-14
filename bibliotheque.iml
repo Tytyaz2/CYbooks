@@ -20,7 +20,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://C:/Program Files/JetBrains/Gson/lib/gson-2.10.1.jar!/" />
+          <root url="jar://C:/Program Files/JetBrains/GSON/lib/gson-2.10.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

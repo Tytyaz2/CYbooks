@@ -38,25 +38,25 @@ public class DatabaseConnection {
 
             // Create table if it doesn't exist
             String createTableQueryUtilisateur = "CREATE TABLE IF NOT EXISTS Utilisateur (" +
-                    "id INT AUTO_INCREMENT PRIMARY KEY, " +
-                    "nom VARCHAR(255), " +
+                    "email VARCHAR(255) PRIMARY KEY, " +
                     "prenom VARCHAR(255), " +
-                    "email VARCHAR(255)" +
+                    "nom VARCHAR(255), " +
+                    "statut INT NOT NULL," +
+                    "MaxEmprunt INT NOT NULL" +
                     ")";
 
             String createTableQueryLivre = "CREATE TABLE IF NOT EXISTS Livre (" +
-                    "isbn VARCHAR(255) PRIMARY KEY, " +
+                    "isbn INT NOT NULL PRIMARY KEY, " +
                     "titre VARCHAR(255), " +
                     "auteur VARCHAR(255)" +
                     ")";
 
             String createTableQueryEmprunt = "CREATE TABLE IF NOT EXISTS Emprunt (" +
-                    "id INT AUTO_INCREMENT PRIMARY KEY, " +
-                    "utilisateur_id INT, " +
-                    "livre_isbn VARCHAR(255), " +
+                    "user_email VARCHAR(255), " +
+                    "livre_isbn INT, " +
                     "date_debut DATE, " +
                     "date_fin DATE, " +
-                    "FOREIGN KEY (utilisateur_id) REFERENCES Utilisateur(id), " +
+                    "FOREIGN KEY (user_email) REFERENCES Utilisateur(email), " +
                     "FOREIGN KEY (livre_isbn) REFERENCES Livre(isbn)" +
                     ")";
 
@@ -79,7 +79,7 @@ public class DatabaseConnection {
     }
 
     // Method to insert data into the 'utilisateurs' table
-    public static void insertUserData(String nom, String prenom, String email) throws SQLException {
+    public static void insertUserData(String email, String prenom, String nom) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
@@ -88,13 +88,16 @@ public class DatabaseConnection {
             connection = getConnection();
 
             // Build INSERT SQL query for utilisateurs table
-            String query = "INSERT INTO utilisateur (nom, prenom, email) VALUES (?, ?, ?)";
+            String query = "INSERT INTO utilisateur (email, prenom, nom, statut, MaxEmprunt) VALUES (?, ?, ?, ?, ?)";
             preparedStatement = connection.prepareStatement(query);
 
-            // Set parameter values
-            preparedStatement.setString(1, nom);
+// Set parameter values
+            preparedStatement.setString(1, email);
             preparedStatement.setString(2, prenom);
-            preparedStatement.setString(3, email);
+            preparedStatement.setString(3, nom);
+            preparedStatement.setInt(4, 0); // Valeur pour la colonne statut
+            preparedStatement.setInt(5, 5); // Valeur pour la colonne MaxEmprunt
+
 
             // Execute INSERT query
             preparedStatement.executeUpdate();
@@ -109,7 +112,7 @@ public class DatabaseConnection {
             }
         }
     }
-    public static void insertDataEmprunt(int utilisateurId, String livreIsbn, String dateDebut, String dateFin) throws SQLException {
+    public static void insertDataEmprunt(String user_email, String livreIsbn, String dateDebut, String dateFin) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
@@ -118,11 +121,11 @@ public class DatabaseConnection {
             connection = getConnection();
 
             // Build INSERT SQL query for Emprunt table
-            String query = "INSERT INTO Emprunt (utilisateur_id, livre_isbn, date_debut, date_fin) VALUES (?, ?, ?, ?)";
+            String query = "INSERT INTO Emprunt (user_email, livre_isbn, date_debut, date_fin) VALUES (?, ?, ?, ?)";
             preparedStatement = connection.prepareStatement(query);
 
             // Set parameter values
-            preparedStatement.setInt(1, utilisateurId);
+            preparedStatement.setString(1, user_email);
             preparedStatement.setString(2, livreIsbn);
             preparedStatement.setString(3, dateDebut);
             preparedStatement.setString(4, dateFin);
@@ -184,7 +187,7 @@ public class DatabaseConnection {
             connection = getConnection();
 
             // Préparer la requête SQL
-            String query = "SELECT id, nom, prenom, email FROM Utilisateur";
+            String query = "SELECT email, prenom, nom, statut, MaxEmprunt FROM Utilisateur";
             statement = connection.prepareStatement(query);
 
             // Exécuter la requête
@@ -192,13 +195,15 @@ public class DatabaseConnection {
 
             // Parcourir les résultats et ajouter les utilisateurs à la liste
             while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String nom = resultSet.getString("nom");
-                String prenom = resultSet.getString("prenom");
+
                 String email = resultSet.getString("email");
+                String prenom = resultSet.getString("prenom");
+                String nom = resultSet.getString("nom");
+                int statut = resultSet.getInt("statut");
+                int MaxEmprunt = resultSet.getInt("MaxEmprunt");
 
                 // Créer un nouvel objet User et l'ajouter à la liste
-                Utilisateur user = new Utilisateur(id, nom, prenom, email);
+                Utilisateur user = new Utilisateur(nom, prenom, email, statut, MaxEmprunt);
                 userList.add(user);
             }
         } finally {

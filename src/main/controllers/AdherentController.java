@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import main.models.Utilisateur;
 import main.models.DatabaseConnection;
 import main.models.Livre;
@@ -55,9 +56,9 @@ public class AdherentController {
 
         if (utilisateur != null) {
             user = utilisateur;
-            titreColumn.setCellValueFactory(cellData -> cellData.getValue().titreProperty());
-            auteurColumn.setCellValueFactory(cellData -> cellData.getValue().auteurProperty());
-            isbnColumn.setCellValueFactory(cellData -> cellData.getValue().isbnProperty());
+            titreColumn.setCellValueFactory(new PropertyValueFactory<>("titre"));
+           auteurColumn.setCellValueFactory(new PropertyValueFactory<>("auteur"));
+            isbnColumn.setCellValueFactory(new PropertyValueFactory<>("isbn"));
             // Afficher les détails de l'utilisateur dans les labels correspondants
             nomLabel.setText(utilisateur.getNom());
             prenomLabel.setText(utilisateur.getPrenom());

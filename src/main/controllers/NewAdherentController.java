@@ -47,13 +47,17 @@ public class NewAdherentController {
             // Afficher un message d'erreur si les champs sont vides
             System.out.println("Veuillez remplir tous les champs.");
         } else {
+            try{
             // Ajouter l'adhérent à la base de données
-            DatabaseConnection.insertUserData(nom, prenom, mail);
-            System.out.println("Nouvel adhérent ajouté : " + nom + " " + prenom);
+            DatabaseConnection.insertUserData(mail, prenom, nom);
+            System.out.println("Nouvel adhérent ajouté : "+ mail + nom + " " + prenom);
 
             // Fermer la fenêtre après l'ajout de l'adhérent
             Stage stage = (Stage) nomTextArea.getScene().getWindow();
-            stage.close();
+            stage.close();}
+            catch (SQLException e) {
+                System.out.println("Utilisateur deja existant");
+            }
 
             // Rafraîchissez les données des adhérents dans la table principale
             if (mainController != null) {
