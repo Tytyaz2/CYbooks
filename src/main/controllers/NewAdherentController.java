@@ -2,6 +2,7 @@ package main.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import main.models.DatabaseConnection;
@@ -56,6 +57,12 @@ public class NewAdherentController {
             Stage stage = (Stage) nomTextArea.getScene().getWindow();
             stage.close();}
             catch (SQLException e) {
+                // Afficher un message d'échec
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("ERREUR");
+                alert.setHeaderText(null);
+                alert.setContentText("Utilisateur deja existant.");
+                alert.showAndWait();
                 System.out.println("Utilisateur deja existant");
             }
 
