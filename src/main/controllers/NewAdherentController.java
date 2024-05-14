@@ -51,7 +51,7 @@ public class NewAdherentController {
             try{
             // Ajouter l'adhérent à la base de données
             DatabaseConnection.insertUserData(mail, prenom, nom);
-            System.out.println("Nouvel adhérent ajouté : "+ mail + nom + " " + prenom);
+            System.out.println("Nouvel adhérent ajouté : "+ nom + " " + prenom);
 
             // Fermer la fenêtre après l'ajout de l'adhérent
             Stage stage = (Stage) nomTextArea.getScene().getWindow();

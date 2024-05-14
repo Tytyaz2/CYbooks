@@ -1,9 +1,8 @@
 package main.controllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import main.models.Utilisateur;
 import main.models.DatabaseConnection;
@@ -32,6 +31,15 @@ public class AdherentController {
 
     @FXML
     private Label nbEmpruntsLabel;
+
+    @FXML
+    private TextArea nomTextArea;
+
+    @FXML
+    private TextArea prenomTextArea;
+
+    @FXML
+    private TextArea mailTextArea;
 
     @FXML
     private TableView<Livre> livresTableView;
@@ -74,6 +82,104 @@ public class AdherentController {
             nbEmpruntsLabel.setText("");
         }
     }
+
+    @FXML
+    public void modifierAdherent(ActionEvent actionEvent) {
+        if (nomLabel.isVisible()) {
+            // Afficher les TextArea et masquer les Label
+            nomLabel.setVisible(false);
+            prenomLabel.setVisible(false);
+            mailLabel.setVisible(false);
+            nomTextArea.setVisible(true);
+            prenomTextArea.setVisible(true);
+            mailTextArea.setVisible(true);
+
+            // Remplir les TextArea avec les valeurs actuelles des Label
+            nomTextArea.setText(nomLabel.getText());
+            prenomTextArea.setText(prenomLabel.getText());
+            mailTextArea.setText(mailLabel.getText());
+        } else {
+            // Masquer les TextArea et afficher les Label
+            nomLabel.setVisible(true);
+            prenomLabel.setVisible(true);
+            mailLabel.setVisible(true);
+            nomTextArea.setVisible(false);
+            prenomTextArea.setVisible(false);
+            mailTextArea.setVisible(false);
+
+
+
+            // Récupérer les nouvelles valeurs depuis les TextAreas
+            String nouveauNom = nomTextArea.getText();
+            String nouveauPrenom = prenomTextArea.getText();
+            String nouvelEmail = mailTextArea.getText();
+
+            // Récupérer l'adresse e-mail de l'utilisateur que vous souhaitez modifier
+            String ancienEmail = user.getEmail(); // Vous devez avoir une méthode getEmail() dans votre classe Utilisateur
+
+            Connection connection = null;
+            PreparedStatement preparedStatement = null;
+            try {
+                // Obtenez une connexion à la base de données
+                connection = DatabaseConnection.getConnection();
+
+                // Créez votre instruction SQL UPDATE
+                String query = "UPDATE Utilisateur SET email=?, prenom=?, nom=? WHERE email=?";
+
+                // Créez un objet PreparedStatement et passez les valeurs nécessaires
+                preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setString(1, nouvelEmail);
+                preparedStatement.setString(2, nouveauPrenom);
+                preparedStatement.setString(3, nouveauNom);
+                preparedStatement.setString(4, ancienEmail);
+
+                // Exécutez la mise à jour
+                int rowsAffected = preparedStatement.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    // Mise à jour réussie
+                    System.out.println("Utilisateur mis à jour avec succès !");
+                    // Mettre à jour les Label avec les nouvelles valeurs des TextArea
+                    nomLabel.setText(nomTextArea.getText());
+                    prenomLabel.setText(prenomTextArea.getText());
+                    mailLabel.setText(mailTextArea.getText());
+                } else {
+                    // Aucune ligne affectée, échec de la mise à jour
+                    System.out.println("Échec de la mise à jour de l'utilisateur !");
+                }
+
+
+            } catch (SQLException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("ERREUR");
+                alert.setHeaderText(null);
+                alert.setContentText("Cet email existe deja.");
+                alert.showAndWait();
+                System.out.println("cet email existe deja.");
+            } finally {
+                // Fermez les ressources
+                try {
+                    if (preparedStatement != null) preparedStatement.close();
+                    if (connection != null) connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    @FXML
+    public void initialize() {
+            // Masquer les TextArea et afficher les Label par défaut
+            nomTextArea.setVisible(false);
+            prenomTextArea.setVisible(false);
+            mailTextArea.setVisible(false);
+
+            nomLabel.setVisible(true);
+            prenomLabel.setVisible(true);
+            mailLabel.setVisible(true);
+        }
+
 /*
     // Méthode pour charger les livres empruntés par un utilisateur à partir de la base de données
     private void chargerLivresEmpruntes(int userId) {
@@ -120,4 +226,6 @@ public class AdherentController {
         }
     }
 */
+
+
 }

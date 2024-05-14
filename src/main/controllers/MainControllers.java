@@ -59,9 +59,9 @@ public class MainControllers {
             // Itérer à travers le jeu de résultats et ajouter les données à la liste
             while (resultSet.next()) {
                 Utilisateur model = new Utilisateur(
-                        resultSet.getString("nom"),
-                        resultSet.getString("prenom"),
                         resultSet.getString("email"),
+                        resultSet.getString("prenom"),
+                        resultSet.getString("nom"),
                         resultSet.getInt("statut"),
                         resultSet.getInt("MaxEmprunt"));
                 data.add(model);
