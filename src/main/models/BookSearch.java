@@ -12,14 +12,20 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 
-class BookSearch {
 
-    public void search(String keyword) {
+public class BookSearch {
+    /*public List<Book> search(String keyword, int startIndex, int pageSize) {
+        return search(keyword, 20); // Appel de la méthode overloaded avec une limite de 20 livres
+    }*/
+    public List<Book> search(String keyword, int startIndex, int pageSize) {
+        List<Book> books = new ArrayList<>();
         try {
-            String encodedKeyword = URLEncoder.encode(keyword, "UTF-8");
-            String apiUrl = "https://www.googleapis.com/books/v1/volumes?q=" + encodedKeyword;
+            String encodedKeyword = keyword != null ? URLEncoder.encode(keyword, "UTF-8") : "";
+            String apiUrl = "https://www.googleapis.com/books/v1/volumes?q=" + encodedKeyword + "&startIndex=" + startIndex + "&maxResults=" + pageSize;
             URL url = new URL(apiUrl);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
@@ -32,36 +38,28 @@ class BookSearch {
             }
             in.close();
 
-            System.out.println("Résultats de la recherche pour '" + keyword + "':");
-            printBookDetails(response.toString());
+            Gson gson = new Gson();
+            JsonObject jsonObject = gson.fromJson(response.toString(), JsonObject.class);
+            JsonArray items = jsonObject.getAsJsonArray("items");
+
+            if (items != null) {
+                for (JsonElement item : items) {
+                    JsonObject volumeInfo = item.getAsJsonObject().getAsJsonObject("volumeInfo");
+                    String title = volumeInfo.has("title") ? volumeInfo.get("title").getAsString() : "Titre non disponible";
+                    String authors = volumeInfo.has("authors") ? volumeInfo.getAsJsonArray("authors").toString() : "Auteur(s) non disponible";
+                    String isbn = volumeInfo.has("industryIdentifiers") ? volumeInfo.getAsJsonArray("industryIdentifiers").get(0).getAsJsonObject().get("identifier").getAsString() : "ISBN non disponible";
+                    String kind = volumeInfo.has("kind") ? volumeInfo.get("kind").getAsString() : "Kind non disponible";
+
+                    books.add(new Book(title, authors, isbn, kind));
+                }
+            } else {
+                System.out.println("Aucun résultat trouvé.");
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return books;
     }
-
-    private void printBookDetails(String jsonResponse) {
-        Gson gson = new Gson();
-        JsonObject jsonObject = gson.fromJson(jsonResponse, JsonObject.class);
-        JsonArray items = jsonObject.getAsJsonArray("items");
-
-        if (items != null) {
-            for (JsonElement item : items) {
-                JsonObject volumeInfo = item.getAsJsonObject().getAsJsonObject("volumeInfo");
-                String title = volumeInfo.has("title") ? volumeInfo.get("title").getAsString() : "Titre non disponible";
-                String authors = volumeInfo.has("authors") ? volumeInfo.getAsJsonArray("authors").toString() : "Auteur(s) non disponible";
-                String isbn = volumeInfo.has("industryIdentifiers") ? volumeInfo.getAsJsonArray("industryIdentifiers").get(0).getAsJsonObject().get("identifier").getAsString() : "ISBN non disponible";
-                String kind = volumeInfo.has("kind") ? volumeInfo.get("kind").getAsString() : "Kind non disponible";
-
-                System.out.println("Titre: " + title);
-                System.out.println("Auteurs: " + authors);
-                System.out.println("ISBN: " + isbn);
-                System.out.println("Kind: " + kind);
-                System.out.println();
-            }
-        } else {
-            System.out.println("Aucun résultat trouvé.");
-        }
-    }
-
 }

@@ -180,7 +180,7 @@ public class AdherentController {
             mailLabel.setVisible(true);
         }
 
-/*
+
     // Méthode pour charger les livres empruntés par un utilisateur à partir de la base de données
     private void chargerLivresEmpruntes(int userId) {
         // Effacer les éléments actuels de la TableView
@@ -206,7 +206,7 @@ public class AdherentController {
                 Livre livre = new Livre(
                         resultSet.getString("titre"),
                         resultSet.getString("auteur"),
-                        resultSet.getString("isbn"));
+                        resultSet.getInt("isbn"));
                 livres.add(livre);
             }
             // Peupler le TableView avec les livres empruntés
@@ -225,7 +225,7 @@ public class AdherentController {
             }
         }
     }
-*/
+
 
 
 }

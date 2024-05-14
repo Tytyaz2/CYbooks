@@ -112,7 +112,7 @@ public class DatabaseConnection {
             }
         }
     }
-    public static void insertDataEmprunt(String user_email, String livreIsbn, String dateDebut, String dateFin) throws SQLException {
+    public static void insertDataEmprunt(String user_email, int livreIsbn, String dateDebut, String dateFin) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
@@ -123,10 +123,10 @@ public class DatabaseConnection {
             // Build INSERT SQL query for Emprunt table
             String query = "INSERT INTO Emprunt (user_email, livre_isbn, date_debut, date_fin) VALUES (?, ?, ?, ?)";
             preparedStatement = connection.prepareStatement(query);
-
+            
             // Set parameter values
             preparedStatement.setString(1, user_email);
-            preparedStatement.setString(2, livreIsbn);
+            preparedStatement.setInt(2, livreIsbn);
             preparedStatement.setString(3, dateDebut);
             preparedStatement.setString(4, dateFin);
 
@@ -144,7 +144,7 @@ public class DatabaseConnection {
         }
     }
 
-    public static void insertDataLivre(String isbn, String titre, String auteur) throws SQLException {
+    public static void insertDataLivre(int isbn, String titre, String auteur) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
@@ -157,7 +157,7 @@ public class DatabaseConnection {
             preparedStatement = connection.prepareStatement(query);
 
             // Set parameter values
-            preparedStatement.setString(1, isbn);
+            preparedStatement.setInt(1, isbn);
             preparedStatement.setString(2, titre);
             preparedStatement.setString(3, auteur);
 

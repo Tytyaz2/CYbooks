@@ -8,10 +8,14 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.TableColumn;
 import javafx.stage.Stage;
+import main.models.Book;
+import main.models.BookSearch;
 import main.models.DatabaseConnection;
 import main.models.Utilisateur;
 
@@ -25,6 +29,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainControllers {
+    private int startIndex = 0;
+    private final int pageSize = 20;
+
+    @FXML
+    private TableView<Book> bookTableView;
+    @FXML
+    private TextArea SearchBook;
+    @FXML
+
+    private TextField searchTextField;
+    private BookSearch bookSearch;
+
+    public MainControllers() {
+        this.bookSearch = new BookSearch();
+    }
 
     @FXML
     private TableView<Utilisateur> userTableView;
@@ -40,6 +59,39 @@ public class MainControllers {
 
     private Utilisateur selectedUser;
 
+    public void searchAndUpdateTableView(String keyword) {
+        List<Book> books = bookSearch.search(keyword, startIndex, pageSize);
+        bookTableView.getItems().setAll(books);
+    }
+
+
+
+    @FXML
+    private void loadFirst20Books() {
+        String recherche = SearchBook.getText();
+        List<Book> books = bookSearch.search(recherche, startIndex, pageSize);
+        bookTableView.getItems().setAll(books);
+    }
+    @FXML
+    private void handleNextButtonAction() {
+        startIndex += pageSize;
+        loadFirst20Books();
+    }
+
+    @FXML
+    private void handlePreviousButtonAction() {
+        startIndex = Math.max(0, startIndex - pageSize);
+        loadFirst20Books();
+    }
+
+
+
+
+    @FXML
+    private void handleSearchButtonAction(ActionEvent event) {
+        String keyword = searchTextField.getText();
+        searchAndUpdateTableView(keyword);
+    }
 
     private void loadData() throws SQLException {
         List<Utilisateur> data = new ArrayList<>();
@@ -106,6 +158,7 @@ public class MainControllers {
 
         // Charger les données dans TableView
         loadData();
+
     }
 
     @FXML
