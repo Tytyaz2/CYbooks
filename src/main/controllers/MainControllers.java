@@ -124,7 +124,7 @@ public class MainControllers {
             userTableView.getItems().addAll(data);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.getMessage();
         } finally {
             // Fermer les ressources
             try {
@@ -132,7 +132,7 @@ public class MainControllers {
                 if (preparedStatement != null) preparedStatement.close();
                 if (connection != null) connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                e.getMessage();
             }
         }
 
@@ -243,7 +243,7 @@ public class MainControllers {
                 stage.setTitle("Page Adhérent");
                 stage.show();
             } catch (IOException e) {
-                e.printStackTrace();
+                e.getMessage();
             }
         }
     }
@@ -257,6 +257,26 @@ public class MainControllers {
         showNewAdherentPage();
     }
 
+    @FXML
+    private void handleEmpruntButtonClick() {
+        try {
+            // Charger la vue emprunt.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/emprunt.fxml"));
+            Parent root = loader.load();
+
+            // Créer une nouvelle scène avec la racine chargée
+            Scene scene = new Scene(root);
+
+            // Créer un nouveau stage pour afficher la vue emprunt.fxml
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("Emprunt de livre");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void showNewAdherentPage() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/newAdherent.fxml"));
         Parent root;
@@ -268,7 +288,7 @@ public class MainControllers {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            e.getMessage();
         }
     }
 }

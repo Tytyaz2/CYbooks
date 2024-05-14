@@ -1,6 +1,7 @@
 package main.controllers;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import main.models.Authentication;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -20,6 +21,18 @@ public class ConnexionController extends Application {
     @FXML
     private PasswordField passwordField;
 
+    private Stage primaryStage;
+
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+    }
+
+    // Méthode pour activer/désactiver le mode plein écran
+    public void toggleFullScreen() {
+        primaryStage.setFullScreen(!primaryStage.isFullScreen());
+    }
+
+
     @FXML
     private void handleLogin() {
         String username = usernameField.getText();
@@ -31,6 +44,7 @@ public class ConnexionController extends Application {
         // Vérifier si l'authentification est réussie
         if (isAuthenticated) {
             // Charger la nouvelle page
+// Charger la nouvelle page
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/pageprincipal.fxml"));
                 Parent root = loader.load();
@@ -38,9 +52,19 @@ public class ConnexionController extends Application {
                 Stage stage = new Stage();
                 stage.setScene(scene);
                 stage.setTitle("Page Principale");
+
+                // Ajouter un gestionnaire d'événements pour fermer l'application lorsque la fenêtre est fermée
+                stage.setOnCloseRequest(event -> {
+                    // Code à exécuter lors de la fermeture de la fenêtre
+                    Platform.exit(); // Fermer l'application
+                });
+
                 stage.show();
+            } catch (javafx.fxml.LoadException e) {
+                // Gérer l'exception ici
+                e.printStackTrace(); // Ou afficher un message d'erreur, etc.
             } catch (IOException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
 
             // Fermer la fenêtre de connexion actuelle
