@@ -1,24 +1,19 @@
 package main.models;
 
-
-
 public class Utilisateur {
-//changer les string property et pas de javafx
-
-    private  String nom;
-    private  String prenom;
-    private  String email;
+    private String email;
+    private String prenom;
+    private String nom;
     private int statut;
-    private int MaxEmprunt;
+    private int maxEmprunt ; // Initialisation à 5
 
-    public Utilisateur( String email, String prenom, String nom, int statut, int MaxEmprunt) {
+    public Utilisateur(String email, String prenom, String nom, int statut, int maxEmprunt) {
+        this.email = email;
+        this.prenom = prenom;
         this.nom = nom;
-        this.prenom =prenom;
-        this.email =email;
         this.statut = statut;
-        this.MaxEmprunt = MaxEmprunt;
+        this.maxEmprunt = 5;
     }
-
 
     public String getNom() {
         return nom;
@@ -35,15 +30,18 @@ public class Utilisateur {
     public int getStatut() {
         return statut;
     }
+
     public void setStatut(int statut) {
         this.statut = statut;
     }
 
     public int getMaxEmprunt() {
-        return MaxEmprunt;
+        return maxEmprunt;
     }
 
     public void setMaxEmprunt(int maxEmprunt) {
-        MaxEmprunt = maxEmprunt;
+        this.maxEmprunt = maxEmprunt;
     }
+
+    // Autres méthodes à implémenter selon la logique de votre application
 }

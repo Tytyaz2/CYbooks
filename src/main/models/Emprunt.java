@@ -3,49 +3,48 @@ package main.models;
 import java.time.LocalDate;
 
 public class Emprunt {
-    private Utilisateur utilisateur;
-    private Livre livre;
-    private LocalDate dateDebut;
-    private LocalDate dateFin;
+    private Utilisateur user;
+    private Book book;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
-    public Emprunt(Utilisateur utilisateur, Livre livre, LocalDate dateDebut, LocalDate dateFin) {
-        this.utilisateur = utilisateur;
-        this.livre = livre;
-        this.dateDebut = dateDebut;
-        this.dateFin = dateFin;
+    public Emprunt(Utilisateur user, Book book, LocalDate startDate, LocalDate endDate) {
+        this.user = user;
+        this.book = book;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
-    // Getters and setters
-    public Utilisateur getUtilisateur() {
-        return utilisateur;
+    public Book getBook() {
+        return book;
     }
 
-    public void setUtilisateur(Utilisateur utilisateur) {
-        this.utilisateur = utilisateur;
+    public LocalDate getEndDate() {
+        return endDate;
     }
 
-    public Livre getLivre() {
-        return livre;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public void setLivre(Livre livre) {
-        this.livre = livre;
+    public Utilisateur getUser() {
+        return user;
     }
 
-    public LocalDate getDateDebut() {
-        return dateDebut;
+    public void setBook(Book book) {
+        this.book = book;
     }
 
-    public void setDateDebut(LocalDate dateDebut) {
-        this.dateDebut = dateDebut;
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 
-    public LocalDate getDateFin() {
-        return dateFin;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
     }
 
-    public void setDateFin(LocalDate dateFin) {
-        this.dateFin = dateFin;
+    public void setUser(Utilisateur user) {
+        this.user = user;
     }
+    // Getters et setters
 }
-

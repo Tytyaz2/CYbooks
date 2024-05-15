@@ -6,11 +6,22 @@ public class Book {
     private String isbn;
     private String kind;
 
+    private int stock;
+
     public Book(String title, String authors, String isbn, String kind) {
         this.title = title;
         this.authors = authors;
         this.isbn = isbn;
         this.kind = kind;
+        this.stock=10;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 
     public String getTitle() {
@@ -43,5 +54,9 @@ public class Book {
 
     public void setKind(String kind) {
         this.kind = kind;
+    }
+
+    public String toString(){
+        return this.title+","+this.authors;
     }
 }

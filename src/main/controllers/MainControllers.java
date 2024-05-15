@@ -1,5 +1,6 @@
 package main.controllers;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -7,19 +8,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.control.TableColumn;
 import javafx.stage.Stage;
 import main.models.Book;
 import main.models.BookSearch;
 import main.models.DatabaseConnection;
 import main.models.Utilisateur;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
+
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -42,21 +39,24 @@ public class MainControllers {
     private TextField searchTextField;
     private BookSearch bookSearch;
 
-    public MainControllers() {
+    public MainControllers() throws SQLException {
         this.bookSearch = new BookSearch();
+
+
     }
+
 
     @FXML
     private TableView<Utilisateur> userTableView;
 
     @FXML
-    private TableColumn<Utilisateur, String> test1Column;
+    private TableColumn<Utilisateur, String> nom;
 
     @FXML
-    private TableColumn<Utilisateur, String> test2Column;
+    private TableColumn<Utilisateur, String> prenom;
 
     @FXML
-    private TableColumn<Utilisateur, String> test3Column;
+    private TableColumn<Utilisateur, String> email;
 
     private Utilisateur selectedUser;
 
@@ -102,10 +102,13 @@ public class MainControllers {
 
         try {
             // Utiliser la méthode getConnection() de DatabaseConnection
+            System.out.println("Tentative de connexion à la base de données...");
             connection = DatabaseConnection.getConnection();
+            System.out.println("Connexion réussie !");
 
             // Exécuter la requête pour récupérer les données
             String query = "SELECT * FROM utilisateur";
+            System.out.println("Exécution de la requête : " + query);
             preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
 
@@ -117,27 +120,31 @@ public class MainControllers {
                         resultSet.getString("nom"),
                         resultSet.getInt("statut"),
                         resultSet.getInt("MaxEmprunt"));
+
                 data.add(model);
             }
+            System.out.println("Données récupérées avec succès !");
 
             // Peupler TableView avec les données
             userTableView.getItems().addAll(data);
+            System.out.println("Données ajoutées à la TableView avec succès !");
 
         } catch (SQLException e) {
-            e.getMessage();
+            System.err.println("Erreur lors de la récupération des données : " + e.getMessage());
         } finally {
             // Fermer les ressources
             try {
                 if (resultSet != null) resultSet.close();
                 if (preparedStatement != null) preparedStatement.close();
                 if (connection != null) connection.close();
+                System.out.println("Ressources fermées avec succès !");
             } catch (SQLException e) {
-                e.getMessage();
+                System.err.println("Erreur lors de la fermeture des ressources : " + e.getMessage());
             }
         }
-
-
     }
+
+
 
     // Méthode pour rafraîchir les données des adhérents
     public void refreshUserData() throws SQLException {
@@ -163,16 +170,14 @@ public class MainControllers {
     private ToggleGroup searchToggleGroup;
 
 
-
-    @FXML
     public void initialize() throws SQLException {
-        // Associer les colonnes du TableView aux propriétés du modèle de données
-        test1Column.setCellValueFactory(new PropertyValueFactory<>("nom"));
-        test2Column.setCellValueFactory(new PropertyValueFactory<>("prenom"));
-        test3Column.setCellValueFactory(new PropertyValueFactory<>("email"));
-
         // Charger les données dans TableView
         loadData();
+
+        // Définir les usines de valeurs de cellule personnalisées pour chaque colonne
+        nom.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNom()));
+        prenom.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPrenom()));
+        email.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEmail()));
 
         // Créer un groupe de bascule pour les boutons radio de recherche
         searchToggleGroup = new ToggleGroup();
@@ -196,6 +201,9 @@ public class MainControllers {
             }
         });
     }
+
+
+
 
     private void loadBooksByAuthor() {
         String author = SearchBook.getText();
@@ -248,6 +256,8 @@ public class MainControllers {
         }
     }
 
+
+
     public Utilisateur getSelectedUser() {
         return selectedUser;
     }
@@ -258,24 +268,32 @@ public class MainControllers {
     }
 
     @FXML
-    private void handleEmpruntButtonClick() {
+    private Button empruntButton; // Assurez-vous d'annoter avec @FXML
+
+    @FXML
+    void handleNewBorrowButtonClick(ActionEvent event) {
         try {
-            // Charger la vue emprunt.fxml
+            // Charger le fichier FXML de la scène d'emprunt
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/emprunt.fxml"));
-            Parent root = loader.load();
+            Parent empruntRoot = loader.load();
 
-            // Créer une nouvelle scène avec la racine chargée
-            Scene scene = new Scene(root);
+            // Créer une nouvelle scène
+            Scene empruntScene = new Scene(empruntRoot);
 
-            // Créer un nouveau stage pour afficher la vue emprunt.fxml
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.setTitle("Emprunt de livre");
-            stage.show();
+            // Créer une nouvelle fenêtre pour la scène d'emprunt
+            Stage empruntStage = new Stage();
+            empruntStage.setScene(empruntScene);
+            empruntStage.setTitle("Emprunt");
+
+            // Afficher la nouvelle fenêtre
+            empruntStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
+
 
     public void showNewAdherentPage() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/newAdherent.fxml"));
@@ -291,4 +309,6 @@ public class MainControllers {
             e.getMessage();
         }
     }
+
+
 }

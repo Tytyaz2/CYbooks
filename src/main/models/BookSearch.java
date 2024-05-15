@@ -62,7 +62,7 @@ public class BookSearch {
 
         return books;
     }
-    public List<Book> searchByTitle(String title, int startIndex, int pageSize) {
+    public static List<Book> searchByTitle(String title, int startIndex, int pageSize) {
         List<Book> books = new ArrayList<>();
         try {
             String encodedTitle = title != null ? URLEncoder.encode(title, "UTF-8") : "";

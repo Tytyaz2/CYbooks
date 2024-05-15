@@ -1,5 +1,7 @@
 package main.models;
 
+import main.models.Utilisateur;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,31 +30,46 @@ public class DatabaseConnection {
             }
         }
     }
+    public static void updateUserNbrEmprunt(String email, int nbrEmprunt) throws SQLException {
+        String query = "UPDATE Utilisateur SET MaxEmprunt = ? WHERE email = ?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setInt(1, 5 - nbrEmprunt);
+            preparedStatement.setString(2, email);
+
+            preparedStatement.executeUpdate();
+            System.out.println("Nombre d'emprunts restants mis à jour pour l'utilisateur avec l'email: " + email);
+        }
+    }
+
 
     private static void createTablesIfNotExist() throws SQLException {
         try (Connection connection = getConnection()) {
             String createTableQueryUtilisateur = "CREATE TABLE IF NOT EXISTS Utilisateur (" +
-                    "email VARCHAR(100) PRIMARY KEY, " + // Adjusted length of email column
+                    "email VARCHAR(100) PRIMARY KEY, " +
                     "prenom VARCHAR(255), " +
                     "nom VARCHAR(255), " +
                     "statut INT NOT NULL," +
                     "MaxEmprunt INT NOT NULL" +
+
                     ")";
 
             String createTableQueryLivre = "CREATE TABLE IF NOT EXISTS Livre (" +
-                    "isbn INT NOT NULL PRIMARY KEY, " +
+                    "isbn VARCHAR(100)  PRIMARY KEY, " +
                     "titre VARCHAR(255), " +
-                    "auteur VARCHAR(255)" +
+                    "auteur VARCHAR(255), " +
+                    "stock INT DEFAULT 10" +
                     ")";
             String createTableQueryEmprunt = "CREATE TABLE IF NOT EXISTS Emprunt (" +
                     "user_email VARCHAR(100), " +
-                    "livre_isbn INT NOT NULL, " +
+                    "livre_isbn VARCHAR(100) , " +
                     "date_debut DATE, " +
                     "date_fin DATE, " +
                     "FOREIGN KEY (user_email) REFERENCES Utilisateur(email), " +
                     "FOREIGN KEY (livre_isbn) REFERENCES Livre(isbn)" +
                     ")";
-
 
             try (PreparedStatement createTableStatementUtilisateur = connection.prepareStatement(createTableQueryUtilisateur);
                  PreparedStatement createTableStatementLivre = connection.prepareStatement(createTableQueryLivre);
@@ -64,10 +81,166 @@ public class DatabaseConnection {
         }
     }
 
+    public static boolean isBookExists(String isbn) throws SQLException {
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Livre WHERE isbn = ?")) {
+            stmt.setString(1, isbn);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next() && rs.getInt(1) > 0;
+            }
+        }
+    }
+
+    public static void insertBook(Book book) throws SQLException {
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement("INSERT INTO Livre (isbn, titre, auteur, stock) VALUES (?, ?, ?, ?)")) {
+            stmt.setString(1, book.getIsbn());
+            stmt.setString(2, book.getTitle());
+            stmt.setString(3, book.getAuthors());
+            stmt.setInt(4, 10); // Stock initial à 10
+            stmt.executeUpdate();
+        }
+    }
+
+    public static int getBookStock(String isbn) throws SQLException {
+        int stock = 0;
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement("SELECT stock FROM Livre WHERE isbn = ?")) {
+            stmt.setString(1, isbn);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    stock = rs.getInt("stock");
+                }
+            }
+        }
+        return stock;
+    }
+
+    public static void updateStock(String isbn, int newStock) throws SQLException {
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement("UPDATE Livre SET stock = ? WHERE isbn = ?")) {
+            stmt.setInt(1, newStock);
+            stmt.setString(2, isbn);
+            stmt.executeUpdate();
+        }
+    }
+
+    public static int getUserMaxEmprunt(String userEmail) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int maxEmprunt = 0;
+
+        try {
+            // Obtenez la connexion à la base de données
+            connection = getConnection();
+
+            // Préparez la requête SQL pour récupérer le nombre d'emprunts maximal de l'utilisateur
+            String query = "SELECT MaxEmprunt FROM utilisateur WHERE email = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, userEmail);
+
+            // Exécutez la requête et récupérez le résultat
+            resultSet = preparedStatement.executeQuery();
+
+            // Si une ligne est renvoyée, récupérez le nombre d'emprunts maximal
+            if (resultSet.next()) {
+                maxEmprunt = resultSet.getInt("MaxEmprunt");
+            }
+        } finally {
+            // Fermer les ressources
+            if (resultSet != null) {
+                resultSet.close();
+            }
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+
+        return maxEmprunt;
+    }
+
+    public static void updateUserMaxEmprunt(String userEmail, int newMaxEmprunt) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            // Obtenez la connexion à la base de données
+            connection = getConnection();
+
+            // Préparez la requête SQL pour mettre à jour le nombre d'emprunts maximal de l'utilisateur
+            String query = "UPDATE utilisateur SET MaxEmprunt = ? WHERE email = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, newMaxEmprunt);
+            preparedStatement.setString(2, userEmail);
+
+            // Exécutez la requête
+            preparedStatement.executeUpdate();
+        } finally {
+            // Fermer les ressources
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    }
+
+    public static boolean isBookAlreadyBorrowed(String userEmail, String bookISBN) throws SQLException {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = getConnection();
+            String query = "SELECT COUNT(*) FROM Emprunt WHERE user_email = ? AND livre_isbn = ?";
+            stmt = conn.prepareStatement(query);
+            stmt.setString(1, userEmail);
+            stmt.setString(2, bookISBN);
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                return count > 0;
+            }
+            return false;
+        } finally {
+            // Assurez-vous de fermer toutes les ressources JDBC pour éviter les fuites de ressources
+            closeResources(rs, stmt, conn);
+        }
+    }
+
+
+    public static void closeResources(ResultSet rs, Statement stmt, Connection conn) {
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            if (stmt != null) {
+                stmt.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            if (conn != null) {
+                conn.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL + DATABASE_NAME, USERNAME, PASSWORD);
     }
-
 
     public static void insertUserData(String email, String prenom, String nom) throws SQLException {
         String query = "INSERT INTO Utilisateur (email, prenom, nom, statut, MaxEmprunt) VALUES (?, ?, ?, ?, ?)";
@@ -81,19 +254,23 @@ public class DatabaseConnection {
             preparedStatement.setInt(4, 0); // statut
             preparedStatement.setInt(5, 5); // MaxEmprunt
 
+
             preparedStatement.executeUpdate();
             System.out.println("Data inserted successfully into Utilisateur table!");
         }
     }
 
-    public static void insertDataEmprunt(String user_email, int livreIsbn, String dateDebut, String dateFin) throws SQLException {
+
+
+
+    public static void insertDataEmprunt(String user_email, String livreIsbn, String dateDebut, String dateFin) throws SQLException {
         String query = "INSERT INTO Emprunt (user_email, livre_isbn, date_debut, date_fin) VALUES (?, ?, ?, ?)";
 
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setString(1, user_email);
-            preparedStatement.setInt(2, livreIsbn);
+            preparedStatement.setString(2, livreIsbn);
             preparedStatement.setString(3, dateDebut);
             preparedStatement.setString(4, dateFin);
 
@@ -102,13 +279,13 @@ public class DatabaseConnection {
         }
     }
 
-    public static void insertDataLivre(int isbn, String titre, String auteur) throws SQLException {
+    public static void insertDataLivre(String isbn, String titre, String auteur) throws SQLException {
         String query = "INSERT INTO Livre (isbn, titre, auteur) VALUES (?, ?, ?)";
 
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setInt(1, isbn);
+            preparedStatement.setString(1, isbn);
             preparedStatement.setString(2, titre);
             preparedStatement.setString(3, auteur);
 
@@ -116,6 +293,8 @@ public class DatabaseConnection {
             System.out.println("Data inserted successfully into Livre table!");
         }
     }
+
+
 
     public static List<Utilisateur> getAllUtilisateur() throws SQLException {
         List<Utilisateur> userList = new ArrayList<>();
@@ -132,6 +311,8 @@ public class DatabaseConnection {
                 int statut = resultSet.getInt("statut");
                 int maxEmprunt = resultSet.getInt("MaxEmprunt");
 
+
+                // Création de l'objet Utilisateur avec la nouvelle colonne nbrEmprunt
                 Utilisateur user = new Utilisateur(email, prenom, nom, statut, maxEmprunt);
                 userList.add(user);
             }

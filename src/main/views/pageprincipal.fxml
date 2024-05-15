@@ -15,40 +15,55 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controllers.MainControllers">
     <children>
-        <Button layoutX="537.0" layoutY="547.0" mnemonicParsing="false" onAction="#handleNewAdherentButtonClick" prefHeight="88.0" prefWidth="201.0" style="-fx-font-size: 20;" text="Nouvel adhérent" />
+        <Button layoutX="537.0" layoutY="316.0" mnemonicParsing="false" onAction="#handleNewAdherentButtonClick" prefHeight="88.0" prefWidth="201.0" style="-fx-font-size: 20;" text="Nouvel adhérent" />
         <TextArea layoutX="106.0" layoutY="95.0" prefHeight="48.0" prefWidth="332.0" />
         <Text layoutX="187.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="rechercher adhérent" textAlignment="CENTER" wrappingWidth="170.06829071044922" />
         <TextArea fx:id="SearchBook" layoutX="821.0" layoutY="96.0" prefHeight="46.0" prefWidth="333.0" />
         <Button layoutX="1174.0" layoutY="119.0" onAction="#loadFirst20Books" prefHeight="0.0" prefWidth="76.0" text="Research" />
         <Text layoutX="935.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="rechercher livre" textAlignment="CENTER" wrappingWidth="105.73839569091797" />
         <Text layoutX="563.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 40;" text="CYbooks" />
-        <TableView fx:id="userTableView" layoutX="46.0" layoutY="141.0" onMouseClicked="#handleUserClick" prefHeight="494.0" prefWidth="480.0">
+
+
+        <TableView  onMouseClicked="#handleUserClick" fx:id="userTableView" layoutX="46.0" layoutY="148.0" prefHeight="487.0" prefWidth="480.0">
             <columns>
-                <TableColumn fx:id="test1Column" prefWidth="140.53610801696777" text="Nom" />
-                <TableColumn fx:id="test2Column" prefWidth="147.46389770507812" text="Prenom" />
-                <TableColumn fx:id="test3Column" minWidth="0.0" prefWidth="190.02061824208755" text="Mail" />
+                <TableColumn  fx:id="prenom" prefWidth="182.0" text="prenom">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="prenom" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="nom" prefWidth="147.0" text="nom">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="nom" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="email" prefWidth="150.0" text="email">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="email" />
+                    </cellValueFactory>
+                </TableColumn>
+
             </columns>
         </TableView>
-        <TableView fx:id="bookTableView" layoutX="748.0" layoutY="148.0" prefHeight="496.0" prefWidth="480.0">
+        <TableView fx:id="bookTableView" layoutX="748.0" layoutY="148.0" prefHeight="487.0" prefWidth="480.0">
             <columns>
-                <TableColumn prefWidth="325.60009765625" text="Titre">
+                <TableColumn prefWidth="168.0" text="Titre">
                     <cellValueFactory>
                         <PropertyValueFactory property="title" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn prefWidth="75.99993896484375" text="Auteur">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="authors" />
-                    </cellValueFactory>
-                </TableColumn>
-                <TableColumn prefWidth="48.0" text="ISBN">
+                <TableColumn prefWidth="92.0" text="ISBN">
                     <cellValueFactory>
                         <PropertyValueFactory property="isbn" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn prefWidth="32.0" text="Kind">
+                <TableColumn prefWidth="113.0" text="Kind">
                     <cellValueFactory>
                         <PropertyValueFactory property="kind" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="109.0" text="Auteur">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="authors" />
                     </cellValueFactory>
                 </TableColumn>
             </columns>
@@ -77,5 +92,6 @@
             <RadioButton fx:id="searchbyisbn" layoutY="36.0" mnemonicParsing="false" text="Search by ISBN" />
          </children>
       </Pane>
+      <Button layoutX="537.0" layoutY="547.0" mnemonicParsing="false" onAction="#handleNewBorrowButtonClick" prefHeight="88.0" prefWidth="201.0" style="-fx-font-size: 20;" text="Emprunter" />
     </children>
 </AnchorPane>
