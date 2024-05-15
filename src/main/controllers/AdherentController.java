@@ -8,7 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import main.models.Utilisateur;
 import main.models.DatabaseConnection;
-import main.models.Livre;
+import main.models.Book;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -44,32 +44,35 @@ public class AdherentController {
     private TextArea mailTextArea;
 
     @FXML
-    private TableView<Livre> livresTableView;
+    private TableView<Book> livresTableView;
 
     @FXML
-    private TableColumn<Livre, String> titreColumn;
+    private TableColumn<Book, String> titreColumn;
 
     @FXML
-    private TableColumn<Livre, String> auteurColumn;
+    private TableColumn<Book, String> auteurColumn;
 
     @FXML
-    private TableColumn<Livre, String> isbnColumn;
+    private TableColumn<Book, String> isbnColumn;
 
     @FXML
-    private TableColumn<Livre, String> dateEmpruntColumn;
+    private TableColumn<Book, String> dateEmprunt;
 
     @FXML
-    private TableColumn<Livre, String> dateRenduColumn;
+    private TableColumn<Book, String> dateRendu;
 
-    private ObservableList<Livre> listeEmprunts = FXCollections.observableArrayList();
+    private ObservableList<Book> listeEmprunts = FXCollections.observableArrayList();
 
 
     public void afficherDetailsUtilisateur(Utilisateur utilisateur) {
         if (utilisateur != null) {
             user = utilisateur;
-            titreColumn.setCellValueFactory(new PropertyValueFactory<>("titre"));
-            auteurColumn.setCellValueFactory(new PropertyValueFactory<>("auteur"));
+            // Définir les PropertyValueFactory pour les colonnes de la TableView
+            titreColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+            auteurColumn.setCellValueFactory(new PropertyValueFactory<>("authors"));
             isbnColumn.setCellValueFactory(new PropertyValueFactory<>("isbn"));
+            dateEmprunt.setCellValueFactory(new PropertyValueFactory<>("dateBorrow"));
+            dateRendu.setCellValueFactory(new PropertyValueFactory<>("dateGB"));
 
             // Afficher les détails de l'utilisateur dans les labels correspondants
             nomLabel.setText(utilisateur.getNom());
@@ -124,7 +127,7 @@ public class AdherentController {
             }
         }
 
-        return 5- maxEmprunt;
+        return maxEmprunt;
     }
 
     @FXML
@@ -223,12 +226,19 @@ public class AdherentController {
         mailLabel.setVisible(true);
 
         livresTableView.setItems(listeEmprunts);
+
+        // Définir les PropertyValueFactory pour les colonnes de la TableView
+        titreColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        auteurColumn.setCellValueFactory(new PropertyValueFactory<>("authors"));
+        isbnColumn.setCellValueFactory(new PropertyValueFactory<>("isbn"));
+        dateEmprunt.setCellValueFactory(new PropertyValueFactory<>("dateBorrow"));
+        dateRendu.setCellValueFactory(new PropertyValueFactory<>("dateGB"));
     }
 
 
     private void chargerLivresEmpruntes(String email) {
         listeEmprunts.clear(); // Inutile, car déjà géré par le rafraîchissement de la TableView
-        List<Livre> livres = new ArrayList<>();
+        List<Book> livres = new ArrayList<>();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -237,8 +247,8 @@ public class AdherentController {
             // Obtenez une connexion à la base de données
             connection = DatabaseConnection.getConnection();
 
-            // Exécuter la requête pour récupérer les livres empruntés par l'utilisateur
-            String query = "SELECT Livre.titre, Livre.auteur, Livre.isbn " +
+            // Exécuter la requête pour récupérer les livres empruntés par l'utilisateur avec les dates d'emprunt et de rendu
+            String query = "SELECT Livre.titre, Livre.auteur, Livre.isbn, Emprunt.date_debut, Emprunt.date_fin " +
                     "FROM Emprunt " +
                     "JOIN Livre ON Emprunt.livre_isbn = Livre.isbn " +
                     "WHERE Emprunt.user_email = ?";
@@ -251,11 +261,15 @@ public class AdherentController {
                 String titre = resultSet.getString("titre");
                 String auteur = resultSet.getString("auteur");
                 String isbn = resultSet.getString("isbn");
-                Livre livre = new Livre(titre, auteur, isbn);
+                String dateEmprunt = resultSet.getString("date_debut");
+                String dateRendu = resultSet.getString("date_fin");
+                Book livre = new Book(titre, auteur, isbn);
+                livre.setDateBorrow(dateEmprunt);
+                livre.setDateGB(dateRendu);
                 livres.add(livre);
             }
             // Peupler le TableView avec les livres empruntés
-            livresTableView.getItems().setAll(livres);
+            listeEmprunts.addAll(livres);
 
         } catch (SQLException e) {
             e.printStackTrace(); // Gérer les erreurs de manière appropriée
@@ -270,11 +284,5 @@ public class AdherentController {
             }
         }
     }
+
 }
-
-
-
-
-
-
-

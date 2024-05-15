@@ -50,7 +50,7 @@ public class BookSearch {
                     String isbn = volumeInfo.has("industryIdentifiers") ? volumeInfo.getAsJsonArray("industryIdentifiers").get(0).getAsJsonObject().get("identifier").getAsString() : "ISBN non disponible";
                     String kind = volumeInfo.has("kind") ? volumeInfo.get("kind").getAsString() : "Kind non disponible";
 
-                    books.add(new Book(title, authors, isbn, kind));
+                    books.add(new Book(title, authors, isbn));
                 }
             } else {
                 System.out.println("Aucun résultat trouvé.");
@@ -91,7 +91,7 @@ public class BookSearch {
                     String isbn = volumeInfo.has("industryIdentifiers") ? volumeInfo.getAsJsonArray("industryIdentifiers").get(0).getAsJsonObject().get("identifier").getAsString() : "ISBN non disponible";
                     String kind = volumeInfo.has("kind") ? volumeInfo.get("kind").getAsString() : "Kind non disponible";
 
-                    books.add(new Book(bookTitle, authors, isbn, kind));
+                    books.add(new Book(bookTitle, authors, isbn));
                 }
             } else {
                 System.out.println("Aucun résultat trouvé.");
@@ -132,7 +132,7 @@ public class BookSearch {
                     String isbn = volumeInfo.has("industryIdentifiers") ? volumeInfo.getAsJsonArray("industryIdentifiers").get(0).getAsJsonObject().get("identifier").getAsString() : "ISBN non disponible";
                     String kind = volumeInfo.has("kind") ? volumeInfo.get("kind").getAsString() : "Kind non disponible";
 
-                    books.add(new Book(title, authors, isbn, kind));
+                    books.add(new Book(title, authors, isbn));
                 }
             } else {
                 System.out.println("Aucun résultat trouvé.");
@@ -173,7 +173,7 @@ public class BookSearch {
                     String isbnResult = volumeInfo.has("industryIdentifiers") ? volumeInfo.getAsJsonArray("industryIdentifiers").get(0).getAsJsonObject().get("identifier").getAsString() : "ISBN non disponible";
                     String kind = volumeInfo.has("kind") ? volumeInfo.get("kind").getAsString() : "Kind non disponible";
 
-                    books.add(new Book(title, authors, isbnResult, kind));
+                    books.add(new Book(title, authors, isbnResult));
                 }
             } else {
                 System.out.println("Aucun résultat trouvé.");

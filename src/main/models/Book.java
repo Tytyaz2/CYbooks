@@ -4,15 +4,18 @@ public class Book {
     private String title;
     private String authors;
     private String isbn;
-    private String kind;
+
+
+    private String dateBorrow;
+    private String dateGB;
 
     private int stock;
 
-    public Book(String title, String authors, String isbn, String kind) {
+    public Book(String title, String authors, String isbn) {
         this.title = title;
         this.authors = authors;
         this.isbn = isbn;
-        this.kind = kind;
+
         this.stock=10;
     }
 
@@ -22,6 +25,22 @@ public class Book {
 
     public void setStock(int stock) {
         this.stock = stock;
+    }
+
+    public String getDateBorrow() {
+        return dateBorrow;
+    }
+
+    public void setDateBorrow(String dateBorrow) {
+        this.dateBorrow = dateBorrow;
+    }
+
+    public String getDateGB() {
+        return dateGB;
+    }
+
+    public void setDateGB(String dateGB) {
+        this.dateGB = dateGB;
     }
 
     public String getTitle() {
@@ -48,15 +67,13 @@ public class Book {
         this.isbn = isbn;
     }
 
-    public String getKind() {
-        return kind;
-    }
 
-    public void setKind(String kind) {
-        this.kind = kind;
-    }
+
+
 
     public String toString(){
         return this.title+","+this.authors;
     }
+
+
 }

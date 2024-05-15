@@ -5,6 +5,7 @@ public class Livre {
     private final String titre;
     private final String auteur;
     private final String isbn;
+
     private Integer quantiteActuelle;
     private Integer quantiteInitiale;
 
@@ -21,6 +22,7 @@ public class Livre {
         this.auteur = auteur;
         this.isbn = isbn;
     }
+
 
     public String getTitre() {
         return titre;
