@@ -4,11 +4,11 @@ package main.models;
 public class Livre {
     private final String titre;
     private final String auteur;
-    private final Integer isbn;
+    private final String isbn;
     private Integer quantiteActuelle;
     private Integer quantiteInitiale;
 
-    public Livre(String titre, String auteur, Integer isbn, Integer quantiteActuelle, Integer quantiteInitiale) {
+    public Livre(String titre, String auteur, String isbn, Integer quantiteActuelle, Integer quantiteInitiale) {
         this.titre = titre;
         this.auteur = auteur;
         this.isbn = isbn;
@@ -16,7 +16,7 @@ public class Livre {
         this.quantiteInitiale = quantiteInitiale;
     }
 
-    public Livre(String titre, String auteur, Integer isbn) {
+    public Livre(String titre, String auteur, String isbn) {
         this.titre = titre;
         this.auteur = auteur;
         this.isbn = isbn;
@@ -30,7 +30,7 @@ public class Livre {
         return auteur;
     }
 
-    public Integer getIsbn() {
+    public String getIsbn() {
         return isbn;
     }
 

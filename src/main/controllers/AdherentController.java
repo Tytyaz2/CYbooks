@@ -1,5 +1,7 @@
 package main.controllers;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -59,21 +61,27 @@ public class AdherentController {
     @FXML
     private TableColumn<Livre, String> dateRenduColumn;
 
-    // Méthode pour afficher les détails de l'utilisateur et les livres empruntés
-    public void afficherDetailsUtilisateur(Utilisateur utilisateur) {
+    private ObservableList<Livre> listeEmprunts = FXCollections.observableArrayList();
 
+
+    public void afficherDetailsUtilisateur(Utilisateur utilisateur) {
         if (utilisateur != null) {
             user = utilisateur;
             titreColumn.setCellValueFactory(new PropertyValueFactory<>("titre"));
-           auteurColumn.setCellValueFactory(new PropertyValueFactory<>("auteur"));
+            auteurColumn.setCellValueFactory(new PropertyValueFactory<>("auteur"));
             isbnColumn.setCellValueFactory(new PropertyValueFactory<>("isbn"));
+
             // Afficher les détails de l'utilisateur dans les labels correspondants
             nomLabel.setText(utilisateur.getNom());
             prenomLabel.setText(utilisateur.getPrenom());
             mailLabel.setText(utilisateur.getEmail());
 
+            // Récupérer le nombre maximum d'emprunts depuis la base de données
+            int maxEmprunt = getMaxEmpruntFromDatabase(utilisateur.getEmail()); // Modification : récupérer le nombre maximum d'emprunts
+            nbEmpruntsLabel.setText(String.valueOf(maxEmprunt)); // Afficher le nombre maximum d'emprunts
+
             // Charger les livres empruntés par cet utilisateur
-            //chargerLivresEmpruntes(utilisateur.getId());
+            chargerLivresEmpruntes(utilisateur.getEmail());
         } else {
             // Effacer les labels si aucun utilisateur n'est sélectionné
             nomLabel.setText("");
@@ -81,6 +89,42 @@ public class AdherentController {
             mailLabel.setText("");
             nbEmpruntsLabel.setText("");
         }
+    }
+
+    private int getMaxEmpruntFromDatabase(String email) {
+        int maxEmprunt = 0;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            // Obtenez une connexion à la base de données
+            connection = DatabaseConnection.getConnection();
+
+            // Exécuter la requête pour récupérer le nombre maximum d'emprunts de l'utilisateur
+            String query = "SELECT MaxEmprunt FROM Utilisateur WHERE email = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, email);
+            resultSet = preparedStatement.executeQuery();
+
+            // Si une ligne est retournée, récupérez le nombre maximum d'emprunts
+            if (resultSet.next()) {
+                maxEmprunt = resultSet.getInt("MaxEmprunt");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Gérer les erreurs de manière appropriée
+        } finally {
+            // Fermer les ressources
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                // Ne fermez pas la connexion ici, car elle est réutilisée
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return 5- maxEmprunt;
     }
 
     @FXML
@@ -106,7 +150,6 @@ public class AdherentController {
             nomTextArea.setVisible(false);
             prenomTextArea.setVisible(false);
             mailTextArea.setVisible(false);
-
 
 
             // Récupérer les nouvelles valeurs depuis les TextAreas
@@ -170,62 +213,68 @@ public class AdherentController {
 
     @FXML
     public void initialize() {
-            // Masquer les TextArea et afficher les Label par défaut
-            nomTextArea.setVisible(false);
-            prenomTextArea.setVisible(false);
-            mailTextArea.setVisible(false);
+        // Masquer les TextArea et afficher les Label par défaut
+        nomTextArea.setVisible(false);
+        prenomTextArea.setVisible(false);
+        mailTextArea.setVisible(false);
 
-            nomLabel.setVisible(true);
-            prenomLabel.setVisible(true);
-            mailLabel.setVisible(true);
-        }
+        nomLabel.setVisible(true);
+        prenomLabel.setVisible(true);
+        mailLabel.setVisible(true);
+
+        livresTableView.setItems(listeEmprunts);
+    }
 
 
-    // Méthode pour charger les livres empruntés par un utilisateur à partir de la base de données
-    private void chargerLivresEmpruntes(int userId) {
-        // Effacer les éléments actuels de la TableView
-        livresTableView.getItems().clear();
-
+    private void chargerLivresEmpruntes(String email) {
+        listeEmprunts.clear(); // Inutile, car déjà géré par le rafraîchissement de la TableView
         List<Livre> livres = new ArrayList<>();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
         try {
-            // Utiliser la méthode getConnection() de DatabaseConnection pour obtenir la connexion
+            // Obtenez une connexion à la base de données
             connection = DatabaseConnection.getConnection();
 
             // Exécuter la requête pour récupérer les livres empruntés par l'utilisateur
-            String query = "SELECT * FROM Emprunt WHERE utilisateur_id = ?";
+            String query = "SELECT Livre.titre, Livre.auteur, Livre.isbn " +
+                    "FROM Emprunt " +
+                    "JOIN Livre ON Emprunt.livre_isbn = Livre.isbn " +
+                    "WHERE Emprunt.user_email = ?";
             preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, userId);
+            preparedStatement.setString(1, email);
             resultSet = preparedStatement.executeQuery();
 
             // Itérer à travers le jeu de résultats et ajouter les livres à la liste
             while (resultSet.next()) {
-                Livre livre = new Livre(
-                        resultSet.getString("titre"),
-                        resultSet.getString("auteur"),
-                        resultSet.getInt("isbn"));
+                String titre = resultSet.getString("titre");
+                String auteur = resultSet.getString("auteur");
+                String isbn = resultSet.getString("isbn");
+                Livre livre = new Livre(titre, auteur, isbn);
                 livres.add(livre);
             }
             // Peupler le TableView avec les livres empruntés
-            livresTableView.getItems().addAll(livres);
+            livresTableView.getItems().setAll(livres);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // Gérer les erreurs de manière appropriée
         } finally {
             // Fermer les ressources
             try {
                 if (resultSet != null) resultSet.close();
                 if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
+                // Ne fermez pas la connexion ici, car elle est réutilisée
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
     }
-
-
-
 }
+
+
+
+
+
+
+
