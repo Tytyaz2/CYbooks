@@ -80,7 +80,7 @@ public class AdherentController {
             mailLabel.setText(utilisateur.getEmail());
 
             // Récupérer le nombre maximum d'emprunts depuis la base de données
-            int maxEmprunt = getMaxEmpruntFromDatabase(utilisateur.getEmail()); // Modification : récupérer le nombre maximum d'emprunts
+            int maxEmprunt = 5 - getMaxEmpruntFromDatabase(utilisateur.getEmail()); // Modification : récupérer le nombre maximum d'emprunts
             nbEmpruntsLabel.setText(String.valueOf(maxEmprunt)); // Afficher le nombre maximum d'emprunts
 
             // Charger les livres empruntés par cet utilisateur
