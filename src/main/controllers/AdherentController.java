@@ -130,6 +130,7 @@ public class AdherentController {
         return maxEmprunt;
     }
 
+
     @FXML
     public void modifierAdherent(ActionEvent actionEvent) {
         if (nomLabel.isVisible()) {
@@ -154,7 +155,6 @@ public class AdherentController {
             prenomTextArea.setVisible(false);
             mailTextArea.setVisible(false);
 
-
             // Récupérer les nouvelles valeurs depuis les TextAreas
             String nouveauNom = nomTextArea.getText();
             String nouveauPrenom = prenomTextArea.getText();
@@ -164,55 +164,71 @@ public class AdherentController {
             String ancienEmail = user.getEmail(); // Vous devez avoir une méthode getEmail() dans votre classe Utilisateur
 
             Connection connection = null;
-            PreparedStatement preparedStatement = null;
+            PreparedStatement preparedStatementUtilisateur = null;
+            PreparedStatement preparedStatementEmprunt = null;
             try {
                 // Obtenez une connexion à la base de données
                 connection = DatabaseConnection.getConnection();
+                connection.setAutoCommit(false); // Début de la transaction
 
-                // Créez votre instruction SQL UPDATE
-                String query = "UPDATE Utilisateur SET email=?, prenom=?, nom=? WHERE email=?";
+                // 1. Mettre à jour les informations dans la table Utilisateur
+                String updateUtilisateurQuery = "UPDATE Utilisateur SET email=?, prenom=?, nom=? WHERE email=?";
+                preparedStatementUtilisateur = connection.prepareStatement(updateUtilisateurQuery);
+                preparedStatementUtilisateur.setString(1, nouvelEmail);
+                preparedStatementUtilisateur.setString(2, nouveauPrenom);
+                preparedStatementUtilisateur.setString(3, nouveauNom);
+                preparedStatementUtilisateur.setString(4, ancienEmail);
+                preparedStatementUtilisateur.executeUpdate();
 
-                // Créez un objet PreparedStatement et passez les valeurs nécessaires
-                preparedStatement = connection.prepareStatement(query);
-                preparedStatement.setString(1, nouvelEmail);
-                preparedStatement.setString(2, nouveauPrenom);
-                preparedStatement.setString(3, nouveauNom);
-                preparedStatement.setString(4, ancienEmail);
+                // 2. Mettre à jour les informations dans la table Emprunt où l'e-mail de l'utilisateur est utilisé
+                String updateEmpruntQuery = "UPDATE Emprunt SET user_email=? WHERE user_email=?";
+                preparedStatementEmprunt = connection.prepareStatement(updateEmpruntQuery);
+                preparedStatementEmprunt.setString(1, nouvelEmail);
+                preparedStatementEmprunt.setString(2, ancienEmail);
+                preparedStatementEmprunt.executeUpdate();
 
-                // Exécutez la mise à jour
-                int rowsAffected = preparedStatement.executeUpdate();
+                // 3. Mettre à jour les informations dans la table Emprunt où l'adresse e-mail de l'utilisateur est référencée comme une clé étrangère
+                // Cette mise à jour n'est pas nécessaire car les clés étrangères sont mises à jour automatiquement lorsque les clés primaires correspondantes dans la table Utilisateur sont modifiées.
 
-                if (rowsAffected > 0) {
-                    // Mise à jour réussie
-                    System.out.println("Utilisateur mis à jour avec succès !");
-                    // Mettre à jour les Label avec les nouvelles valeurs des TextArea
-                    nomLabel.setText(nomTextArea.getText());
-                    prenomLabel.setText(prenomTextArea.getText());
-                    mailLabel.setText(mailTextArea.getText());
-                } else {
-                    // Aucune ligne affectée, échec de la mise à jour
-                    System.out.println("Échec de la mise à jour de l'utilisateur !");
-                }
+                connection.commit(); // Valider la transaction
 
-
+                // Mise à jour réussie
+                System.out.println("Utilisateur et Emprunt mis à jour avec succès !");
+                // Mettre à jour les Label avec les nouvelles valeurs des TextArea
+                nomLabel.setText(nomTextArea.getText());
+                prenomLabel.setText(prenomTextArea.getText());
+                mailLabel.setText(mailTextArea.getText());
             } catch (SQLException e) {
+                // En cas d'erreur, annuler la transaction
+                try {
+                    if (connection != null) {
+                        connection.rollback();
+                    }
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("ERREUR");
                 alert.setHeaderText(null);
-                alert.setContentText("Cet email existe deja.");
+                alert.setContentText("Une erreur s'est produite lors de la mise à jour de l'utilisateur.");
                 alert.showAndWait();
-                System.out.println("cet email existe deja.");
+                e.printStackTrace();
             } finally {
                 // Fermez les ressources
                 try {
-                    if (preparedStatement != null) preparedStatement.close();
-                    if (connection != null) connection.close();
+                    if (preparedStatementUtilisateur != null) preparedStatementUtilisateur.close();
+                    if (preparedStatementEmprunt != null) preparedStatementEmprunt.close();
+                    if (connection != null) {
+                        connection.setAutoCommit(true); // Rétablir le mode de commutation automatique
+                        connection.close();
+                    }
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
         }
     }
+
 
     @FXML
     public void initialize() {

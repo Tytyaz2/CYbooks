@@ -63,11 +63,7 @@
                             <PropertyValueFactory property="isbn" />
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn prefWidth="136.0" text="Kind">
-                        <cellValueFactory>
-                            <PropertyValueFactory property="kind" />
-                        </cellValueFactory>
-                    </TableColumn>
+
                 </columns>
             </TableView>
         </VBox>

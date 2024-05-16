@@ -28,8 +28,8 @@
                   <TableColumn fx:id="titreColumn" prefWidth="217.73193359375" text="Titre" />
                   <TableColumn fx:id="auteurColumn" minWidth="1.9793701171875" prefWidth="188.0411376953125" text="Auteur" />
                   <TableColumn fx:id="isbnColumn" minWidth="0.0" prefWidth="207.83502197265625" text="ISBN" />
-                  <TableColumn fx:id="dateEmpruntColumn" prefWidth="108.865966796875" text="Date d'emprunt" />
-                  <TableColumn fx:id="dateRenduColumn" prefWidth="254.3505859375" text="Date de rendu" />
+                  <TableColumn fx:id="dateEmprunt" prefWidth="108.865966796875" text="Date d'emprunt" />
+                  <TableColumn fx:id="dateRendu" prefWidth="254.3505859375" text="Date de rendu" />
                </columns>
             </TableView>
       <Button layoutX="865.0" layoutY="635.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="171.0" text="Historique" />

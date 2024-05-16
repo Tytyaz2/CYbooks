@@ -195,16 +195,20 @@ public class EmpruntController {
 
     @FXML
     private void handleUserSelection(MouseEvent event) {
+        selectedBooksListView.getItems().clear();
         selectedUser = userTableView.getSelectionModel().getSelectedItem();
+
         if (selectedUser != null) {
+
             selectedUserLabel.setText(selectedUser.getNom() + " " + selectedUser.getPrenom());
+
             // Récupérer la limite d'emprunt maximum
             int maxEmprunt = selectedUser.getMaxEmprunt();
             // Mettre à jour la liste des livres sélectionnés pour refléter la limite d'emprunt maximum
-            selectedBooksListView.getItems().clear();
             selectedBooksListView.getItems().addAll(selectedBooks.subList(0, Math.min(selectedBooks.size(), maxEmprunt)));
         }
     }
+
 
     private final ObservableList<Book> selectedBooks = FXCollections.observableArrayList();
 
