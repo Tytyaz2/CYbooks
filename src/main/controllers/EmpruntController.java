@@ -120,7 +120,7 @@ public class EmpruntController {
                         resultSet.getString("nom"),
                         resultSet.getInt("statut"),
                         resultSet.getInt("MaxEmprunt")
-                        ); // Ajout de nbrEmprunt
+                        );
                 data.add(model);
             }
 
@@ -194,18 +194,28 @@ public class EmpruntController {
 
 
     @FXML
-    private void handleUserSelection(MouseEvent event) {
+    private void handleUserSelection(MouseEvent event) throws SQLException {
         selectedBooksListView.getItems().clear();
         selectedUser = userTableView.getSelectionModel().getSelectedItem();
 
-        if (selectedUser != null) {
 
+        System.out.println(selectedUser.getMaxEmprunt());
+        if (selectedUser != null) {
             selectedUserLabel.setText(selectedUser.getNom() + " " + selectedUser.getPrenom());
 
-            // Récupérer la limite d'emprunt maximum
-            int maxEmprunt = selectedUser.getMaxEmprunt();
-            // Mettre à jour la liste des livres sélectionnés pour refléter la limite d'emprunt maximum
-            selectedBooksListView.getItems().addAll(selectedBooks.subList(0, Math.min(selectedBooks.size(), maxEmprunt)));
+            // Vérifier si l'utilisateur a déjà atteint sa limite d'emprunt maximum
+            if (selectedUser.getMaxEmprunt() <= 0) {
+                // Afficher un message d'alerte
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Limite d'emprunt atteinte");
+                alert.setHeaderText("Vous avez déjà atteint votre limite d'emprunt");
+                alert.setContentText("Vous ne pouvez pas emprunter plus de livres.");
+                alert.showAndWait();
+            } else {
+                int maxEmprunt = selectedUser.getMaxEmprunt();
+                // Mettre à jour la liste des livres sélectionnés pour refléter la limite d'emprunt maximum
+                selectedBooksListView.getItems().addAll(selectedBooks.subList(0, Math.min(selectedBooks.size(), maxEmprunt)));
+            }
         }
     }
 
@@ -213,7 +223,7 @@ public class EmpruntController {
     private final ObservableList<Book> selectedBooks = FXCollections.observableArrayList();
 
     @FXML
-    private void handleBookSelection() {
+    private void handleBookSelection() throws SQLException {
         if (selectedUser != null) {
             int maxEmprunt = selectedUser.getMaxEmprunt();
             int selectedBooksCount = selectedBooks.size();
@@ -258,6 +268,7 @@ public class EmpruntController {
                     // Décrémenter la limite d'emprunt restante
                     maxEmprunt--;
 
+
                     // Afficher la liste complète des livres sélectionnés
                     System.out.println("Liste complète des livres sélectionnés :");
                     for (Book book : selectedBooks) {
@@ -296,7 +307,7 @@ public class EmpruntController {
 
 
     @FXML
-    private void handleEmprunter() {
+    private void handleEmprunter() throws SQLException {
         Utilisateur selectedUser = userTableView.getSelectionModel().getSelectedItem();
 
 

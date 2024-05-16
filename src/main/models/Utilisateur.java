@@ -12,7 +12,7 @@ public class Utilisateur {
         this.prenom = prenom;
         this.nom = nom;
         this.statut = statut;
-        this.maxEmprunt = 5;
+        this.maxEmprunt = maxEmprunt;
     }
 
     public String getNom() {
