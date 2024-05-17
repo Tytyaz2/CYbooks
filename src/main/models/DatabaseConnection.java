@@ -53,7 +53,6 @@ public class DatabaseConnection {
                     "nom VARCHAR(255), " +
                     "statut INT NOT NULL," +
                     "MaxEmprunt INT NOT NULL" +
-
                     ")";
 
             String createTableQueryLivre = "CREATE TABLE IF NOT EXISTS Livre (" +
@@ -70,16 +69,30 @@ public class DatabaseConnection {
                     "FOREIGN KEY (user_email) REFERENCES Utilisateur(email), " +
                     "FOREIGN KEY (livre_isbn) REFERENCES Livre(isbn)" +
                     ")";
+            // Requête SQL pour créer la table Historique
+            String createHistoquery = "CREATE TABLE IF NOT EXISTS Historique ("
+                    + "id INT AUTO_INCREMENT PRIMARY KEY,"
+                    + "livre_isbn VARCHAR(100),"
+                    + "user_email VARCHAR(100),"
+                    + "date_debut DATE,"
+                    + "date_fin DATE,"
+                    + "retard BOOLEAN,"
+                    + "FOREIGN KEY (livre_isbn) REFERENCES Livre(isbn),"
+                    + "FOREIGN KEY (user_email) REFERENCES Utilisateur(email)"
+                    + ")";
 
             try (PreparedStatement createTableStatementUtilisateur = connection.prepareStatement(createTableQueryUtilisateur);
                  PreparedStatement createTableStatementLivre = connection.prepareStatement(createTableQueryLivre);
-                 PreparedStatement createTableStatementEmprunt = connection.prepareStatement(createTableQueryEmprunt)) {
+                 PreparedStatement createTableStatementEmprunt = connection.prepareStatement(createTableQueryEmprunt);
+                 PreparedStatement createTableStatementHistorique = connection.prepareStatement(createHistoquery)) {
                 createTableStatementUtilisateur.executeUpdate();
                 createTableStatementLivre.executeUpdate();
                 createTableStatementEmprunt.executeUpdate();
+                createTableStatementHistorique.executeUpdate();
             }
         }
     }
+
 
     public static boolean isBookExists(String isbn) throws SQLException {
         try (Connection conn = getConnection();
@@ -161,7 +174,67 @@ public class DatabaseConnection {
         }
 
         return maxEmprunt;
+
+
     }
+
+    public static void updateBookStock(String isbn, int newStock) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = getConnection();
+
+            String query = "UPDATE Livre SET stock = ? WHERE isbn = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, newStock);
+            preparedStatement.setString(2, isbn);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static int getStockFromDatabase(String isbn) {
+        int stock = 0;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = getConnection();
+
+            String query = "SELECT stock FROM Livre WHERE isbn = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, isbn);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                stock = resultSet.getInt("stock");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return stock;
+    }
+
 
     public static void updateUserMaxEmprunt(String userEmail, int newMaxEmprunt) throws SQLException {
         Connection connection = null;

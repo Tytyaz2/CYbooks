@@ -231,28 +231,8 @@ public class MainControllers {
 
         // Vérifier si un adhérent est sélectionné
         if (selectedUser != null) {
-            try {
-                // Charge la vue de la page adhérent
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/pageadherent.fxml"));
-                Parent root = loader.load();
-
-                // Obtient le contrôleur de la page adhérent
-                AdherentController adherentController = loader.getController();
-
-                adherentController.afficherDetailsUtilisateur(selectedUser);
-                // Crée une nouvelle scène avec la racine chargée
-                Scene scene = new Scene(root);
-
-                // Obtient le stage actuel
-                Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
-
-                // Définit la nouvelle scène sur le stage actuel
-                stage.setScene(scene);
-                stage.setTitle("Page Adhérent");
-                stage.show();
-            } catch (IOException e) {
-                e.getMessage();
-            }
+            // Appelle la méthode pour afficher la page adhérent dans une nouvelle scène
+            showAdherentPage();
         }
     }
 
@@ -292,6 +272,32 @@ public class MainControllers {
         }
     }
 
+
+    public void showAdherentPage() {
+        try {
+            // Charge la vue de la page adhérent
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/pageadherent.fxml"));
+            Parent root = loader.load();
+
+            // Obtient le contrôleur de la page adhérent
+            AdherentController adherentController = loader.getController();
+
+            adherentController.afficherDetailsUtilisateur(selectedUser);
+
+            // Crée une nouvelle scène avec la racine chargée
+            Scene scene = new Scene(root);
+
+            // Crée un nouveau stage pour la nouvelle scène
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("Page Adhérent");
+
+            // Affiche le nouveau stage
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 

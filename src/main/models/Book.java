@@ -11,6 +11,15 @@ public class Book {
 
     private int stock;
 
+    public Book(String title,String authors, String isbn, String dateBorrow, String dateGB){
+        this.title=title;
+        this.authors=authors;
+        this.isbn=isbn;
+        this.dateBorrow=dateBorrow;
+        this.dateGB=dateGB;
+        this.stock = DatabaseConnection.getStockFromDatabase(isbn);
+    }
+
     public Book(String title, String authors, String isbn) {
         this.title = title;
         this.authors = authors;
