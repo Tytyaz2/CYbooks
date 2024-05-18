@@ -1,5 +1,8 @@
 package main.models;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Utilisateur {
     private String email;
     private String prenom;
@@ -43,5 +46,16 @@ public class Utilisateur {
         this.maxEmprunt = maxEmprunt;
     }
 
-    // Autres méthodes à implémenter selon la logique de votre application
+    // Méthode pour valider le format de l'email
+    public static boolean isValidEmail(String email) {
+        String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
+        Pattern pattern = Pattern.compile(emailRegex);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

@@ -16,7 +16,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 public class AdherentController {
@@ -171,42 +170,99 @@ public class AdherentController {
             String nouveauPrenom = prenomTextArea.getText();
             String nouvelEmail = mailTextArea.getText();
 
+            if (!Utilisateur.isValidEmail(nouvelEmail)) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur de validation");
+                alert.setHeaderText(null);
+                alert.setContentText("Veuillez entrer une adresse email valide.");
+                alert.showAndWait();
+                return;
+            }
+
             String ancienEmail = user.getEmail();
+            int statut = user.getStatut();  // Assuming `statut` is part of your user object
+            int maxEmprunt = user.getMaxEmprunt();  // Assuming `maxEmprunt` is part of your user object
 
             Connection connection = null;
-            PreparedStatement preparedStatementUtilisateur = null;
-            PreparedStatement preparedStatementEmprunt = null;
+            PreparedStatement insertNewUserStatement = null;
+            PreparedStatement updateEmpruntStatement = null;
+            PreparedStatement updateHistoriqueStatement = null;
+            PreparedStatement deleteUserStatement = null;
 
             try {
                 connection = DatabaseConnection.getConnection();
+                connection.setAutoCommit(false);  // Commence une transaction
 
-                String updateQueryUtilisateur = "UPDATE Utilisateur SET nom = ?, prenom = ?, email = ? WHERE email = ?";
-                preparedStatementUtilisateur = connection.prepareStatement(updateQueryUtilisateur);
-                preparedStatementUtilisateur.setString(1, nouveauNom);
-                preparedStatementUtilisateur.setString(2, nouveauPrenom);
-                preparedStatementUtilisateur.setString(3, nouvelEmail);
-                preparedStatementUtilisateur.setString(4, ancienEmail);
+                // Insérer le nouvel utilisateur
+                String insertNewUserQuery = "INSERT INTO Utilisateur (email, nom, prenom, statut, MaxEmprunt) VALUES (?, ?, ?, ?, ?)";
+                insertNewUserStatement = connection.prepareStatement(insertNewUserQuery);
+                insertNewUserStatement.setString(1, nouvelEmail);
+                insertNewUserStatement.setString(2, nouveauNom);
+                insertNewUserStatement.setString(3, nouveauPrenom);
+                insertNewUserStatement.setInt(4, statut);
+                insertNewUserStatement.setInt(5, maxEmprunt);
+                insertNewUserStatement.executeUpdate();
 
-                String updateQueryEmprunt = "UPDATE Emprunt SET email_utilisateur = ? WHERE email_utilisateur = ?";
-                preparedStatementEmprunt = connection.prepareStatement(updateQueryEmprunt);
-                preparedStatementEmprunt.setString(1, nouvelEmail);
-                preparedStatementEmprunt.setString(2, ancienEmail);
+                // Mettre à jour les emprunts pour utiliser le nouvel email
+                String updateEmpruntQuery = "UPDATE Emprunt SET user_email = ? WHERE user_email = ?";
+                updateEmpruntStatement = connection.prepareStatement(updateEmpruntQuery);
+                updateEmpruntStatement.setString(1, nouvelEmail);
+                updateEmpruntStatement.setString(2, ancienEmail);
+                updateEmpruntStatement.executeUpdate();
 
-                preparedStatementUtilisateur.executeUpdate();
-                preparedStatementEmprunt.executeUpdate();
+                // Mettre à jour l'historique pour utiliser le nouvel email
+                String updateHistoriqueQuery = "UPDATE Historique SET user_email = ? WHERE user_email = ?";
+                updateHistoriqueStatement = connection.prepareStatement(updateHistoriqueQuery);
+                updateHistoriqueStatement.setString(1, nouvelEmail);
+                updateHistoriqueStatement.setString(2, ancienEmail);
+                updateHistoriqueStatement.executeUpdate();
+
+                // Supprimer l'ancien utilisateur
+                String deleteUserQuery = "DELETE FROM Utilisateur WHERE email = ?";
+                deleteUserStatement = connection.prepareStatement(deleteUserQuery);
+                deleteUserStatement.setString(1, ancienEmail);
+                deleteUserStatement.executeUpdate();
+
+                connection.commit();  // Confirme la transaction
 
                 nomLabel.setText(nouveauNom);
                 prenomLabel.setText(nouveauPrenom);
                 mailLabel.setText(nouvelEmail);
                 nbEmpruntsLabel.setText(String.valueOf(5 - getMaxEmpruntFromDatabase(nouvelEmail)));
 
+                System.out.println("changement(s) effectué(s)");
+
             } catch (SQLException e) {
-                e.printStackTrace();
+                if (connection != null) {
+                    try {
+                        connection.rollback();  // Annule la transaction en cas d'erreur
+                    } catch (SQLException rollbackEx) {
+                        rollbackEx.printStackTrace();
+                    }
+                }
+                System.out.println("Aucun changement apporté");
             } finally {
-                // Fermeture des ressources...
+                try {
+                    if (insertNewUserStatement != null) {
+                        insertNewUserStatement.close();
+                    }
+                    if (updateEmpruntStatement != null) {
+                        updateEmpruntStatement.close();
+                    }
+                    if (deleteUserStatement != null) {
+                        deleteUserStatement.close();
+                    }
+                    if (connection != null) {
+                        connection.setAutoCommit(true);  // Réactive l'auto-commit
+                        connection.close();
+                    }
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
             }
         }
     }
+
 
     @FXML
     public void rendreLivre() {

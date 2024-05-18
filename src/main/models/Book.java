@@ -24,7 +24,6 @@ public class Book {
         this.title = title;
         this.authors = authors;
         this.isbn = isbn;
-
         this.stock=10;
     }
 
