@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import main.models.Book;
 import main.models.BookSearch;
@@ -257,26 +258,26 @@ public class MainControllers {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/emprunt.fxml"));
             Parent empruntRoot = loader.load();
 
-            // Créer une nouvelle scène
-            Scene empruntScene = new Scene(empruntRoot);
+            // Obtenir le contrôleur de la nouvelle vue
+            EmpruntController empruntController = loader.getController();
+            // Initialiser ou mettre à jour le contrôleur selon les besoins
+            empruntController.initialize(); // Par exemple, si vous avez besoin d'initialiser des données
 
-            // Créer une nouvelle fenêtre pour la scène d'emprunt
-            Stage empruntStage = new Stage();
-            empruntStage.setScene(empruntScene);
-            empruntStage.setTitle("Emprunt");
+            // Obtenir le conteneur racine de la scène actuelle et le convertir en AnchorPane
+            AnchorPane root = (AnchorPane) ((Node) event.getSource()).getScene().getRoot();
+            // Accéder à la liste des enfants du conteneur racine et remplacer les enfants par ceux de la nouvelle vue
+            root.getChildren().setAll(empruntRoot);
 
-            // Afficher la nouvelle fenêtre
-            empruntStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
 
+
+
+
     public void showAdherentPage() {
-
-
-
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/pageadherent.fxml"));
             Parent root = loader.load();
@@ -292,19 +293,19 @@ public class MainControllers {
 
 
     public void showNewAdherentPage() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/newAdherent.fxml"));
-        Parent root;
         try {
-            root = loader.load();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/newAdherent.fxml"));
+            Parent root = loader.load();
             NewAdherentController controller = loader.getController();
             controller.setMainController(this);
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
+            Stage stage = (Stage) bookTableView.getScene().getWindow();
+            stage.getScene().setRoot(root);
         } catch (IOException e) {
-            e.getMessage();
+            e.printStackTrace();
         }
     }
+
+
 
 
 }

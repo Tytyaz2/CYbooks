@@ -52,7 +52,7 @@ public class EmpruntController {
 
     // Méthode appelée lors du chargement de la vue FXML
     @FXML
-    private void initialize() {
+    public void initialize() {
         try {
             // Charger les données des utilisateurs
             bookTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
