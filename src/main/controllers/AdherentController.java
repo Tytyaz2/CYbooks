@@ -1,16 +1,20 @@
 package main.controllers;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import main.models.Utilisateur;
 import main.models.DatabaseConnection;
 import main.models.Book;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,50 +24,59 @@ import java.util.List;
 
 public class AdherentController {
 
-    private Utilisateur user;
+    protected Utilisateur user;
+    @FXML
+    protected Button rendre;
+    @FXML
+    protected Button historique;
+    @FXML
+    protected Button emprunter;
+    @FXML
+    protected Label nomLabel;
 
     @FXML
-    private Label nomLabel;
+    protected Label prenomLabel;
 
     @FXML
-    private Label prenomLabel;
+    protected Label mailLabel;
 
     @FXML
-    private Label mailLabel;
+    protected Label nbEmpruntsLabel;
+    @FXML
+    protected Label historiquelabel;
+    @FXML
+    protected Label emprunterlabel;
 
     @FXML
-    private Label nbEmpruntsLabel;
+    protected TextArea nomTextArea;
 
     @FXML
-    private TextArea nomTextArea;
+    protected TextArea prenomTextArea;
 
     @FXML
-    private TextArea prenomTextArea;
+    protected TextArea mailTextArea;
 
     @FXML
-    private TextArea mailTextArea;
+    protected TableView<Book> livresTableView;
 
     @FXML
-    private TableView<Book> livresTableView;
+    protected TableColumn<Book, String> titreColumn;
 
     @FXML
-    private TableColumn<Book, String> titreColumn;
+    protected TableColumn<Book, String> auteurColumn;
 
     @FXML
-    private TableColumn<Book, String> auteurColumn;
+    protected TableColumn<Book, String> isbnColumn;
 
     @FXML
-    private TableColumn<Book, String> isbnColumn;
+    protected TableColumn<Book, String> dateEmprunt;
 
     @FXML
-    private TableColumn<Book, String> dateEmprunt;
+    protected TableColumn<Book, String> dateRendu;
 
-    @FXML
-    private TableColumn<Book, String> dateRendu;
+    protected ObservableList<Book> listeEmprunts;
 
-    private ObservableList<Book> listeEmprunts;
-
-    private final ObservableList<Book> livresSelectionnes = FXCollections.observableArrayList();
+    protected final ObservableList<Book> livresSelectionnes = FXCollections.observableArrayList();
 
     public void afficherDetailsUtilisateur(Utilisateur utilisateur) {
         if (utilisateur != null) {
@@ -119,6 +132,7 @@ public class AdherentController {
 
     @FXML
     public void initialize() {
+        historiquelabel.setVisible(false);
         nomTextArea.setVisible(false);
         prenomTextArea.setVisible(false);
         mailTextArea.setVisible(false);
@@ -277,7 +291,7 @@ public class AdherentController {
             }
 
             rendreLivresSelectionnes(livresSelectionnes);
-        }else {
+        } else {
             // Afficher un message à l'utilisateur ou effectuer une autre action appropriée
             System.out.println("Aucun livre sélectionné.");
         }
@@ -365,13 +379,11 @@ public class AdherentController {
             }
         }
     }
-
-    private void chargerLivresEmpruntes(String email) {
+    protected void chargerLivresEmpruntes(String email) {
         listeEmprunts = FXCollections.observableArrayList();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-
         try {
             connection = DatabaseConnection.getConnection();
 
@@ -405,11 +417,105 @@ public class AdherentController {
             }
         }
     }
+    @FXML
+    protected void ButtonchargerLivresEmpruntes(javafx.event.ActionEvent ActionEvent) {
+        historiquelabel.setVisible(false);
+        emprunterlabel.setVisible(true);
+        listeEmprunts = FXCollections.observableArrayList();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        rendre.setVisible(true);
+        emprunter.setVisible(false);
+        historique.setVisible(true);
+        try {
+            connection = DatabaseConnection.getConnection();
+
+            String query = "SELECT L.titre, L.auteur, L.isbn, E.date_debut, E.date_fin " +
+                    "FROM Livre L " +
+                    "INNER JOIN Emprunt E ON L.isbn = E.livre_isbn " +
+                    "WHERE E.user_email = ? ";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, user.getEmail());
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String titre = resultSet.getString("titre");
+                String auteur = resultSet.getString("auteur");
+                String isbn = resultSet.getString("isbn");
+                String dateEmprunt = resultSet.getDate("date_debut").toString();
+                LocalDate dateRetour = resultSet.getDate("date_debut").toLocalDate().plusDays(30);
+                listeEmprunts.add(new Book(titre, auteur, isbn, dateEmprunt, dateRetour.toString()));
+            }
+
+            livresTableView.setItems(listeEmprunts);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @FXML
+    protected void chargerHistorique(javafx.event.ActionEvent ActionEvent) {
+        historiquelabel.setVisible(true);
+        emprunterlabel.setVisible(false);
+        ObservableList<Book> historiqueList = FXCollections.observableArrayList();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        rendre.setVisible(false);
+        historique.setVisible(false);
+        emprunter.setVisible(true);
+
+        try {
+            connection = DatabaseConnection.getConnection();
+
+            String query = "SELECT L.titre, L.auteur, L.isbn, H.date_debut, H.date_fin, H.retard " +
+                    "FROM Livre L " +
+                    "INNER JOIN Historique H ON L.isbn = H.livre_isbn " +
+                    "WHERE H.user_email = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, user.getEmail());
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String titre = resultSet.getString("titre");
+                String auteur = resultSet.getString("auteur");
+                String isbn = resultSet.getString("isbn");
+                String dateDebut = resultSet.getDate("date_debut").toString();
+                String dateFin = resultSet.getDate("date_fin").toString();
+                boolean retard = resultSet.getBoolean("retard");
+                System.out.println(titre + " " + auteur + " " + isbn);
+                historiqueList.add(new Book(titre, auteur, isbn, dateDebut, dateFin.toString()));
+            }
+
+            livresTableView.setItems(historiqueList);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     // Méthode pour gérer la sélection des livres dans la TableView
     @FXML
-    private void handleBookSelection() {
+    protected void handleBookSelection() {
         livresSelectionnes.clear();
         livresSelectionnes.addAll(livresTableView.getSelectionModel().getSelectedItems());
     }
 }
+
+
