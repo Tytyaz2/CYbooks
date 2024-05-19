@@ -146,7 +146,7 @@ public class AdherentController {
     }
 
     @FXML
-    public void modifierAdherent(MouseEvent actionEvent) {
+    public void modifierAdherent(MouseEvent actionEvent) throws SQLException {
         if (nomLabel.isVisible()) {
             nomLabel.setVisible(false);
             prenomLabel.setVisible(false);
@@ -181,7 +181,7 @@ public class AdherentController {
 
             String ancienEmail = user.getEmail();
             int statut = user.getStatut();  // Assuming `statut` is part of your user object
-            int maxEmprunt = user.getMaxEmprunt();  // Assuming `maxEmprunt` is part of your user object
+            int maxEmprunt = DatabaseConnection.getUserMaxEmprunt(user.getEmail());  // Assuming `maxEmprunt` is part of your user object
 
             Connection connection = null;
             PreparedStatement insertNewUserStatement = null;
