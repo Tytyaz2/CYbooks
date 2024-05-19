@@ -135,6 +135,7 @@ public class AdherentController {
     @FXML
     public void initialize() {
         historiquelabel.setVisible(false);
+        emprunterlabel.setVisible(false);
         nomTextArea.setVisible(false);
         prenomTextArea.setVisible(false);
         mailTextArea.setVisible(false);
