@@ -3,6 +3,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -13,6 +14,7 @@ import javafx.stage.Stage;
 import main.models.Utilisateur;
 import main.models.DatabaseConnection;
 import main.models.Book;
+import javafx.event.ActionEvent;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -132,7 +134,7 @@ public class AdherentController {
 
     @FXML
     public void initialize() {
-        historiquelabel.setVisible(false);
+
         nomTextArea.setVisible(false);
         prenomTextArea.setVisible(false);
         mailTextArea.setVisible(false);
@@ -145,12 +147,6 @@ public class AdherentController {
 
         listeEmprunts = livresTableView.getItems();
 
-        titreColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        auteurColumn.setCellValueFactory(new PropertyValueFactory<>("authors"));
-        isbnColumn.setCellValueFactory(new PropertyValueFactory<>("isbn"));
-        dateEmprunt.setCellValueFactory(new PropertyValueFactory<>("dateBorrow"));
-        dateRendu.setCellValueFactory(new PropertyValueFactory<>("dateGB"));
-
         // Gestion de la sélection des livres dans la TableView
         livresTableView.setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
@@ -162,6 +158,7 @@ public class AdherentController {
     @FXML
     public void modifierAdherent(MouseEvent actionEvent) throws SQLException {
         if (nomLabel.isVisible()) {
+            historiquelabel.setVisible(false);
             nomLabel.setVisible(false);
             prenomLabel.setVisible(false);
             mailLabel.setVisible(false);
@@ -193,9 +190,11 @@ public class AdherentController {
                 return;
             }
 
-            String ancienEmail = user.getEmail();
+
             int statut = user.getStatut();  // Assuming `statut` is part of your user object
             int maxEmprunt = DatabaseConnection.getUserMaxEmprunt(user.getEmail());  // Assuming `maxEmprunt` is part of your user object
+            String ancienEmail = user.getEmail();
+            user.setEmail(nouvelEmail);
 
             Connection connection = null;
             PreparedStatement insertNewUserStatement = null;
@@ -515,6 +514,26 @@ public class AdherentController {
     protected void handleBookSelection() {
         livresSelectionnes.clear();
         livresSelectionnes.addAll(livresTableView.getSelectionModel().getSelectedItems());
+    }
+
+    @FXML
+    private void handleReturnButtonClick(ActionEvent event) {
+        try {
+            //Charge la vue de la page principale
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/pageprincipal.fxml"));
+             Parent root = loader.load();
+            // Obtient le stage actuel à partir de n'importe quel composant de la scène
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            // Définit la nouvelle scène avec la racine chargée
+             Scene scene = new Scene(root);
+            stage.setScene(scene);
+            // Optionnel : redéfinir le titre de la fenêtre
+            stage.setTitle("Page Principale");
+             //Affiche la scène principale
+             stage.show();
+            } catch (IOException e) {
+             e.printStackTrace();
+        }
     }
 }
 
