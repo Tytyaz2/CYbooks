@@ -274,6 +274,9 @@ public class MainControllers {
 
 
     public void showAdherentPage() {
+
+
+
         try {
             // Charge la vue de la page adhérent
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/pageadherent.fxml"));

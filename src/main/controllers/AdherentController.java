@@ -260,6 +260,9 @@ public class AdherentController {
                         connection.setAutoCommit(true);  // Réactive l'auto-commit
                         connection.close();
                     }
+
+                    System.out.println(DatabaseConnection.getUserMaxEmprunt(user.getEmail()));
+                    System.out.println(user.getMaxEmprunt());
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
