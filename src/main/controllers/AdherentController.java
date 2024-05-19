@@ -299,8 +299,6 @@ public class AdherentController {
     private void rendreLivresSelectionnes(List<Book> livresARendre) {
         Connection connection = null;
         PreparedStatement updateEmpruntStatement = null;
-
-        // reste de la méthode rendreLivresSelectionnes
         PreparedStatement updateLivreStatement = null;
         PreparedStatement insertHistoriqueStatement = null;
         PreparedStatement deleteEmpruntStatement = null;
@@ -322,40 +320,53 @@ public class AdherentController {
             deleteEmpruntStatement = connection.prepareStatement(deleteEmpruntQuery);
 
             for (Book livre : livresARendre) {
-                // Suppression de l'emprunt de la table Emprunt
-                deleteEmpruntStatement.setString(1, livre.getIsbn());
-                deleteEmpruntStatement.executeUpdate();
+                // Vérifier si le livre est déjà emprunté
+                if (DatabaseConnection.isBookAlreadyBorrowed(user.getEmail(), livre.getIsbn())) {
+                    // Mise à jour de la date de fin de l'emprunt
+                    updateEmpruntStatement.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
+                    updateEmpruntStatement.setString(2, livre.getIsbn());
+                    updateEmpruntStatement.executeUpdate();
 
-                // Mise à jour de la date de fin de l'emprunt
-                updateEmpruntStatement.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
-                updateEmpruntStatement.setString(2, livre.getIsbn());
-                updateEmpruntStatement.executeUpdate();
+                    // Mise à jour du stock du livre
+                    updateLivreStatement.setString(1, livre.getIsbn());
+                    updateLivreStatement.executeUpdate();
 
-                // Mise à jour du stock du livre
-                updateLivreStatement.setString(1, livre.getIsbn());
-                updateLivreStatement.executeUpdate();
+                    // Calcul du retard
+                    LocalDate dateRetour = LocalDate.parse(livre.getDateGB());
+                    boolean retard = false;
+                    if (dateRetour != null && LocalDate.now().isAfter(dateRetour)) {
+                        retard = true;
+                    }
 
-                DatabaseConnection.updateUserMaxEmprunt(user.getEmail(), DatabaseConnection.getUserMaxEmprunt(user.getEmail()) + 1);
+                    // Ajout des informations de l'emprunt dans la table Historique
+                    insertHistoriqueStatement.setString(1, livre.getIsbn());
+                    insertHistoriqueStatement.setString(2, user.getEmail());
+                    insertHistoriqueStatement.setString(3, livre.getDateBorrow());
+                    insertHistoriqueStatement.setString(4, LocalDate.now().toString());
+                    insertHistoriqueStatement.setBoolean(5, retard);
+                    insertHistoriqueStatement.executeUpdate();
 
-                // Calcul du retard
-                LocalDate dateRetour = LocalDate.parse(livre.getDateGB());
-                boolean retard = false;
-                if (dateRetour != null && LocalDate.now().isAfter(dateRetour)) {
-                    retard = true;
+                    // Suppression de l'emprunt de la table Emprunt
+                    deleteEmpruntStatement.setString(1, livre.getIsbn());
+                    deleteEmpruntStatement.executeUpdate();
+
+                    DatabaseConnection.updateUserMaxEmprunt(user.getEmail(), DatabaseConnection.getUserMaxEmprunt(user.getEmail()) + 1);
+
+                    // Mise à jour de l'interface utilisateur
+                    listeEmprunts.remove(livre);
+                    nbEmpruntsLabel.setText(String.valueOf(5 - getMaxEmpruntFromDatabase(user.getEmail())));
+                    System.out.println("Livre rendu : " + livre.getTitle());
+                } else {
+                    // Afficher un message d'erreur si le livre n'est pas emprunté
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Erreur de rendu");
+                    alert.setHeaderText("Sélection Livre");
+                    alert.setContentText("Veuillez sélectionner un livre à rendre ! ");
+                    alert.showAndWait();
                 }
-
-                // Ajout des informations de l'emprunt dans la table Historique
-                insertHistoriqueStatement.setString(1, livre.getIsbn());
-                insertHistoriqueStatement.setString(2, user.getEmail());
-                insertHistoriqueStatement.setString(3, livre.getDateBorrow());
-                insertHistoriqueStatement.setString(4, LocalDate.now().toString());
-                insertHistoriqueStatement.setBoolean(5, retard);
-                insertHistoriqueStatement.executeUpdate();
             }
 
             connection.commit();
-            listeEmprunts.removeAll(livresARendre);
-            nbEmpruntsLabel.setText(String.valueOf(5 - getMaxEmpruntFromDatabase(user.getEmail())));
 
         } catch (SQLException e) {
             if (connection != null) {
@@ -378,6 +389,7 @@ public class AdherentController {
             }
         }
     }
+
     protected void chargerLivresEmpruntes(String email) {
         listeEmprunts = FXCollections.observableArrayList();
         Connection connection = null;

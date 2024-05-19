@@ -34,7 +34,7 @@
          </columns>
       </TableView>
       <Button fx:id="historique" layoutX="865.0" layoutY="635.0" mnemonicParsing="false" onAction="#chargerHistorique" prefHeight="58.0" prefWidth="171.0" text="Historique" />
-      <Button fx:id="rendre" layoutX="1070.0" layoutY="635.0" mnemonicParsing="false" onMouseReleased="#rendreLivre" prefHeight="58.0" prefWidth="171.0" text="Rendre" />
+      <Button fx:id="rendre" layoutX="1070.0" layoutY="635.0" mnemonicParsing="false" onMouseClicked="#rendreLivre" prefHeight="58.0" prefWidth="171.0" text="Rendre" />
       <Button fx:id="emprunter" layoutX="1070.0" layoutY="635.0" mnemonicParsing="false" onAction="#ButtonchargerLivresEmpruntes" prefHeight="58.0" prefWidth="171.0" text="Emprunter" />
       <Label fx:id="historiquelabel" layoutX="848.0" layoutY="58.0" text="Historique">
          <font>
