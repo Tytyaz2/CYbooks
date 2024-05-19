@@ -1,5 +1,9 @@
 package main.controllers;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import main.models.Utilisateur;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,6 +14,7 @@ import main.models.DatabaseConnection;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Label;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 import java.util.regex.Pattern;
@@ -93,5 +98,28 @@ public class NewAdherentController {
         this.mainController = mainController;
     }
 
+    @FXML
+    private void handleReturnButtonClick(ActionEvent event) {
+        try {
+            // Charge la vue de la page principale
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/pageprincipal.fxml"));
+            Parent root = loader.load();
+
+            // Obtient le stage actuel à partir de n'importe quel composant de la scène
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            // Définit la nouvelle scène avec la racine chargée
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+
+            // Optionnel : redéfinir le titre de la fenêtre
+            stage.setTitle("Page Principale");
+
+            // Affiche la scène principale
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
 

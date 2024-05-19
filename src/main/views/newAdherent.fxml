@@ -22,5 +22,6 @@
 
       <!-- Label pour afficher le message d'erreur -->
       <Label fx:id="errorMessageLabel" layoutX="282.0" layoutY="420.0" style="-fx-font-size: 15; -fx-text-fill: red;" />
+      <Button fx:id="returnButton" layoutX="51.0" layoutY="658.0" mnemonicParsing="false" onAction="#handleReturnButtonClick" prefHeight="38.0" prefWidth="81.0" text="Return" />
    </children>
 </AnchorPane>

@@ -45,7 +45,7 @@
                 <!-- Bouton de recherche avec gestionnaire d'événements -->
                 <Button onAction="#searchBooks" prefHeight="25.0" prefWidth="205.0" text="Rechercher" />
             </HBox>
-            <TableView fx:id="bookTableView" layoutX="748.0" layoutY="148.0" onMouseReleased="#handleBookSelection"   prefHeight="487.0" prefWidth="417.0" >
+            <TableView fx:id="bookTableView" layoutX="748.0" layoutY="148.0" onMouseReleased="#handleBookSelection" prefHeight="487.0" prefWidth="417.0">
 
                 <columns>
                     <TableColumn prefWidth="168.0" text="Titre">
@@ -73,10 +73,11 @@
             <Label fx:id="selectedUserLabel" />
             <Label text="Livres sélectionnés :" />
             <ListView fx:id="selectedBooksListView" prefHeight="300.0" />
-            <Button text="Retirer Livre" onAction="#handleRetirerLivre" />
+            <Button onAction="#handleRetirerLivre" text="Retirer Livre" />
         </VBox>
 
         <Button layoutX="1050.0" layoutY="634.0" onAction="#handleEmprunter" prefHeight="25.0" prefWidth="166.0" text="Emprunter" />
+        <Button fx:id="returnButton" layoutX="51.0" layoutY="658.0" mnemonicParsing="false" onAction="#handleReturnButtonClick" prefHeight="38.0" prefWidth="81.0" text="Return" />
 
 
 
