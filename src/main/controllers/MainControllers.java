@@ -275,25 +275,12 @@ public class MainControllers {
 
     public void showAdherentPage() {
         try {
-            // Charge la vue de la page adhérent
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/pageadherent.fxml"));
             Parent root = loader.load();
-
-            // Obtient le contrôleur de la page adhérent
             AdherentController adherentController = loader.getController();
-
             adherentController.afficherDetailsUtilisateur(selectedUser);
-
-            // Crée une nouvelle scène avec la racine chargée
-            Scene scene = new Scene(root);
-
-            // Crée un nouveau stage pour la nouvelle scène
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.setTitle("Page Adhérent");
-
-            // Affiche le nouveau stage
-            stage.show();
+            Stage stage = (Stage) bookTableView.getScene().getWindow();
+            stage.getScene().setRoot(root);
         } catch (IOException e) {
             e.printStackTrace();
         }

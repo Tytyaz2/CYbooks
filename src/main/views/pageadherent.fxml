@@ -22,8 +22,8 @@
       <TextArea fx:id="mailTextArea" layoutX="271.0" layoutY="351.0" prefHeight="40.0" prefWidth="202.0" />
       <TextArea fx:id="prenomTextArea" layoutX="272.0" layoutY="306.0" prefHeight="31.0" prefWidth="201.0" />
       <Text layoutX="117.0" layoutY="418.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15;" text="Nombre d'emprunt" />
-      <Button layoutX="117.0" layoutY="635.0" mnemonicParsing="false" onMouseClicked="#modifierAdherent" prefHeight="58.0" prefWidth="171.0" text="modifier " />
-      <TableView fx:id="livresTableView" layoutX="503.0" layoutY="113.0" prefHeight="443.0" prefWidth="722.0" onMouseClicked="#handleBookSelection">
+      <Button layoutX="186.0" layoutY="463.0" mnemonicParsing="false" onMouseClicked="#modifierAdherent" prefHeight="58.0" prefWidth="171.0" text="modifier " />
+      <TableView fx:id="livresTableView" layoutX="503.0" layoutY="113.0" onMouseClicked="#handleBookSelection" prefHeight="443.0" prefWidth="722.0">
          <columns>
             <TableColumn fx:id="titreColumn" prefWidth="217.73193359375" text="Titre" />
             <TableColumn fx:id="auteurColumn" minWidth="1.9793701171875" prefWidth="188.0411376953125" text="Auteur" />
@@ -32,8 +32,9 @@
             <TableColumn fx:id="dateRendu" prefWidth="254.3505859375" text="Date de rendu" />
          </columns>
       </TableView>
-      <Button layoutX="865.0" layoutY="635.0" mnemonicParsing="false"  prefHeight="58.0" prefWidth="171.0" text="Historique" />
+      <Button layoutX="865.0" layoutY="635.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="171.0" text="Historique" />
       <Button layoutX="1070.0" layoutY="635.0" mnemonicParsing="false" onMouseReleased="#rendreLivre" prefHeight="58.0" prefWidth="171.0" text="Rendre" />
+      <Button fx:id="returnButton" layoutX="51.0" layoutY="658.0" mnemonicParsing="false" onAction="#handleReturnButtonClick" prefHeight="38.0" prefWidth="81.0" text="Return" />
 
    </children>
 </AnchorPane>

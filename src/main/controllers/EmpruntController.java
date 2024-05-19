@@ -2,16 +2,21 @@ package main.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import jdk.jshell.execution.Util;
 import main.models.*;
 
-import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -425,6 +430,30 @@ public class EmpruntController {
             alert.setHeaderText("Erreur lors de l'ajout des emprunts");
             alert.setContentText("Une erreur s'est produite lors de l'ajout des emprunts dans la base de données.");
             alert.showAndWait();
+        }
+    }
+
+    @FXML
+    private void handleReturnButtonClick(ActionEvent event) {
+        try {
+            // Charge la vue de la page principale
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/pageprincipal.fxml"));
+            Parent root = loader.load();
+
+            // Obtient le stage actuel à partir de n'importe quel composant de la scène
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            // Définit la nouvelle scène avec la racine chargée
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+
+            // Optionnel : redéfinir le titre de la fenêtre
+            stage.setTitle("Page Principale");
+
+            // Affiche la scène principale
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
