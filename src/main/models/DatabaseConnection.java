@@ -160,6 +160,7 @@ public class DatabaseConnection {
             if (resultSet.next()) {
                 maxEmprunt = resultSet.getInt("MaxEmprunt");
             }
+            System.out.println(maxEmprunt + userEmail);
         } finally {
             // Fermer les ressources
             if (resultSet != null) {

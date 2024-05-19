@@ -179,10 +179,7 @@ public class AdherentController {
                 return;
             }
 
-            String ancienEmail = user.getEmail();
-            user.setEmail(nouvelEmail);
-            int statut = user.getStatut();  // Assuming `statut` is part of your user object
-            int maxEmprunt = DatabaseConnection.getUserMaxEmprunt(user.getEmail());  // Assuming `maxEmprunt` is part of your user object
+
 
             Connection connection = null;
             PreparedStatement insertNewUserStatement = null;
@@ -193,6 +190,12 @@ public class AdherentController {
             try {
                 connection = DatabaseConnection.getConnection();
                 connection.setAutoCommit(false);  // Commence une transaction
+
+
+                int statut = user.getStatut();  // Assuming `statut` is part of your user object
+                int maxEmprunt = DatabaseConnection.getUserMaxEmprunt(user.getEmail());
+                String ancienEmail = user.getEmail();
+                user.setEmail(nouvelEmail);
 
                 // Insérer le nouvel utilisateur
                 String insertNewUserQuery = "INSERT INTO Utilisateur (email, nom, prenom, statut, MaxEmprunt) VALUES (?, ?, ?, ?, ?)";
