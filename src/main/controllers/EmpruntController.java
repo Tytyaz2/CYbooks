@@ -181,8 +181,6 @@ public class EmpruntController {
     }
 
 
-    @FXML
-    private DatePicker startDatePicker;
 
     @FXML
     private DatePicker endDatePicker;
@@ -418,7 +416,7 @@ public class EmpruntController {
             // Effacer les champs de sélection
             userTableView.getSelectionModel().clearSelection();
             bookTableView.getSelectionModel().clearSelection();
-            startDatePicker.setValue(null);
+
 
             // Mettre à jour le nombre maximal d'emprunts autorisés pour l'utilisateur dans la base de données
             DatabaseConnection.updateUserMaxEmprunt(selectedUser.getEmail(), selectedUser.getMaxEmprunt());

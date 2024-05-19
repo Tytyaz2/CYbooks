@@ -274,6 +274,9 @@ public class MainControllers {
 
 
     public void showAdherentPage() {
+
+
+
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/pageadherent.fxml"));
             Parent root = loader.load();
