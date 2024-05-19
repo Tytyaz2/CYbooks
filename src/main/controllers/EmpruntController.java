@@ -32,15 +32,6 @@ public class EmpruntController {
     @FXML
     private TableView<Utilisateur> userTableView;
 
-    @FXML
-    private TextField textFieldAuteur;
-
-    @FXML
-    private TextField textFieldDateEmprunt;
-
-    @FXML
-    private Button buttonEmprunter;
-
 
 
     @FXML
@@ -70,36 +61,6 @@ public class EmpruntController {
     @FXML
     private TableView<Book> bookTableView;
 
-
-
-
-
-
-
-
-
-    // Méthode appelée lors du clic sur le bouton "Emprunter"
-    @FXML
-    private void handleEmpruntButtonClick() {
-        // Insérez ici le code pour gérer l'emprunt du livre
-        System.out.println("Bouton Emprunter cliqué !");
-    }
-
-    public void handleUserClick(MouseEvent mouseEvent) {
-        // Vérifier si le clic a été effectué avec le bouton gauche de la souris
-        if (mouseEvent.getButton() == MouseButton.PRIMARY) {
-            // Récupérer la source de l'événement (l'élément sur lequel le clic a été effectué)
-            Node source = (Node) mouseEvent.getSource();
-
-            // Afficher les coordonnées du clic
-            double x = mouseEvent.getSceneX();
-            double y = mouseEvent.getSceneY();
-            System.out.println("Clic à la position X: " + x + ", Y: " + y);
-
-            // Ajouter ici la logique spécifique à exécuter lorsque l'utilisateur clique
-            // sur l'élément source avec le bouton gauche de la souris
-        }
-    }
 
     // Méthode pour charger les données des utilisateurs depuis la base de données et les afficher dans le TableView
     private void loadData() throws SQLException {
@@ -152,7 +113,7 @@ public class EmpruntController {
     private TextArea bookSearchTextArea;
 
 
-    private final BookSearch bookSearch = new BookSearch();
+
 
     @FXML
     private void searchBooks() {
@@ -167,23 +128,6 @@ public class EmpruntController {
         bookTableView.getItems().setAll(books);
     }
 
-    private ObservableList<Emprunt> emprunts = FXCollections.observableArrayList();
-
-    public void emprunter(Utilisateur user, Book book, LocalDate startDate) {
-        // La date de fin est fixée à 30 jours après la date de début
-        LocalDate endDate = startDate.plusDays(30);
-        Emprunt emprunt = new Emprunt(user, book, startDate, endDate);
-        emprunts.add(emprunt);
-    }
-
-    public ObservableList<Emprunt> getEmprunts() {
-        return emprunts;
-    }
-
-
-
-    @FXML
-    private DatePicker endDatePicker;
 
 
 

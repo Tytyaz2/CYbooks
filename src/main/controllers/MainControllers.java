@@ -259,10 +259,6 @@ public class MainControllers {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/emprunt.fxml"));
             Parent empruntRoot = loader.load();
 
-            // Obtenir le contrôleur de la nouvelle vue
-            EmpruntController empruntController = loader.getController();
-            // Initialiser ou mettre à jour le contrôleur selon les besoins
-            empruntController.initialize(); // Par exemple, si vous avez besoin d'initialiser des données
 
             // Obtenir le conteneur racine de la scène actuelle et le convertir en AnchorPane
             AnchorPane root = (AnchorPane) ((Node) event.getSource()).getScene().getRoot();
