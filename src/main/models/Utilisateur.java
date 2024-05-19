@@ -58,4 +58,8 @@ public class Utilisateur {
     public String toString() {
         return super.toString();
     }
+
+    public void setEmail(String nouvelEmail) {
+        this.email = nouvelEmail;
+    }
 }

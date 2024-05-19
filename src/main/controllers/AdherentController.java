@@ -180,6 +180,7 @@ public class AdherentController {
             }
 
             String ancienEmail = user.getEmail();
+            user.setEmail(nouvelEmail);
             int statut = user.getStatut();  // Assuming `statut` is part of your user object
             int maxEmprunt = user.getMaxEmprunt();  // Assuming `maxEmprunt` is part of your user object
 
