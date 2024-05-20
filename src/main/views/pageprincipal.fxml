@@ -57,11 +57,7 @@
                         <PropertyValueFactory property="isbn" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn prefWidth="113.0" text="Kind">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="kind" />
-                    </cellValueFactory>
-                </TableColumn>
+
                 <TableColumn prefWidth="109.0" text="Auteur">
                     <cellValueFactory>
                         <PropertyValueFactory property="authors" />
