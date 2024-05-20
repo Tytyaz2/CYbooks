@@ -1,7 +1,11 @@
 package main.models;
 
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import main.models.DatabaseConnection;
 
 public class Utilisateur {
     private String email;
@@ -61,5 +65,18 @@ public class Utilisateur {
 
     public void setEmail(String nouvelEmail) {
         this.email = nouvelEmail;
+    }
+
+    public boolean hasOverdueLoans(LocalDate currentDate) throws SQLException {
+
+        System.out.println("Fonction hasOverDueLoans: on recup tous les emprunts");
+        List<Emprunt> emprunts = DatabaseConnection.getEmpruntsUtilisateur(this.getEmail());
+        for (Emprunt emprunt : emprunts) {
+            System.out.println("Verification de la date de rendu par rapport à la date actuelle");
+            if (emprunt.getEndDate().isBefore(currentDate)) {
+                return true; // Il y a au moins un emprunt en retard
+            }
+        }
+        return false; // Aucun emprunt en retard
     }
 }

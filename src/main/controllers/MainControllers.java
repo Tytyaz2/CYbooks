@@ -9,23 +9,30 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import main.models.Book;
-import main.models.BookSearch;
-import main.models.DatabaseConnection;
-import main.models.Utilisateur;
+import main.models.*;
+import javafx.scene.paint.Color;
+import javafx.scene.control.TableCell;
 
 
+
+import java.awt.*;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.Objects;
 
 public class MainControllers {
@@ -96,7 +103,6 @@ public class MainControllers {
         String keyword = searchTextField.getText();
         searchAndUpdateTableView(keyword);
     }
-
     private void loadData() throws SQLException {
         List<Utilisateur> data = new ArrayList<>();
         Connection connection = null;
@@ -149,6 +155,7 @@ public class MainControllers {
 
 
 
+
     // Méthode pour rafraîchir les données des adhérents
     public void refreshUserData() throws SQLException {
         // Effacez les données actuelles de la table
@@ -171,9 +178,10 @@ public class MainControllers {
     private RadioButton searchbyisbn;
 
     private ToggleGroup searchToggleGroup;
-
-
-    public void initialize() throws SQLException {
+    public void initialize() throws SQLException, InterruptedException {
+        // Appeler la méthode pour charger les livres populaires
+        loadTop20PopularBooksLastMonth();
+        checkAndUpdateUserStatus();
         // Charger les données dans TableView
         loadData();
 
@@ -181,6 +189,76 @@ public class MainControllers {
         nom.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNom()));
         prenom.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPrenom()));
         email.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEmail()));
+
+        // Appliquer les usines de cellules personnalisées pour changer la couleur en fonction du statut
+        nom.setCellFactory(column -> new TableCell<Utilisateur, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    setText(item);
+                    Utilisateur user = getTableView().getItems().get(getIndex());
+                    if (user.getStatut() == 1) {
+                        setTextFill(Color.RED);
+                    } else if (user.getStatut() == 2) {
+                        setTextFill(Color.ORANGE);
+                    } else if (user.getStatut() == 0) {
+                        setTextFill(Color.BLACK);
+                    } else {
+                        setTextFill(Color.BLACK); // Couleur par défaut si le statut n'est pas 0, 1 ou 2
+                    }
+                }
+            }
+        });
+
+        prenom.setCellFactory(column -> new TableCell<Utilisateur, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    setText(item);
+                    Utilisateur user = getTableView().getItems().get(getIndex());
+                    if (user.getStatut() == 1) {
+                        setTextFill(Color.RED);
+                    } else if (user.getStatut() == 2) {
+                        setTextFill(Color.ORANGE);
+                    } else if (user.getStatut() == 0) {
+                        setTextFill(Color.BLACK);
+                    } else {
+                        setTextFill(Color.BLACK); // Couleur par défaut si le statut n'est pas 0, 1 ou 2
+                    }
+                }
+            }
+        });
+
+        email.setCellFactory(column -> new TableCell<Utilisateur, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    setText(item);
+                    Utilisateur user = getTableView().getItems().get(getIndex());
+                    if (user.getStatut() == 1) {
+                        setTextFill(Color.RED);
+                    } else if (user.getStatut() == 2) {
+                        setTextFill(Color.ORANGE);
+                    } else if (user.getStatut() == 0) {
+                        setTextFill(Color.BLACK);
+                    } else {
+                        setTextFill(Color.BLACK); // Couleur par défaut si le statut n'est pas 0, 1 ou 2
+                    }
+                }
+            }
+        });
 
         // Créer un groupe de bascule pour les boutons radio de recherche
         searchToggleGroup = new ToggleGroup();
@@ -204,6 +282,7 @@ public class MainControllers {
             }
         });
     }
+
 
 
 
@@ -288,8 +367,6 @@ public class MainControllers {
         }
     }
 
-
-
     public void showNewAdherentPage() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/newAdherent.fxml"));
@@ -299,6 +376,71 @@ public class MainControllers {
             Stage stage = (Stage) bookTableView.getScene().getWindow();
             stage.getScene().setRoot(root);
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void checkAndUpdateUserStatus() {
+        // Créer une tâche pour vérifier les emprunts à intervalles réguliers
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    // Récupérer la date actuelle
+                    LocalDate currentDate = LocalDate.now();
+
+                    // Récupérer la liste des utilisateurs depuis la base de données
+                    List<Utilisateur> users = DatabaseConnection.getAllUtilisateur();
+                    System.out.println("Fonction check : on a récupéré la liste des utilisateurs ");
+
+                    // Parcourir la liste des utilisateurs
+                    for (Utilisateur user : users) {
+                        // Vérifier les emprunts de chaque utilisateur
+                        System.out.println("On est dans le parcours de la liste des utilisateurs");
+
+                        // Vérifier si l'utilisateur a des emprunts en retard
+                        if (user.hasOverdueLoans(currentDate)) {
+                            System.out.println("On a détecté un emprunt en retard");
+                            user.setStatut(1); // 1 pour indiquer que l'utilisateur est en retard
+                            // Mettre à jour le statut de l'utilisateur dans la base de données
+                            System.out.println("Mise à jour du statut à 1");
+                            DatabaseConnection.updateUserStatus(user.getEmail(), 1);
+                        } else if (user.getStatut() != 1) {
+                            // Vérifier si l'utilisateur a atteint le nombre maximal d'emprunts
+                            int userMaxEmprunt = DatabaseConnection.getUserMaxEmprunt(user.getEmail());
+                            List<Emprunt> empruntsUtilisateur = DatabaseConnection.getEmpruntsUtilisateur(user.getEmail());
+
+                            if (empruntsUtilisateur.size() >= userMaxEmprunt) {
+                                System.out.println("L'utilisateur a atteint le nombre maximal d'emprunts");
+                                user.setStatut(2); // 2 pour indiquer que l'utilisateur a atteint le max d'emprunts
+                                // Mettre à jour le statut de l'utilisateur dans la base de données
+                                System.out.println("Mise à jour du statut à 2");
+                                DatabaseConnection.updateUserStatus(user.getEmail(), 2);
+                            } else {
+                                // Si l'utilisateur n'a pas d'emprunts en retard et que son statut est différent de 2, mettre à jour le statut à 0
+                                System.out.println("Aucun emprunt en retard et statut différent de 2");
+                                user.setStatut(0);
+                                // Mettre à jour le statut de l'utilisateur dans la base de données
+                                System.out.println("Mise à jour du statut à 0");
+                                DatabaseConnection.updateUserStatus(user.getEmail(), 0);
+                            }
+                        }
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, 0, 24 * 60 * 60 * 1000); // Exécuter la tâche tous les jours
+    }
+
+    private void loadTop20PopularBooksLastMonth() {
+        try {
+            // Appeler la méthode pour obtenir les 20 livres les plus populaires du mois dernier
+            List<Book> popularBooks = DatabaseConnection.getTop20PopularBooksLast30Days();
+
+            // Mettre à jour la TableView avec les données des livres populaires
+            bookTableView.getItems().setAll(popularBooks);
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

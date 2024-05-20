@@ -75,10 +75,6 @@ public class Book {
         this.isbn = isbn;
     }
 
-
-
-
-
     public String toString(){
         return this.title+","+this.authors;
     }

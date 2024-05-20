@@ -3,6 +3,8 @@ package main.models;
 import main.models.Utilisateur;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -263,6 +265,34 @@ public class DatabaseConnection {
         }
     }
 
+    public static void updateUserStatus(String userEmail, int newStatut) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            // Obtenez la connexion à la base de données
+            connection = getConnection();
+
+            // Préparez la requête SQL pour mettre à jour le nombre d'emprunts maximal de l'utilisateur
+            String query = "UPDATE utilisateur SET statut = ? WHERE email = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, newStatut);
+            preparedStatement.setString(2, userEmail);
+
+            // Exécutez la requête
+            preparedStatement.executeUpdate();
+        } finally {
+            // Fermer les ressources
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    }
+
+
     public static boolean isBookAlreadyBorrowed(String userEmail, String bookISBN) throws SQLException {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -390,7 +420,113 @@ public class DatabaseConnection {
                 userList.add(user);
             }
         }
-
         return userList;
     }
+
+    public static List<Emprunt> getEmpruntsUtilisateur(String userEmail) throws SQLException {
+        List<Emprunt> emprunts = new ArrayList<>();
+        String query = "SELECT * FROM emprunt WHERE user_email = ?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, userEmail);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    // Récupérer les données de l'emprunt depuis le résultat de la requête
+                    String livreIsbn = resultSet.getString("livre_isbn");
+                    LocalDate dateDebut = resultSet.getDate("date_debut").toLocalDate();
+                    LocalDate dateFin = resultSet.getDate("date_fin").toLocalDate();
+
+
+                    // Supposez que vous ayez une méthode pour récupérer un utilisateur à partir de son email
+                    Utilisateur user = getUserByEmail(userEmail);
+
+                    // Supposez que vous ayez une méthode pour récupérer un livre à partir de son ISBN
+                    Book book = getBookByISBN(livreIsbn);
+
+                    // Créer un nouvel objet Emprunt et l'ajouter à la liste
+                    Emprunt emprunt = new Emprunt(user, book, dateDebut, dateFin);
+                    emprunts.add(emprunt);
+                }
+            }
+        }
+        return emprunts;
+    }
+
+    // Méthode pour récupérer un utilisateur à partir de son email
+    public static Utilisateur getUserByEmail(String email) throws SQLException {
+        Utilisateur user = null;
+        String query = "SELECT * FROM utilisateur WHERE email = ?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, email);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    String prenom = resultSet.getString("prenom");
+                    String nom = resultSet.getString("nom");
+                    int statut = resultSet.getInt("statut");
+                    int maxEmprunt = resultSet.getInt("MaxEmprunt");
+                    user = new Utilisateur(email, prenom, nom, statut, maxEmprunt);
+                }
+            }
+        }
+        return user;
+    }
+
+    // Méthode pour récupérer un livre à partir de son ISBN
+    public static Book getBookByISBN(String isbn) throws SQLException {
+        Book book = null;
+        String query = "SELECT * FROM livre WHERE isbn = ?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, isbn);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    String title = resultSet.getString("titre");
+                    String author = resultSet.getString("auteur");
+                    book = new Book(isbn, title, author);
+                }
+            }
+        }
+        return book;
+    }
+
+
+    public static List<Book> getTop20PopularBooksLast30Days() throws SQLException {
+        List<Book> popularBooks = new ArrayList<>();
+
+        // Obtenir la date d'il y a 30 jours à partir de la date actuelle
+        LocalDate thirtyDaysAgo = LocalDate.now().minusDays(30);
+
+        String query = "SELECT l.isbn, l.titre, l.auteur, COUNT(h.livre_isbn) AS borrow_count " +
+                "FROM Livre l " +
+                "JOIN Historique h ON l.isbn = h.livre_isbn " +
+                "WHERE h.date_debut >= ? " +
+                "GROUP BY l.isbn, l.titre, l.auteur " +
+                "ORDER BY borrow_count DESC " +
+                "LIMIT 20";
+
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setDate(1, Date.valueOf(thirtyDaysAgo));
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    String isbn = resultSet.getString("isbn");
+                    String titre = resultSet.getString("titre");
+                    String auteur = resultSet.getString("auteur");
+
+                    Book livre = new Book(titre, auteur, isbn);
+                    popularBooks.add(livre);
+                }
+            }
+        }
+        return popularBooks;
+    }
+
 }

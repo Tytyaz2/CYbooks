@@ -19,7 +19,7 @@ public class Main extends Application {
         try {
             // Effectuer les opérations de base de données nécessaires
             DatabaseConnection.insertUserData("nadir1401@gmail.com", "Nadir", "NEHILI");
-            DatabaseConnection.insertUserData("soares.flavio2002@gmail.com", "Flavio", "Soares");
+            DatabaseConnection.insertUserData("flavio2002@gmail.com", "Flavio", "Soares");
 
 
         } catch (SQLException e) {
@@ -29,4 +29,5 @@ public class Main extends Application {
         // Lancer l'application JavaFX
         launch(args);
     }
+
 }
