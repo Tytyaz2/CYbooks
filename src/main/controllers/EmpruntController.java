@@ -42,6 +42,8 @@ public class EmpruntController {
 
     @FXML
     private TableColumn<Utilisateur, String> nomColumn;
+    @FXML
+    private TableColumn<Utilisateur, String> emailColumn;
 
     @FXML
     private TableColumn<Utilisateur, String> prenomColumn;
@@ -60,6 +62,8 @@ public class EmpruntController {
             loadData();
 
             // Configurer les colonnes pour afficher le nom et le prénom
+
+            emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
             nomColumn.setCellValueFactory(new PropertyValueFactory<>("nom"));
             prenomColumn.setCellValueFactory(new PropertyValueFactory<>("prenom"));
         } catch (SQLException e) {
@@ -178,9 +182,30 @@ public class EmpruntController {
         selectedBooksListView.getItems().clear();
         selectedUser = userTableView.getSelectionModel().getSelectedItem();
 
-
-        System.out.println(selectedUser.getMaxEmprunt());
         if (selectedUser != null) {
+            // Vérifier si l'utilisateur est banni ou en retard
+            if (selectedUser.getStatut() == 1) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Statut incorrect");
+                alert.setHeaderText("Vous n'êtes pas en position pour emprunter un livre");
+                alert.setContentText("Adhérent possédant au moins un livre en retard !");
+                alert.showAndWait();
+                // Désélectionner l'utilisateur et retourner
+                userTableView.getSelectionModel().clearSelection();
+                selectedUser = null;
+                return;
+            } else if (selectedUser.getStatut() == 3) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Statut incorrect");
+                alert.setHeaderText("Vous n'êtes pas en position pour emprunter un livre");
+                alert.setContentText("Adhérent banni !");
+                alert.showAndWait();
+                // Désélectionner l'utilisateur et retourner
+                userTableView.getSelectionModel().clearSelection();
+                selectedUser = null;
+                return;
+            }
+
             selectedUserLabel.setText(selectedUser.getNom() + " " + selectedUser.getPrenom());
 
             // Vérifier si l'utilisateur a déjà atteint sa limite d'emprunt maximum
@@ -198,6 +223,7 @@ public class EmpruntController {
             }
         }
     }
+
 
 
     private final ObservableList<Book> selectedBooks = FXCollections.observableArrayList();
