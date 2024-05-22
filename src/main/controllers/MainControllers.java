@@ -411,9 +411,15 @@ public class MainControllers {
                     for (Utilisateur user : users) {
                         boolean hasOverdueLoans = user.hasOverdueLoans(currentDate);
                         int maxEmprunt = DatabaseConnection.getUserMaxEmprunt(user.getEmail());
+                        int lateCount = DatabaseConnection.getUserLateCount(user.getEmail());
 
-                        if(user.getStatut() != 3) {
-                            if (hasOverdueLoans) {
+                        if (user.getStatut() != 3) {
+                            if (lateCount >= 3) {
+                                if (user.getStatut() != 3) {
+                                    user.setStatut(3);
+                                    DatabaseConnection.updateUserStatus(user.getEmail(), 3);
+                                }
+                            } else if (hasOverdueLoans) {
                                 if (user.getStatut() != 1) {
                                     user.setStatut(1);
                                     DatabaseConnection.updateUserStatus(user.getEmail(), 1);
@@ -437,6 +443,7 @@ public class MainControllers {
             }
         }, 0, 24 * 60 * 60 * 1000); // Exécuter la tâche tous les jours
     }
+
 
 
 

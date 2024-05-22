@@ -297,7 +297,6 @@ public class AdherentController {
             System.out.println("Aucun livre sélectionné.");
         }
     }
-
     private void rendreLivresSelectionnes(List<Book> livresARendre) {
         Connection connection = null;
         PreparedStatement updateEmpruntStatement = null;
@@ -345,7 +344,8 @@ public class AdherentController {
                     insertHistoriqueStatement.setString(2, user.getEmail());
                     insertHistoriqueStatement.setString(3, livre.getDateBorrow());
                     insertHistoriqueStatement.setString(4, LocalDate.now().toString());
-                    insertHistoriqueStatement.setBoolean(5, retard);
+                    insertHistoriqueStatement.setBoolean(5, retard); // Utiliser directement le boolean "retard"
+                    // Mettre retard à 1 si le livre est rendu en retard, sinon à 0
                     insertHistoriqueStatement.executeUpdate();
 
                     // Suppression de l'emprunt de la table Emprunt
@@ -391,6 +391,7 @@ public class AdherentController {
             }
         }
     }
+
 
     protected void chargerLivresEmpruntes(String email) {
         listeEmprunts = FXCollections.observableArrayList();

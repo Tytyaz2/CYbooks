@@ -566,4 +566,32 @@ public class DatabaseConnection {
         return popularBooks;
     }
 
+
+    public static int getUserLateCount(String email) throws SQLException {
+        int lateCount = 0;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = getConnection();
+            String query = "SELECT COUNT(*) FROM historique WHERE user_email = ? AND retard = 1";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, email);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                lateCount = resultSet.getInt(1);
+            }
+        } finally {
+            if (resultSet != null) resultSet.close();
+            if (preparedStatement != null) preparedStatement.close();
+            if (connection != null) connection.close();
+        }
+
+        return lateCount;
+    }
+
+
+
 }
