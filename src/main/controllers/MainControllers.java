@@ -52,10 +52,7 @@ public class MainControllers {
 
     public MainControllers() throws SQLException {
         this.bookSearch = new BookSearch();
-
-
     }
-
 
     @FXML
     private TableView<Utilisateur> userTableView;
@@ -117,7 +114,7 @@ public class MainControllers {
             System.out.println("Connexion réussie !");
 
             // Exécuter la requête pour récupérer les données
-            String query = "SELECT * FROM utilisateur";
+            String query = "SELECT * FROM utilisateur WHERE statut != 3";
             System.out.println("Exécution de la requête : " + query);
             preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
@@ -157,6 +154,7 @@ public class MainControllers {
 
 
 
+
     // Méthode pour rafraîchir les données des adhérents
     public void refreshUserData() throws SQLException {
         // Effacez les données actuelles de la table
@@ -179,6 +177,7 @@ public class MainControllers {
     private RadioButton searchbyisbn;
 
     private ToggleGroup searchToggleGroup;
+
     public void initialize() throws SQLException, InterruptedException {
         // Appeler la méthode pour charger les livres populaires
         loadTop20PopularBooksLastMonth();
@@ -214,11 +213,6 @@ public class MainControllers {
                 }
             }
         });
-
-
-
-
-
 
         prenom.setCellFactory(column -> new TableCell<Utilisateur, String>() {
             @Override
@@ -380,10 +374,6 @@ public class MainControllers {
         }
     }
 
-
-
-
-
     public void showAdherentPage() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/pageadherent.fxml"));
@@ -410,49 +400,34 @@ public class MainControllers {
         }
     }
     private void checkAndUpdateUserStatus() {
-        // Créer une tâche pour vérifier les emprunts à intervalles réguliers
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 try {
-                    // Récupérer la date actuelle
                     LocalDate currentDate = LocalDate.now();
-
-                    // Récupérer la liste des utilisateurs depuis la base de données
                     List<Utilisateur> users = DatabaseConnection.getAllUtilisateur();
-                    System.out.println("Fonction check : on a récupéré la liste des utilisateurs ");
 
-                    // Parcourir la liste des utilisateurs
                     for (Utilisateur user : users) {
-                        // Vérifier les emprunts de chaque utilisateur
-                        System.out.println("On est dans le parcours de la liste des utilisateurs");
+                        boolean hasOverdueLoans = user.hasOverdueLoans(currentDate);
+                        int maxEmprunt = DatabaseConnection.getUserMaxEmprunt(user.getEmail());
 
-                        // Vérifier si l'utilisateur a des emprunts en retard
-                        if (user.hasOverdueLoans(currentDate)) {
-                            System.out.println("On a détecté un emprunt en retard");
-                            user.setStatut(1); // 1 pour indiquer que l'utilisateur est en retard
-                            // Mettre à jour le statut de l'utilisateur dans la base de données
-                            System.out.println("Mise à jour du statut à 1");
-                            DatabaseConnection.updateUserStatus(user.getEmail(), 1);
-                        } else if (user.getStatut() != 1) {
-                            // Vérifier si l'utilisateur a atteint le nombre maximal d'emprunts
-                            int userMaxEmprunt = DatabaseConnection.getUserMaxEmprunt(user.getEmail());
-                            List<Emprunt> empruntsUtilisateur = DatabaseConnection.getEmpruntsUtilisateur(user.getEmail());
-
-                            if (empruntsUtilisateur.size() >= userMaxEmprunt) {
-                                System.out.println("L'utilisateur a atteint le nombre maximal d'emprunts");
-                                user.setStatut(2); // 2 pour indiquer que l'utilisateur a atteint le max d'emprunts
-                                // Mettre à jour le statut de l'utilisateur dans la base de données
-                                System.out.println("Mise à jour du statut à 2");
-                                DatabaseConnection.updateUserStatus(user.getEmail(), 2);
+                        if(user.getStatut() != 3) {
+                            if (hasOverdueLoans) {
+                                if (user.getStatut() != 1) {
+                                    user.setStatut(1);
+                                    DatabaseConnection.updateUserStatus(user.getEmail(), 1);
+                                }
+                            } else if (maxEmprunt == 0) {
+                                if (user.getStatut() != 2) {
+                                    user.setStatut(2);
+                                    DatabaseConnection.updateUserStatus(user.getEmail(), 2);
+                                }
                             } else {
-                                // Si l'utilisateur n'a pas d'emprunts en retard et que son statut est différent de 2, mettre à jour le statut à 0
-                                System.out.println("Aucun emprunt en retard et statut différent de 2");
-                                user.setStatut(0);
-                                // Mettre à jour le statut de l'utilisateur dans la base de données
-                                System.out.println("Mise à jour du statut à 0");
-                                DatabaseConnection.updateUserStatus(user.getEmail(), 0);
+                                if (user.getStatut() != 0) {
+                                    user.setStatut(0);
+                                    DatabaseConnection.updateUserStatus(user.getEmail(), 0);
+                                }
                             }
                         }
                     }
@@ -462,6 +437,10 @@ public class MainControllers {
             }
         }, 0, 24 * 60 * 60 * 1000); // Exécuter la tâche tous les jours
     }
+
+
+
+
 
     private void loadTop20PopularBooksLastMonth() {
         try {
@@ -474,10 +453,9 @@ public class MainControllers {
             e.printStackTrace();
         }
     }
-
     public void handleSearchUser(ActionEvent actionEvent) throws SQLException {
         List<Utilisateur> data = new ArrayList<>();
-        String searchPattern = SearchUser.getText();
+        String searchPattern = "%" + SearchUser.getText() + "%";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -492,7 +470,7 @@ public class MainControllers {
                 System.out.println("Connexion réussie !");
 
                 // Exécuter la requête pour récupérer les données
-                String query = "SELECT * FROM utilisateur WHERE nom LIKE ? OR prenom LIKE ? OR email LIKE ?";
+                String query = "SELECT * FROM utilisateur WHERE (nom LIKE ? OR prenom LIKE ? OR email LIKE ?) AND statut != 3";
                 System.out.println("Exécution de la requête : " + query);
                 preparedStatement = connection.prepareStatement(query);
 
@@ -513,7 +491,6 @@ public class MainControllers {
                             resultSet.getInt("MaxEmprunt"));
 
                     data.add(model);
-                    System.out.println("Bonjouré");
                 }
 
                 System.out.println("Données récupérées avec succès !");
@@ -536,6 +513,15 @@ public class MainControllers {
                 }
             }
         }
+    }
+
+
+    public void refreshStatut() throws SQLException {
+        // Effacez les données actuelles de la table
+        userTableView.getItems().clear();
+
+        // Rechargez les données depuis la base de données et ajoutez-les à la table
+        loadData();
     }
 
 }

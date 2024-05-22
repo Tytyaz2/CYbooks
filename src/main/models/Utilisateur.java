@@ -68,15 +68,13 @@ public class Utilisateur {
     }
 
     public boolean hasOverdueLoans(LocalDate currentDate) throws SQLException {
-
-        System.out.println("Fonction hasOverDueLoans: on recup tous les emprunts");
         List<Emprunt> emprunts = DatabaseConnection.getEmpruntsUtilisateur(this.getEmail());
         for (Emprunt emprunt : emprunts) {
-            System.out.println("Verification de la date de rendu par rapport à la date actuelle");
             if (emprunt.getEndDate().isBefore(currentDate)) {
                 return true; // Il y a au moins un emprunt en retard
             }
         }
         return false; // Aucun emprunt en retard
     }
+
 }

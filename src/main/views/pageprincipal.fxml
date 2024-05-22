@@ -91,5 +91,6 @@
       <Button layoutX="540.0" layoutY="348.0" mnemonicParsing="false" onAction="#handleNewBorrowButtonClick" prefHeight="88.0" prefWidth="201.0" style="-fx-font-size: 20;" text="Emprunter" />
         <Button layoutX="540.0" layoutY="232.0" mnemonicParsing="false" onAction="#handleNewAdherentButtonClick" prefHeight="88.0" prefWidth="201.0" style="-fx-font-size: 20;" text="Nouvel adhérent" />
         <Button fx:id="showLateBooksButton" layoutX="540.0" layoutY="500.0" mnemonicParsing="false" text="Afficher Liste Retard" onAction="#showLateLoansView" prefHeight="88.0" prefWidth="201.0" style="-fx-font-size: 20;" />
+        <Button layoutX="253.0" layoutY="664.0" mnemonicParsing="false" text="Rafraichir" onAction="#refreshStatut"/>
     </children>
 </AnchorPane>

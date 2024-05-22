@@ -78,6 +78,7 @@ public class AdherentController {
 
     protected ObservableList<Book> listeEmprunts;
 
+
     protected final ObservableList<Book> livresSelectionnes = FXCollections.observableArrayList();
 
     public void afficherDetailsUtilisateur(Utilisateur utilisateur) {
@@ -546,6 +547,41 @@ public class AdherentController {
              stage.show();
             } catch (IOException e) {
              e.printStackTrace();
+        }
+    }
+
+
+    @FXML
+    private void banUser() {
+
+        if (user != null) {
+            // Afficher une boîte de dialogue de confirmation
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Voulez-vous vraiment bannir cet utilisateur ?", ButtonType.YES, ButtonType.NO);
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.YES) {
+                // Mettre à jour le statut de l'utilisateur pour le bannir (statut 3)
+
+                // Mise à jour dans la base de données
+                try (Connection connection = DatabaseConnection.getConnection();
+                     PreparedStatement updateUserStatement = connection.prepareStatement("UPDATE Utilisateur SET statut = ? WHERE email = ?")) {
+
+                    updateUserStatement.setInt(1, 3);
+                    updateUserStatement.setString(2, user.getEmail());
+                    updateUserStatement.executeUpdate();
+
+                    // Optionnel : mettre à jour l'interface utilisateur pour refléter ce changement
+                    Alert info = new Alert(Alert.AlertType.INFORMATION, "L'utilisateur a été banni avec succès.");
+                    info.show();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Une erreur s'est produite lors de la mise à jour de l'utilisateur.");
+                    errorAlert.show();
+                }
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Aucun utilisateur sélectionné.");
+            alert.show();
         }
     }
 }
