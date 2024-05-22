@@ -20,7 +20,6 @@
             <Label text="Liste des adhérents :" />
             <HBox spacing="10">
                 <TextArea fx:id="textFieldTitre" prefHeight="37.0" prefWidth="329.0" promptText="Recherche de livres..." />
-
                 <Button prefHeight="25.0" prefWidth="166.0" text="Rechercher" onAction="#handleSearchUser"/>
             </HBox>
             <HBox prefHeight="555.0" prefWidth="341.0">
