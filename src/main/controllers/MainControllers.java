@@ -175,7 +175,22 @@ public class MainControllers {
 
     @FXML
     private RadioButton searchbyisbn;
-
+    @FXML
+    private RadioButton searchbypublisher;
+    @FXML
+    private RadioButton searchbypublisheddate;
+    @FXML
+    private RadioButton searchbydescription;
+    @FXML
+    private RadioButton searchbypagecount;
+    @FXML
+    private RadioButton searchbycategorie;
+    @FXML
+    private RadioButton searchbyaveragerating;
+    @FXML
+    private RadioButton searchbyratingscount;
+    @FXML
+    private RadioButton searchbylanguage;
     private ToggleGroup searchToggleGroup;
 
     public void initialize() throws SQLException, InterruptedException {
@@ -267,6 +282,14 @@ public class MainControllers {
         searchbyauthor.setToggleGroup(searchToggleGroup);
         searchbytitle.setToggleGroup(searchToggleGroup);
         searchbyisbn.setToggleGroup(searchToggleGroup);
+        searchbypublisher.setToggleGroup(searchToggleGroup);
+        searchbypublisheddate.setToggleGroup(searchToggleGroup);
+        searchbydescription.setToggleGroup(searchToggleGroup);
+        searchbypagecount.setToggleGroup(searchToggleGroup);
+        searchbycategorie.setToggleGroup(searchToggleGroup);
+        searchbyaveragerating.setToggleGroup(searchToggleGroup);
+        searchbyratingscount.setToggleGroup(searchToggleGroup);
+        searchbylanguage.setToggleGroup(searchToggleGroup);
 
         // Ajouter des écouteurs de changement pour les boutons radio
         searchToggleGroup.selectedToggleProperty().addListener((observable, oldToggle, newToggle) -> {
@@ -279,9 +302,34 @@ public class MainControllers {
             } else if (newToggle == searchbyisbn) {
                 // Appeler la méthode de recherche par ISBN
                 loadBooksByISBN();
+            } else if (newToggle == searchbypublisher) {
+                // Appeler la méthode de recherche par éditeur
+                loadBooksByPublisher();
+            } else if (newToggle == searchbypublisheddate) {
+                // Appeler la méthode de recherche par date de publication
+                loadBooksByPublishedDate();
+            } else if (newToggle == searchbydescription) {
+                // Appeler la méthode de recherche par description
+                loadBooksByDescription();
+            } else if (newToggle == searchbypagecount) {
+                // Appeler la méthode de recherche par nombre de pages
+                loadBooksByPageCount();
+            } else if (newToggle == searchbycategorie) {
+                // Appeler la méthode de recherche par catégories
+                loadBooksByCategories();
+            } else if (newToggle == searchbyaveragerating) {
+                // Appeler la méthode de recherche par note moyenne
+                loadBooksByAverageRating();
+            } else if (newToggle == searchbyratingscount) {
+                // Appeler la méthode de recherche par nombre d'évaluations
+                loadBooksByRatingsCount();
+            } else if (newToggle == searchbylanguage) {
+                // Appeler la méthode de recherche par langue
+                loadBooksByLanguage();
             }
         });
     }
+
 
     // This method will be called when you want to show the Late Loans view
     public void showLateLoansView() {
@@ -314,19 +362,122 @@ public class MainControllers {
     private void loadBooksByAuthor() {
         String author = SearchBook.getText();
         List<Book> books = bookSearch.searchByAuthor(author, startIndex, pageSize);
-        bookTableView.getItems().setAll(books);
+        if (books == null) {
+            bookTableView.getItems().clear();
+        } else {
+            bookTableView.getItems().setAll(books);
+        }
     }
 
     private void loadBooksByTitle() {
         String title = SearchBook.getText();
         List<Book> books = bookSearch.searchByTitle(title, startIndex, pageSize);
-        bookTableView.getItems().setAll(books);
+        if (books == null) {
+            bookTableView.getItems().clear();
+        } else {
+            bookTableView.getItems().setAll(books);
+        }
+
     }
 
     private void loadBooksByISBN() {
         String isbn = SearchBook.getText();
         List<Book> books = bookSearch.searchByISBN(isbn, startIndex, pageSize);
         bookTableView.getItems().setAll(books);
+    }
+    private void loadBooksByPublisher() {
+        String publisher = SearchBook.getText();
+        List<Book> books = bookSearch.searchByPublisher(publisher, startIndex, pageSize);
+        if (books == null) {
+            bookTableView.getItems().clear();
+        } else {
+            bookTableView.getItems().setAll(books);
+        }
+    }
+
+    private void loadBooksByPublishedDate() {
+        String publishedDate = SearchBook.getText();
+        List<Book> books = bookSearch.searchByPublishedDate(publishedDate, startIndex, pageSize);
+        if (books == null) {
+            bookTableView.getItems().clear();
+        } else {
+            bookTableView.getItems().setAll(books);
+        }
+    }
+
+    private void loadBooksByDescription() {
+        String description = SearchBook.getText();
+        List<Book> books = bookSearch.searchByDescription(description, startIndex, pageSize);
+        if (books == null) {
+            bookTableView.getItems().clear();
+        } else {
+            bookTableView.getItems().setAll(books);
+        }
+    }
+
+    private void loadBooksByPageCount() {
+        try {
+            int pageCount = Integer.parseInt(SearchBook.getText());
+            List<Book> books = bookSearch.searchByPageCount(pageCount, startIndex, pageSize);
+            if (books == null) {
+                bookTableView.getItems().clear();
+            } else {
+                bookTableView.getItems().setAll(books);
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Veuillez entrer un nombre valide pour le nombre de pages.");
+            bookTableView.getItems().clear();
+        }
+    }
+
+    private void loadBooksByCategories() {
+        String category = SearchBook.getText();
+        List<Book> books = bookSearch.searchByCategories(category, startIndex, pageSize);
+        if (books == null) {
+            bookTableView.getItems().clear();
+        } else {
+            bookTableView.getItems().setAll(books);
+        }
+    }
+
+    private void loadBooksByAverageRating() {
+        try {
+            double averageRating = Double.parseDouble(SearchBook.getText());
+            List<Book> books = bookSearch.searchByAverageRating(averageRating, startIndex, pageSize);
+            if (books == null) {
+                bookTableView.getItems().clear();
+            } else {
+                bookTableView.getItems().setAll(books);
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Veuillez entrer un nombre valide pour la note moyenne.");
+            bookTableView.getItems().clear();
+        }
+    }
+
+    private void loadBooksByRatingsCount() {
+        try {
+            int ratingsCount = Integer.parseInt(SearchBook.getText());
+            List<Book> books = bookSearch.searchByRatingsCount(ratingsCount, startIndex, pageSize);
+            if (books == null) {
+                bookTableView.getItems().clear();
+            } else {
+                bookTableView.getItems().setAll(books);
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Veuillez entrer un nombre valide pour le nombre d'évaluations.");
+            bookTableView.getItems().clear();
+        }
+    }
+
+    private void loadBooksByLanguage() {
+        String language = SearchBook.getText();
+        List<Book> books = bookSearch.searchByLanguage(language, startIndex, pageSize);
+        if (books == null) {
+            bookTableView.getItems().clear();
+        } else {
+            bookTableView.getItems().setAll(books);
+        }
     }
 
 
