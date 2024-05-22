@@ -161,8 +161,8 @@ public class EmpruntController {
         String title = bookSearchTextArea.getText();
         int startIndex = 0;
         int pageSize = 20;
-        List<Book> books = BookSearch.searchByTitle(title, startIndex, pageSize);
-        bookTableView.getItems().setAll(books);
+       List<Book> books = ApiCaller.call("anywhere",title, startIndex, pageSize);
+        //bookTableView.getItems().setAll(books);
     }
 
 

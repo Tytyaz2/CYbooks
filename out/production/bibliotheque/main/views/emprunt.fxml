@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TableColumn?>
@@ -16,30 +15,31 @@
     <children>
 
 
-        <VBox layoutX="93.0" layoutY="58.0" prefHeight="576.0" prefWidth="354.0" spacing="10">
+        <VBox layoutX="93.0" layoutY="50.0" prefHeight="584.0" prefWidth="452.0" spacing="10">
             <Label text="Liste d'adhérent :" />
-            <HBox spacing="10">
-                <TextArea fx:id="textFieldUser" prefHeight="37.0" prefWidth="329.0" promptText="Recherche d'Utilisateur" />
-                <Button prefHeight="25.0" prefWidth="166.0" text="Rechercher" onAction="#handleSearchUser"/>
+            <HBox prefHeight="37.0" prefWidth="421.0" spacing="10">
+                <TextArea fx:id="textFieldUser" prefHeight="37.0" prefWidth="235.0" promptText="Recherche d'Utilisateur" />
+                <Button onAction="#handleSearchUser" prefHeight="25.0" prefWidth="166.0" text="Rechercher" />
             </HBox>
-            <HBox prefHeight="555.0" prefWidth="341.0">
-                <TableView fx:id="userTableView" onMouseClicked="#handleUserSelection" prefHeight="544.0" prefWidth="331.0">
+            <HBox prefHeight="512.0" prefWidth="405.0">
+                <TableView fx:id="userTableView" onMouseClicked="#handleUserSelection" prefHeight="518.0" prefWidth="415.0">
                     <columns>
-                        <TableColumn fx:id="nomColumn" prefWidth="160.0" text="Nom" />
-                        <TableColumn fx:id="prenomColumn" prefWidth="170.0" text="Prénom" />
+                        <TableColumn fx:id="emailColumn" prefWidth="148.0" text="Email" />
+                        <TableColumn fx:id="nomColumn" prefWidth="109.0" text="Nom" />
+                        <TableColumn fx:id="prenomColumn" prefWidth="157.0" text="Prénom" />
                     </columns>
                 </TableView>
             </HBox>
         </VBox>
 
-        <VBox layoutX="562.0" layoutY="58.0" prefHeight="576.0" prefWidth="364.0" spacing="10">
+        <VBox layoutX="562.0" layoutY="58.0" prefHeight="576.0" prefWidth="415.0" spacing="10">
             <Label text="Liste des livres :" />
             <HBox spacing="10">
                 <TextArea fx:id="bookSearchTextArea" prefHeight="26.0" prefWidth="387.0" promptText="Recherche de livres..." />
                 <!-- Bouton de recherche avec gestionnaire d'événements -->
                 <Button onAction="#searchBooks" prefHeight="25.0" prefWidth="205.0" text="Rechercher" />
             </HBox>
-            <TableView fx:id="bookTableView" layoutX="748.0" layoutY="148.0" onMouseReleased="#handleBookSelection" prefHeight="487.0" prefWidth="417.0">
+            <TableView fx:id="bookTableView" layoutX="748.0" layoutY="148.0" onMouseReleased="#handleBookSelection" prefHeight="501.0" prefWidth="434.0">
 
                 <columns>
                     <TableColumn prefWidth="168.0" text="Titre">
@@ -47,12 +47,12 @@
                             <PropertyValueFactory property="title" />
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn prefWidth="24.0" text="Auteur">
+                    <TableColumn prefWidth="119.0" text="Auteur">
                         <cellValueFactory>
                             <PropertyValueFactory property="authors" />
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn prefWidth="154.0" text="ISBN">
+                    <TableColumn prefWidth="127.0" text="ISBN">
                         <cellValueFactory>
                             <PropertyValueFactory property="isbn" />
                         </cellValueFactory>

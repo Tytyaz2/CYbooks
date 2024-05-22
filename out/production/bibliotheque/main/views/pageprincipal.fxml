@@ -81,16 +81,24 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
       </GridPane>
-      <Pane layoutX="567.0" layoutY="124.0" prefHeight="152.0" prefWidth="146.0">
+      <Pane layoutX="567.0" layoutY="124.0" prefHeight="210.0" prefWidth="146.0">
          <children>
             <RadioButton fx:id="searchbyauthor" mnemonicParsing="false" text="Search By Author" />
             <RadioButton fx:id="searchbytitle" layoutY="18.0" mnemonicParsing="false" text="Search by Title" />
             <RadioButton fx:id="searchbyisbn" layoutY="36.0" mnemonicParsing="false" text="Search by ISBN" />
+            <RadioButton fx:id="searchbypublisher" layoutY="54.0" mnemonicParsing="false" text="Search by publisher" />
+            <RadioButton fx:id="searchbypublisheddate" layoutY="72.0" mnemonicParsing="false" text="Search by published date" />
+            <RadioButton fx:id="searchbycategorie" layoutY="90.0" mnemonicParsing="false" text="Search by categorie" />
+            <RadioButton fx:id="searchbydescription" layoutY="108.0" mnemonicParsing="false" text="Search by description" />
+            <RadioButton fx:id="searchbyaveragerating" layoutY="126.0" mnemonicParsing="false" text="Search by average rating" />
+            <RadioButton fx:id="searchbyratingscount" layoutY="144.0" mnemonicParsing="false" text="Search by ratings count" />
+            <RadioButton fx:id="searchbypagecount" layoutY="162.0" mnemonicParsing="false" text="Search by page count" />
+            <RadioButton fx:id="searchbylanguage" layoutY="180.0" mnemonicParsing="false" text="Search by language" />
          </children>
       </Pane>
-      <Button layoutX="540.0" layoutY="348.0" mnemonicParsing="false" onAction="#handleNewBorrowButtonClick" prefHeight="88.0" prefWidth="201.0" style="-fx-font-size: 20;" text="Emprunter" />
-        <Button layoutX="540.0" layoutY="232.0" mnemonicParsing="false" onAction="#handleNewAdherentButtonClick" prefHeight="88.0" prefWidth="201.0" style="-fx-font-size: 20;" text="Nouvel adhérent" />
-        <Button fx:id="showLateBooksButton" layoutX="540.0" layoutY="500.0" mnemonicParsing="false" text="Afficher Liste Retard" onAction="#showLateLoansView" prefHeight="88.0" prefWidth="201.0" style="-fx-font-size: 20;" />
-        <Button layoutX="253.0" layoutY="664.0" mnemonicParsing="false" text="Rafraichir" onAction="#refreshStatut"/>
+      <Button layoutX="539.0" layoutY="447.0" mnemonicParsing="false" onAction="#handleNewBorrowButtonClick" prefHeight="88.0" prefWidth="201.0" style="-fx-font-size: 20;" text="Emprunter" />
+        <Button layoutX="539.0" layoutY="348.0" mnemonicParsing="false" onAction="#handleNewAdherentButtonClick" prefHeight="88.0" prefWidth="201.0" style="-fx-font-size: 20;" text="Nouvel adhérent" />
+        <Button fx:id="showLateBooksButton" layoutX="539.0" layoutY="547.0" mnemonicParsing="false" onAction="#showLateLoansView" prefHeight="88.0" prefWidth="201.0" style="-fx-font-size: 20;" text="Afficher Liste Retard" />
+        <Button layoutX="253.0" layoutY="664.0" mnemonicParsing="false" onAction="#refreshStatut" text="Rafraichir" />
     </children>
 </AnchorPane>

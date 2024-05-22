@@ -48,11 +48,6 @@ public class MainControllers {
     private TextArea SearchUser;
 
     private TextField searchTextField;
-    private BookSearch bookSearch;
-
-    public MainControllers() throws SQLException {
-        this.bookSearch = new BookSearch();
-    }
 
     @FXML
     private TableView<Utilisateur> userTableView;
@@ -69,7 +64,7 @@ public class MainControllers {
     private Utilisateur selectedUser;
 
     public void searchAndUpdateTableView(String keyword) {
-        List<Book> books = bookSearch.search(keyword, startIndex, pageSize);
+        List<Book> books = ApiCaller.call("anywhere",keyword, startIndex, pageSize);
         bookTableView.getItems().setAll(books);
     }
 
@@ -78,7 +73,7 @@ public class MainControllers {
     @FXML
     private void loadFirst20Books() {
         String recherche = SearchBook.getText();
-        List<Book> books = bookSearch.search(recherche, startIndex, pageSize);
+        List<Book> books = ApiCaller.call("anywhere",recherche, startIndex, pageSize);
         bookTableView.getItems().setAll(books);
     }
     @FXML
@@ -291,7 +286,7 @@ public class MainControllers {
         searchbyratingscount.setToggleGroup(searchToggleGroup);
         searchbylanguage.setToggleGroup(searchToggleGroup);
 
-        // Ajouter des écouteurs de changement pour les boutons radio
+     /*   // Ajouter des écouteurs de changement pour les boutons radio
         searchToggleGroup.selectedToggleProperty().addListener((observable, oldToggle, newToggle) -> {
             if (newToggle == searchbyauthor) {
                 // Appeler la méthode de recherche par auteur
@@ -327,7 +322,7 @@ public class MainControllers {
                 // Appeler la méthode de recherche par langue
                 loadBooksByLanguage();
             }
-        });
+        });*/
     }
 
 
@@ -359,9 +354,9 @@ public class MainControllers {
 
 
 
-    private void loadBooksByAuthor() {
+   /* private void loadBooksByAuthor() {
         String author = SearchBook.getText();
-        List<Book> books = bookSearch.searchByAuthor(author, startIndex, pageSize);
+        List<Book> books = Apicaller.call.ByAuthor(author, startIndex, pageSize);
         if (books == null) {
             bookTableView.getItems().clear();
         } else {
@@ -371,7 +366,7 @@ public class MainControllers {
 
     private void loadBooksByTitle() {
         String title = SearchBook.getText();
-        List<Book> books = bookSearch.searchByTitle(title, startIndex, pageSize);
+        List<Book> books = Apicaller.call.ByTitle(title, startIndex, pageSize);
         if (books == null) {
             bookTableView.getItems().clear();
         } else {
@@ -382,12 +377,12 @@ public class MainControllers {
 
     private void loadBooksByISBN() {
         String isbn = SearchBook.getText();
-        List<Book> books = bookSearch.searchByISBN(isbn, startIndex, pageSize);
+        List<Book> books = Apicaller.call.ByISBN(isbn, startIndex, pageSize);
         bookTableView.getItems().setAll(books);
     }
     private void loadBooksByPublisher() {
         String publisher = SearchBook.getText();
-        List<Book> books = bookSearch.searchByPublisher(publisher, startIndex, pageSize);
+        List<Book> books = Apicaller.call.ByPublisher(publisher, startIndex, pageSize);
         if (books == null) {
             bookTableView.getItems().clear();
         } else {
@@ -397,7 +392,7 @@ public class MainControllers {
 
     private void loadBooksByPublishedDate() {
         String publishedDate = SearchBook.getText();
-        List<Book> books = bookSearch.searchByPublishedDate(publishedDate, startIndex, pageSize);
+        List<Book> books = Apicaller.call.ByPublishedDate(publishedDate, startIndex, pageSize);
         if (books == null) {
             bookTableView.getItems().clear();
         } else {
@@ -407,7 +402,7 @@ public class MainControllers {
 
     private void loadBooksByDescription() {
         String description = SearchBook.getText();
-        List<Book> books = bookSearch.searchByDescription(description, startIndex, pageSize);
+        List<Book> books = Apicaller.call.ByDescription(description, startIndex, pageSize);
         if (books == null) {
             bookTableView.getItems().clear();
         } else {
@@ -418,7 +413,7 @@ public class MainControllers {
     private void loadBooksByPageCount() {
         try {
             int pageCount = Integer.parseInt(SearchBook.getText());
-            List<Book> books = bookSearch.searchByPageCount(pageCount, startIndex, pageSize);
+            List<Book> books = Apicaller.call.ByPageCount(pageCount, startIndex, pageSize);
             if (books == null) {
                 bookTableView.getItems().clear();
             } else {
@@ -432,7 +427,7 @@ public class MainControllers {
 
     private void loadBooksByCategories() {
         String category = SearchBook.getText();
-        List<Book> books = bookSearch.searchByCategories(category, startIndex, pageSize);
+        List<Book> books = Apicaller.call.ByCategories(category, startIndex, pageSize);
         if (books == null) {
             bookTableView.getItems().clear();
         } else {
@@ -443,7 +438,7 @@ public class MainControllers {
     private void loadBooksByAverageRating() {
         try {
             double averageRating = Double.parseDouble(SearchBook.getText());
-            List<Book> books = bookSearch.searchByAverageRating(averageRating, startIndex, pageSize);
+            List<Book> books = Apicaller.call.ByAverageRating(averageRating, startIndex, pageSize);
             if (books == null) {
                 bookTableView.getItems().clear();
             } else {
@@ -458,7 +453,7 @@ public class MainControllers {
     private void loadBooksByRatingsCount() {
         try {
             int ratingsCount = Integer.parseInt(SearchBook.getText());
-            List<Book> books = bookSearch.searchByRatingsCount(ratingsCount, startIndex, pageSize);
+            List<Book> books = Apicaller.call.ByRatingsCount(ratingsCount, startIndex, pageSize);
             if (books == null) {
                 bookTableView.getItems().clear();
             } else {
@@ -472,13 +467,13 @@ public class MainControllers {
 
     private void loadBooksByLanguage() {
         String language = SearchBook.getText();
-        List<Book> books = bookSearch.searchByLanguage(language, startIndex, pageSize);
+        List<Book> books = Apicaller.call.ByLanguage(language, startIndex, pageSize);
         if (books == null) {
             bookTableView.getItems().clear();
         } else {
             bookTableView.getItems().setAll(books);
         }
-    }
+    }*/
 
 
     @FXML
