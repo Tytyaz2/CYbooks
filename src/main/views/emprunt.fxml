@@ -17,9 +17,9 @@
 
 
         <VBox layoutX="93.0" layoutY="58.0" prefHeight="576.0" prefWidth="354.0" spacing="10">
-            <Label text="Liste des adhérents :" />
+            <Label text="Liste d'adhérent :" />
             <HBox spacing="10">
-                <TextArea fx:id="textFieldTitre" prefHeight="37.0" prefWidth="329.0" promptText="Recherche de livres..." />
+                <TextArea fx:id="textFieldUser" prefHeight="37.0" prefWidth="329.0" promptText="Recherche d'Utilisateur" />
                 <Button prefHeight="25.0" prefWidth="166.0" text="Rechercher" onAction="#handleSearchUser"/>
             </HBox>
             <HBox prefHeight="555.0" prefWidth="341.0">
