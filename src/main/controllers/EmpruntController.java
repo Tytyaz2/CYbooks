@@ -24,6 +24,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class EmpruntController {
 
@@ -32,6 +33,9 @@ public class EmpruntController {
     @FXML
     private TableView<Utilisateur> userTableView;
 
+    @FXML
+    private TextArea textFieldTitre;
+
 
 
     @FXML
@@ -39,6 +43,9 @@ public class EmpruntController {
 
     @FXML
     private TableColumn<Utilisateur, String> prenomColumn;
+
+    @FXML
+    private TextArea SearchUser;
 
 
     // Méthode appelée lors du chargement de la vue FXML
@@ -423,6 +430,70 @@ public class EmpruntController {
             e.printStackTrace();
         }
     }
+
+    public void handleSearchUser(ActionEvent actionEvent) throws SQLException {
+        List<Utilisateur> data = new ArrayList<>();
+        String searchPattern = textFieldTitre.getText();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        userTableView.getItems().clear();
+        if (Objects.equals(searchPattern, "")) {
+            loadData();
+        } else {
+            try {
+                // Utiliser la méthode getConnection() de DatabaseConnection
+                System.out.println("Tentative de connexion à la base de données...");
+                connection = DatabaseConnection.getConnection();
+                System.out.println("Connexion réussie !");
+
+                // Exécuter la requête pour récupérer les données
+                String query = "SELECT * FROM utilisateur WHERE nom LIKE ? OR prenom LIKE ? OR email LIKE ?";
+                System.out.println("Exécution de la requête : " + query);
+                preparedStatement = connection.prepareStatement(query);
+
+                // Définir les valeurs des paramètres de substitution
+                preparedStatement.setString(1, searchPattern); // Pour le nom
+                preparedStatement.setString(2, searchPattern); // Pour le prénom
+                preparedStatement.setString(3, searchPattern); // Pour l'email
+
+                resultSet = preparedStatement.executeQuery();
+
+                // Itérer à travers le jeu de résultats et ajouter les données à la liste
+                while (resultSet.next()) {
+                    Utilisateur model = new Utilisateur(
+                            resultSet.getString("email"),
+                            resultSet.getString("prenom"),
+                            resultSet.getString("nom"),
+                            resultSet.getInt("statut"),
+                            resultSet.getInt("MaxEmprunt"));
+
+                    data.add(model);
+                    System.out.println("Bonjouré");
+                }
+
+                System.out.println("Données récupérées avec succès !");
+
+                // Peupler TableView avec les données
+                userTableView.getItems().addAll(data);
+                System.out.println("Données ajoutées à la TableView avec succès !");
+
+            } catch (SQLException e) {
+                System.err.println("Erreur lors de la récupération des données : " + e.getMessage());
+            } finally {
+                // Fermer les ressources
+                try {
+                    if (resultSet != null) resultSet.close();
+                    if (preparedStatement != null) preparedStatement.close();
+                    if (connection != null) connection.close();
+                    System.out.println("Ressources fermées avec succès !");
+                } catch (SQLException e) {
+                    System.err.println("Erreur lors de la fermeture des ressources : " + e.getMessage());
+                }
+            }
+        }
+    }
+
 }
 
 
