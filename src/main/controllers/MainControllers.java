@@ -37,7 +37,7 @@ import java.util.Objects;
 
 public class MainControllers {
     public Button showLateBooksButton;
-    private int startIndex = 0;
+    private int startIndex = 1;
     private final int pageSize = 20;
 
     @FXML

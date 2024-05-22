@@ -26,7 +26,8 @@ public class ApiCaller {
     public static List<Book> call(String categorie,String query, int start, int number) {
 // is appended to the query a link to the API, parameters to get only books,
 // options to get the API's response in the expected format
-        String myURL = "https://catalogue.bnf.fr/api/SRU?version=1.2&operation=searchRetrieve&query=bib.doctype any \"a\" and bib."+ categorie +" any \""+ query +"\" &recordSchema=dublincore";
+        System.out.println(start +" "+ number );
+        String myURL = "https://catalogue.bnf.fr/api/SRU?version=1.2&operation=searchRetrieve&query=bib.doctype any \"a\" and bib."+ categorie +" any \""+ query +"\"&recordSchema=dublincore&maximumRecords="+number+"&startRecord="+start;
         URI juri = null;
 
 // this is to encode special characters in a usable format eg. " " gives " "
