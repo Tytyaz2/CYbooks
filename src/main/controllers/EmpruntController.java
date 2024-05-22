@@ -35,6 +35,8 @@ public class EmpruntController {
 
     @FXML
     private TextArea textFieldTitre;
+    @FXML
+    private TextArea textFieldUser;
 
 
 
@@ -431,9 +433,12 @@ public class EmpruntController {
         }
     }
 
+    @FXML
+
     public void handleSearchUser(ActionEvent actionEvent) throws SQLException {
         List<Utilisateur> data = new ArrayList<>();
-        String searchPattern = textFieldTitre.getText();
+
+        String searchPattern = textFieldUser.getText();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
