@@ -510,8 +510,8 @@ public class MainControllers {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/pageadherent.fxml"));
             Parent root = loader.load();
-            AdherentController adherentController = loader.getController();
-            adherentController.displayUserDetails(selectedUser);
+            UserController userController = loader.getController();
+            userController.displayUserDetails(selectedUser);
             Stage stage = (Stage) bookTableView.getScene().getWindow();
             stage.getScene().setRoot(root);
         } catch (IOException e) {

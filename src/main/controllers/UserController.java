@@ -24,7 +24,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
-public class AdherentController {
+public class UserController {
 
     protected User user;
     @FXML
