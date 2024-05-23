@@ -1,13 +1,13 @@
 package main.models;
 
-import main.models.Utilisateur;
-
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The DatabaseConnection class provides methods to interact with the database.
+ */
 public class DatabaseConnection {
     private static final String URL = "jdbc:mysql://localhost:3306/";
     private static final String DATABASE_NAME = "Cybooks";
@@ -24,15 +24,21 @@ public class DatabaseConnection {
         }
     }
 
-    public static List<Emprunt> getLateLoans() throws SQLException {
-        List<Emprunt> lateLoans = new ArrayList<>();
+    /**
+     * Retrieves a list of borrows that are late.
+     *
+     * @return a list of late borrows
+     * @throws SQLException if a database access error occurs
+     */
+    public static List<Borrow> getLateBorrow() throws SQLException {
+        List<Borrow> lateBorrows = new ArrayList<>();
         LocalDate today = LocalDate.now();
 
-        String query = "SELECT e.user_email, e.livre_isbn, e.date_debut, e.date_fin, u.prenom, u.nom, b.titre " +
-                "FROM Emprunt e " +
-                "JOIN Utilisateur u ON e.user_email = u.email " +
-                "JOIN Livre b ON e.livre_isbn = b.isbn " +
-                "WHERE e.date_fin < ?";
+        String query = "SELECT e.user_email, e.book_isbn, e.start, e.end, u.firstname, u.lastname, b.title " +
+                "FROM Borrow e " +
+                "JOIN User u ON e.user_email = u.email " +
+                "JOIN Book b ON e.book_isbn = b.isbn " +
+                "WHERE e.end < ?";
 
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
@@ -42,25 +48,30 @@ public class DatabaseConnection {
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     String userEmail = resultSet.getString("user_email");
-                    String bookIsbn = resultSet.getString("livre_isbn");
-                    LocalDate startDate = resultSet.getDate("date_debut").toLocalDate();
-                    LocalDate endDate = resultSet.getDate("date_fin").toLocalDate();
-                    String firstName = resultSet.getString("prenom");
-                    String lastName = resultSet.getString("nom");
-                    String title = resultSet.getString("titre");
+                    String bookIsbn = resultSet.getString("book_isbn");
+                    LocalDate startDate = resultSet.getDate("start").toLocalDate();
+                    LocalDate endDate = resultSet.getDate("end").toLocalDate();
+                    String firstName = resultSet.getString("firstname");
+                    String lastName = resultSet.getString("lastname");
+                    String title = resultSet.getString("title");
 
-                    Utilisateur user = new Utilisateur(userEmail, firstName, lastName, 0, 0); // Status and maxLoan are placeholders
+                    User user = new User(userEmail, firstName, lastName, 0, 0); // Status and maxLoan are placeholders
                     Book book = new Book(bookIsbn, title, ""); // Author is a placeholder
-                    Emprunt loan = new Emprunt(user, book, startDate, endDate);
+                    Borrow borrow = new Borrow(user, book, startDate, endDate);
 
-                    lateLoans.add(loan);
+                    lateBorrows.add(borrow);
                 }
             }
         }
-        return lateLoans;
+        return lateBorrows;
     }
 
 
+    /**
+     * Creates the database if it does not exist.
+     *
+     * @throws SQLException if a database access error occurs
+     */
     private static void createDatabaseIfNotExists() throws SQLException {
         try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
             String createDatabaseQuery = "CREATE DATABASE IF NOT EXISTS " + DATABASE_NAME;
@@ -69,95 +80,108 @@ public class DatabaseConnection {
             }
         }
     }
-    public static void updateUserNbrEmprunt(String email, int nbrEmprunt) throws SQLException {
-        String query = "UPDATE Utilisateur SET MaxEmprunt = ? WHERE email = ?";
-
-        try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            preparedStatement.setInt(1, 5 - nbrEmprunt);
-            preparedStatement.setString(2, email);
-
-            preparedStatement.executeUpdate();
-            System.out.println("Nombre d'emprunts restants mis à jour pour l'utilisateur avec l'email: " + email);
-        }
-    }
 
 
+
+
+    /**
+     * Creates tables if they do not exist in the database.
+     *
+     * @throws SQLException if a database access error occurs
+     */
     private static void createTablesIfNotExist() throws SQLException {
         try (Connection connection = getConnection()) {
-            String createTableQueryUtilisateur = "CREATE TABLE IF NOT EXISTS Utilisateur (" +
+            // SQL Query that create the User's Table
+            String createTableQueryUser = "CREATE TABLE IF NOT EXISTS User (" +
                     "email VARCHAR(100) PRIMARY KEY, " +
-                    "prenom VARCHAR(255), " +
-                    "nom VARCHAR(255), " +
-                    "statut INT NOT NULL," +
-                    "MaxEmprunt INT NOT NULL" +
+                    "firstname VARCHAR(255), " +
+                    "lastname VARCHAR(255), " +
+                    "state INT NOT NULL," +
+                    "maxborrow INT NOT NULL" +
                     ")";
-
-            String createTableQueryLivre = "CREATE TABLE IF NOT EXISTS Livre (" +
+            // SQL Query that create the Book's Table
+            String createTableQueryBook = "CREATE TABLE IF NOT EXISTS Book (" +
                     "isbn VARCHAR(100)  PRIMARY KEY, " +
-                    "titre VARCHAR(255), " +
-                    "auteur VARCHAR(255), " +
+                    "title VARCHAR(255), " +
+                    "author VARCHAR(255), " +
                     "stock INT DEFAULT 10" +
                     ")";
-            String createTableQueryEmprunt = "CREATE TABLE IF NOT EXISTS Emprunt (" +
+            // SQL Query that create the Borrow's Table
+            String createTableQueryBorrow = "CREATE TABLE IF NOT EXISTS Borrow (" +
                     "user_email VARCHAR(100), " +
-                    "livre_isbn VARCHAR(100) , " +
-                    "date_debut DATE, " +
-                    "date_fin DATE, " +
-                    "FOREIGN KEY (user_email) REFERENCES Utilisateur(email), " +
-                    "FOREIGN KEY (livre_isbn) REFERENCES Livre(isbn)" +
+                    "book_isbn VARCHAR(100) , " +
+                    "start DATE, " +
+                    "end DATE, " +
+                    "FOREIGN KEY (user_email) REFERENCES User(email), " +
+                    "FOREIGN KEY (book_isbn) REFERENCES Book(isbn)" +
                     ")";
-            // Requête SQL pour créer la table Historique
-            String createHistoquery = "CREATE TABLE IF NOT EXISTS Historique ("
+            // SQL Query that create the History's Table
+            String createHistoquery = "CREATE TABLE IF NOT EXISTS History ("
                     + "id INT AUTO_INCREMENT PRIMARY KEY,"
-                    + "livre_isbn VARCHAR(100),"
+                    + "book_isbn VARCHAR(100),"
                     + "user_email VARCHAR(100),"
-                    + "date_debut DATE,"
-                    + "date_fin DATE,"
-                    + "retard BOOLEAN,"
-                    + "FOREIGN KEY (livre_isbn) REFERENCES Livre(isbn),"
-                    + "FOREIGN KEY (user_email) REFERENCES Utilisateur(email)"
+                    + "start DATE,"
+                    + "end DATE,"
+                    + "delay BOOLEAN,"
+                    + "FOREIGN KEY (book_isbn) REFERENCES Book(isbn),"
+                    + "FOREIGN KEY (user_email) REFERENCES User(email)"
                     + ")";
 
-            try (PreparedStatement createTableStatementUtilisateur = connection.prepareStatement(createTableQueryUtilisateur);
-                 PreparedStatement createTableStatementLivre = connection.prepareStatement(createTableQueryLivre);
-                 PreparedStatement createTableStatementEmprunt = connection.prepareStatement(createTableQueryEmprunt);
-                 PreparedStatement createTableStatementHistorique = connection.prepareStatement(createHistoquery)) {
-                createTableStatementUtilisateur.executeUpdate();
-                createTableStatementLivre.executeUpdate();
-                createTableStatementEmprunt.executeUpdate();
-                createTableStatementHistorique.executeUpdate();
+            try (PreparedStatement createTableStatementUser2= connection.prepareStatement(createTableQueryUser);
+                 PreparedStatement createTableStatementBook2 = connection.prepareStatement(createTableQueryBook);
+                 PreparedStatement createTableStatementBorrow2 = connection.prepareStatement(createTableQueryBorrow);
+                 PreparedStatement createTableStatementHistory = connection.prepareStatement(createHistoquery)) {
+                createTableStatementUser2.executeUpdate();
+                createTableStatementBook2.executeUpdate();
+                createTableStatementBorrow2.executeUpdate();
+                createTableStatementHistory.executeUpdate();
             }
         }
     }
 
-
+    /**
+     * Checks if a book exists in the database.
+     *
+     * @param isbn the ISBN of the book
+     * @return true if the book exists, false otherwise
+     * @throws SQLException if a database access error occurs
+     */
     public static boolean isBookExists(String isbn) throws SQLException {
         try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Livre WHERE isbn = ?")) {
+             PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Book WHERE isbn = ?")) {
             stmt.setString(1, isbn);
             try (ResultSet rs = stmt.executeQuery()) {
                 return rs.next() && rs.getInt(1) > 0;
             }
         }
     }
-
+    /**
+     * Inserts a new book into the database.
+     *
+     * @param book the book to insert
+     * @throws SQLException if a database access error occurs
+     */
     public static void insertBook(Book book) throws SQLException {
         try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement("INSERT INTO Livre (isbn, titre, auteur, stock) VALUES (?, ?, ?, ?)")) {
+             PreparedStatement stmt = conn.prepareStatement("INSERT INTO Book (isbn, title, author, stock) VALUES (?, ?, ?, ?)")) {
             stmt.setString(1, book.getIsbn());
             stmt.setString(2, book.getTitle());
             stmt.setString(3, book.getAuthors());
-            stmt.setInt(4, 10); // Stock initial à 10
+            stmt.setInt(4, 10); // Initial stock at 10
             stmt.executeUpdate();
         }
     }
-
+    /**
+     * Retrieves the stock quantity of a book from the database.
+     *
+     * @param isbn the ISBN of the book
+     * @return the stock quantity of the book
+     * @throws SQLException if a database access error occurs
+     */
     public static int getBookStock(String isbn) throws SQLException {
         int stock = 0;
         try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement("SELECT stock FROM Livre WHERE isbn = ?")) {
+             PreparedStatement stmt = conn.prepareStatement("SELECT stock FROM Book WHERE isbn = ?")) {
             stmt.setString(1, isbn);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -167,40 +191,52 @@ public class DatabaseConnection {
         }
         return stock;
     }
-
+    /**
+     * Updates the stock quantity of a book in the database.
+     *
+     * @param isbn     the ISBN of the book
+     * @param newStock the new stock quantity
+     * @throws SQLException if a database access error occurs
+     */
     public static void updateStock(String isbn, int newStock) throws SQLException {
         try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement("UPDATE Livre SET stock = ? WHERE isbn = ?")) {
+             PreparedStatement stmt = conn.prepareStatement("UPDATE Book SET stock = ? WHERE isbn = ?")) {
             stmt.setInt(1, newStock);
             stmt.setString(2, isbn);
             stmt.executeUpdate();
         }
     }
-
+    /**
+     * Retrieves the maximum number of borrowings allowed for a user.
+     *
+     * @param userEmail the email of the user
+     * @return the maximum number of borrowings allowed
+     * @throws SQLException if a database access error occurs
+     */
     public static int getUserMaxEmprunt(String userEmail) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        int maxEmprunt = 0;
+        int maxBorrow = 0;
 
         try {
-            // Obtenez la connexion à la base de données
+            // Connection to the DataBase
             connection = getConnection();
 
-            // Préparez la requête SQL pour récupérer le nombre d'emprunts maximal de l'utilisateur
-            String query = "SELECT MaxEmprunt FROM utilisateur WHERE email = ?";
+            // Prepare the query to retrieve the User's maxborrow
+            String query = "SELECT maxborrow FROM User WHERE email = ?";
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, userEmail);
 
-            // Exécutez la requête et récupérez le résultat
+            // Execute the query
             resultSet = preparedStatement.executeQuery();
 
-            // Si une ligne est renvoyée, récupérez le nombre d'emprunts maximal
+            // Retrieve the maxborrow
             if (resultSet.next()) {
-                maxEmprunt = resultSet.getInt("MaxEmprunt");
+                maxBorrow = resultSet.getInt("maxborrow");
             }
         } finally {
-            // Fermer les ressources
+            // closeResources
             if (resultSet != null) {
                 resultSet.close();
             }
@@ -212,36 +248,18 @@ public class DatabaseConnection {
             }
         }
 
-        return maxEmprunt;
+        return maxBorrow;
 
 
     }
 
-    public static void updateBookStock(String isbn, int newStock) {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
 
-        try {
-            connection = getConnection();
-
-            String query = "UPDATE Livre SET stock = ? WHERE isbn = ?";
-            preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, newStock);
-            preparedStatement.setString(2, isbn);
-
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
+    /**
+     * Retrieves the stock quantity of a book from the database.
+     *
+     * @param isbn the ISBN of the book
+     * @return the stock quantity of the book
+     */
     public static int getStockFromDatabase(String isbn) {
         int stock = 0;
         Connection connection = null;
@@ -251,7 +269,7 @@ public class DatabaseConnection {
         try {
             connection = getConnection();
 
-            String query = "SELECT stock FROM Livre WHERE isbn = ?";
+            String query = "SELECT stock FROM Book WHERE isbn = ?";
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, isbn);
             resultSet = preparedStatement.executeQuery();
@@ -274,8 +292,47 @@ public class DatabaseConnection {
         return stock;
     }
 
+    /**
+     * Updates the maximum number of borrowings allowed for a user in the database.
+     *
+     * @param userEmail    the email of the user
+     * @param newMaxBorrow the new maximum number of borrowings allowed
+     * @throws SQLException if a database access error occurs
+     */
+    public static void updateUserMaxBorrow(String userEmail, int newMaxBorrow) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
 
-    public static void updateUserMaxEmprunt(String userEmail, int newMaxEmprunt) throws SQLException {
+        try {
+
+            connection = getConnection();
+
+
+            String query = "UPDATE User SET maxborrow = ? WHERE email = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, newMaxBorrow);
+            preparedStatement.setString(2, userEmail);
+
+            // Execute the Query
+            preparedStatement.executeUpdate();
+        } finally {
+            // Fermer les ressources
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    }
+    /**
+     * Updates the status of a user in the database.
+     *
+     * @param userEmail the email of the user
+     * @param newState  the new status of the user
+     * @throws SQLException if a database access error occurs
+     */
+    public static void updateUserStatus(String userEmail, int newState) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
@@ -284,9 +341,9 @@ public class DatabaseConnection {
             connection = getConnection();
 
             // Préparez la requête SQL pour mettre à jour le nombre d'emprunts maximal de l'utilisateur
-            String query = "UPDATE utilisateur SET MaxEmprunt = ? WHERE email = ?";
+            String query = "UPDATE User SET state = ? WHERE email = ?";
             preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, newMaxEmprunt);
+            preparedStatement.setInt(1, newState);
             preparedStatement.setString(2, userEmail);
 
             // Exécutez la requête
@@ -302,34 +359,14 @@ public class DatabaseConnection {
         }
     }
 
-    public static void updateUserStatus(String userEmail, int newStatut) throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-
-        try {
-            // Obtenez la connexion à la base de données
-            connection = getConnection();
-
-            // Préparez la requête SQL pour mettre à jour le nombre d'emprunts maximal de l'utilisateur
-            String query = "UPDATE utilisateur SET statut = ? WHERE email = ?";
-            preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, newStatut);
-            preparedStatement.setString(2, userEmail);
-
-            // Exécutez la requête
-            preparedStatement.executeUpdate();
-        } finally {
-            // Fermer les ressources
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
-            }
-        }
-    }
-
-
+    /**
+     * Checks if a book is already borrowed by a user.
+     *
+     * @param userEmail the email of the user
+     * @param bookISBN  the ISBN of the book
+     * @return true if the book is already borrowed by the user, false otherwise
+     * @throws SQLException if a database access error occurs
+     */
     public static boolean isBookAlreadyBorrowed(String userEmail, String bookISBN) throws SQLException {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -337,7 +374,7 @@ public class DatabaseConnection {
 
         try {
             conn = getConnection();
-            String query = "SELECT COUNT(*) FROM Emprunt WHERE user_email = ? AND livre_isbn = ?";
+            String query = "SELECT COUNT(*) FROM Borrow WHERE user_email = ? AND book_isbn = ?";
             stmt = conn.prepareStatement(query);
             stmt.setString(1, userEmail);
             stmt.setString(2, bookISBN);
@@ -355,6 +392,13 @@ public class DatabaseConnection {
     }
 
 
+    /**
+     * Closes the ResultSet, Statement, and Connection to avoid resource leaks.
+     *
+     * @param rs   the ResultSet to close
+     * @param stmt the Statement to close
+     * @param conn the Connection to close
+     */
     public static void closeResources(ResultSet rs, Statement stmt, Connection conn) {
         try {
             if (rs != null) {
@@ -378,67 +422,79 @@ public class DatabaseConnection {
             e.printStackTrace();
         }
     }
+    /**
+     * Retrieves a connection to the database.
+     *
+     * @return a Connection object
+     * @throws SQLException if a database access error occurs
+     */
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL + DATABASE_NAME, USERNAME, PASSWORD);
     }
-
-    public static void insertUserData(String email, String prenom, String nom) throws SQLException {
-        String query = "INSERT INTO Utilisateur (email, prenom, nom, statut, MaxEmprunt) VALUES (?, ?, ?, ?, ?)";
+    /**
+     * Inserts user data into the User table.
+     *
+     * @param email     the email of the user
+     * @param firstname the first name of the user
+     * @param lastname  the last name of the user
+     * @throws SQLException if a database access error occurs
+     */
+    public static void insertUserData(String email, String firstname, String lastname) throws SQLException {
+        String query = "INSERT INTO User (email, firstname, lastname, state, maxborrow) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setString(1, email);
-            preparedStatement.setString(2, prenom);
-            preparedStatement.setString(3, nom);
+            preparedStatement.setString(2, firstname);
+            preparedStatement.setString(3, lastname);
             preparedStatement.setInt(4, 0); // statut
             preparedStatement.setInt(5, 5); // MaxEmprunt
 
 
             preparedStatement.executeUpdate();
-            System.out.println("Data inserted successfully into Utilisateur table!");
+            System.out.println("Data inserted successfully into User table!");
         }
     }
 
 
 
-
-    public static void insertDataEmprunt(String user_email, String livreIsbn, String dateDebut, String dateFin) throws SQLException {
-        String query = "INSERT INTO Emprunt (user_email, livre_isbn, date_debut, date_fin) VALUES (?, ?, ?, ?)";
+    /**
+     * Inserts borrow data into the Borrow table.
+     *
+     * @param user_email the email of the user
+     * @param bookIsbn   the ISBN of the book
+     * @param start      the start date of the borrowing period
+     * @param end        the end date of the borrowing period
+     * @throws SQLException if a database access error occurs
+     */
+    public static void insertDataBorrow(String user_email, String bookIsbn, String start, String end) throws SQLException {
+        String query = "INSERT INTO Borrow (user_email, book_isbn, start, end) VALUES (?, ?, ?, ?)";
 
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setString(1, user_email);
-            preparedStatement.setString(2, livreIsbn);
-            preparedStatement.setString(3, dateDebut);
-            preparedStatement.setString(4, dateFin);
+            preparedStatement.setString(2, bookIsbn);
+            preparedStatement.setString(3, start);
+            preparedStatement.setString(4, end);
 
             preparedStatement.executeUpdate();
             System.out.println("Data inserted successfully into Emprunt table!");
         }
     }
 
-    public static void insertDataLivre(String isbn, String titre, String auteur) throws SQLException {
-        String query = "INSERT INTO Livre (isbn, titre, auteur) VALUES (?, ?, ?)";
-
-        try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            preparedStatement.setString(1, isbn);
-            preparedStatement.setString(2, titre);
-            preparedStatement.setString(3, auteur);
-
-            preparedStatement.executeUpdate();
-            System.out.println("Data inserted successfully into Livre table!");
-        }
-    }
 
 
-
-    public static List<Utilisateur> getAllUtilisateur() throws SQLException {
-        List<Utilisateur> userList = new ArrayList<>();
-        String query = "SELECT email, prenom, nom, statut, MaxEmprunt FROM Utilisateur";
+    /**
+     * Retrieves all users from the User table.
+     *
+     * @return a list of users
+     * @throws SQLException if a database access error occurs
+     */
+    public static List<User> getAllUser() throws SQLException {
+        List<User> userList = new ArrayList<>();
+        String query = "SELECT email, firstname,lastname, state, maxborrow FROM User";
 
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(query);
@@ -446,23 +502,29 @@ public class DatabaseConnection {
 
             while (resultSet.next()) {
                 String email = resultSet.getString("email");
-                String prenom = resultSet.getString("prenom");
-                String nom = resultSet.getString("nom");
-                int statut = resultSet.getInt("statut");
-                int maxEmprunt = resultSet.getInt("MaxEmprunt");
+                String firstname = resultSet.getString("firstname");
+                String lastname = resultSet.getString("lastname");
+                int state = resultSet.getInt("state");
+                int maxborrow = resultSet.getInt("maxborrow");
 
 
-                // Création de l'objet Utilisateur avec la nouvelle colonne nbrEmprunt
-                Utilisateur user = new Utilisateur(email, prenom, nom, statut, maxEmprunt);
+                // Création de l'objet User avec la nouvelle colonne nbrEmprunt
+                User user = new User(email, firstname, lastname, state, maxborrow);
                 userList.add(user);
             }
         }
         return userList;
     }
-
-    public static List<Emprunt> getEmpruntsUtilisateur(String userEmail) throws SQLException {
-        List<Emprunt> emprunts = new ArrayList<>();
-        String query = "SELECT * FROM emprunt WHERE user_email = ?";
+    /**
+     * Retrieves borrows associated with a specific user.
+     *
+     * @param userEmail the email of the user
+     * @return a list of borrows associated with the user
+     * @throws SQLException if a database access error occurs
+     */
+    public static List<Borrow> getUserBorrow(String userEmail) throws SQLException {
+        List<Borrow> borrows = new ArrayList<>();
+        String query = "SELECT * FROM Borrow WHERE user_email = ?";
 
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -472,59 +534,71 @@ public class DatabaseConnection {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
                     // Récupérer les données de l'emprunt depuis le résultat de la requête
-                    String livreIsbn = resultSet.getString("livre_isbn");
-                    LocalDate dateDebut = resultSet.getDate("date_debut").toLocalDate();
-                    LocalDate dateFin = resultSet.getDate("date_fin").toLocalDate();
+                    String bookIsbn = resultSet.getString("book_isbn");
+                    LocalDate start = resultSet.getDate("start").toLocalDate();
+                    LocalDate end = resultSet.getDate("end").toLocalDate();
 
 
                     // Supposez que vous ayez une méthode pour récupérer un utilisateur à partir de son email
-                    Utilisateur user = getUserByEmail(userEmail);
+                    User user = getUserByEmail(userEmail);
 
                     // Supposez que vous ayez une méthode pour récupérer un livre à partir de son ISBN
-                    Book book = getBookByISBN(livreIsbn);
+                    Book book = getBookByISBN(bookIsbn);
 
                     // Créer un nouvel objet Emprunt et l'ajouter à la liste
-                    Emprunt emprunt = new Emprunt(user, book, dateDebut, dateFin);
-                    emprunts.add(emprunt);
+                    Borrow borrow = new Borrow(user, book, start, end);
+                    borrows.add(borrow);
                 }
             }
         }
-        return emprunts;
+        return borrows;
     }
 
-    // Méthode pour récupérer un utilisateur à partir de son email
-    public static Utilisateur getUserByEmail(String email) throws SQLException {
-        Utilisateur user = null;
-        String query = "SELECT * FROM utilisateur WHERE email = ?";
+    /**
+     * Retrieves a user object by email.
+     *
+     * @param email the email of the user
+     * @return a User object
+     * @throws SQLException if a database access error occurs
+     */
+    public static User getUserByEmail(String email) throws SQLException {
+        User user = null;
+        String query = "SELECT * FROM User WHERE email = ?";
 
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, email);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    String prenom = resultSet.getString("prenom");
-                    String nom = resultSet.getString("nom");
-                    int statut = resultSet.getInt("statut");
-                    int maxEmprunt = resultSet.getInt("MaxEmprunt");
-                    user = new Utilisateur(email, prenom, nom, statut, maxEmprunt);
+                    String firstname = resultSet.getString("firstname");
+                    String lastname = resultSet.getString("lastname");
+                    int state = resultSet.getInt("state");
+                    int maxborrow = resultSet.getInt("maxborrow");
+                    user = new User(email, firstname, lastname, state, maxborrow);
                 }
             }
         }
         return user;
     }
 
-    // Méthode pour récupérer un livre à partir de son ISBN
+    /**
+     * Retrieves a book object by ISBN.
+     *
+     * @param isbn the ISBN of the book
+     * @return a Book object
+     * @throws SQLException if a database access error occurs
+     */
     public static Book getBookByISBN(String isbn) throws SQLException {
         Book book = null;
-        String query = "SELECT * FROM livre WHERE isbn = ?";
+        String query = "SELECT * FROM Book WHERE isbn = ?";
 
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, isbn);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    String title = resultSet.getString("titre");
-                    String author = resultSet.getString("auteur");
+                    String title = resultSet.getString("title");
+                    String author = resultSet.getString("author");
                     book = new Book(isbn, title, author);
                 }
             }
@@ -532,18 +606,23 @@ public class DatabaseConnection {
         return book;
     }
 
-
+    /**
+     * Retrieves the top 20 popular books in the last 30 days.
+     *
+     * @return a list of the top 20 popular books
+     * @throws SQLException if a database access error occurs
+     */
     public static List<Book> getTop20PopularBooksLast30Days() throws SQLException {
         List<Book> popularBooks = new ArrayList<>();
 
         // Obtenir la date d'il y a 30 jours à partir de la date actuelle
         LocalDate thirtyDaysAgo = LocalDate.now().minusDays(30);
 
-        String query = "SELECT l.isbn, l.titre, l.auteur, COUNT(h.livre_isbn) AS borrow_count " +
-                "FROM Livre l " +
-                "JOIN Historique h ON l.isbn = h.livre_isbn " +
-                "WHERE h.date_debut >= ? " +
-                "GROUP BY l.isbn, l.titre, l.auteur " +
+        String query = "SELECT l.isbn, l.title, l.author, COUNT(h.book_isbn) AS borrow_count " +
+                "FROM Book l " +
+                "JOIN History h ON l.isbn = h.book_isbn " +
+                "WHERE h.start >= ? " +
+                "GROUP BY l.isbn, l.title, l.author " +
                 "ORDER BY borrow_count DESC " +
                 "LIMIT 20";
 
@@ -555,10 +634,10 @@ public class DatabaseConnection {
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     String isbn = resultSet.getString("isbn");
-                    String titre = resultSet.getString("titre");
-                    String auteur = resultSet.getString("auteur");
+                    String title = resultSet.getString("title");
+                    String author = resultSet.getString("author");
 
-                    Book livre = new Book(titre, auteur, isbn);
+                    Book livre = new Book(title, author, isbn);
                     popularBooks.add(livre);
                 }
             }
@@ -566,7 +645,13 @@ public class DatabaseConnection {
         return popularBooks;
     }
 
-
+    /**
+     * Retrieves the count of late returns for a user.
+     *
+     * @param email the email of the user
+     * @return the count of late returns
+     * @throws SQLException if a database access error occurs
+     */
     public static int getUserLateCount(String email) throws SQLException {
         int lateCount = 0;
         Connection connection = null;
@@ -575,7 +660,7 @@ public class DatabaseConnection {
 
         try {
             connection = getConnection();
-            String query = "SELECT COUNT(*) FROM historique WHERE user_email = ? AND retard = 1";
+            String query = "SELECT COUNT(*) FROM History WHERE user_email = ? AND delay = 1";
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, email);
             resultSet = preparedStatement.executeQuery();

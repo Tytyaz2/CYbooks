@@ -26,12 +26,12 @@
 
         <TableView fx:id="userTableView" layoutX="46.0" layoutY="148.0" onMouseClicked="#handleUserClick" prefHeight="487.0" prefWidth="480.0">
             <columns>
-                <TableColumn fx:id="prenom" prefWidth="182.0" text="prenom">
+                <TableColumn fx:id="firstName" prefWidth="182.0" text="prenom">
                     <cellValueFactory>
                         <PropertyValueFactory property="prenom" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn fx:id="nom" prefWidth="147.0" text="nom">
+                <TableColumn fx:id="lastName" prefWidth="147.0" text="nom">
                     <cellValueFactory>
                         <PropertyValueFactory property="nom" />
                     </cellValueFactory>

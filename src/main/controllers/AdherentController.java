@@ -11,7 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import main.models.Utilisateur;
+import main.models.User;
 import main.models.DatabaseConnection;
 import main.models.Book;
 import javafx.event.ActionEvent;
@@ -26,89 +26,89 @@ import java.util.List;
 
 public class AdherentController {
 
-    protected Utilisateur user;
+    protected User user;
     @FXML
-    protected Button rendre;
+    protected Button giveBack;
     @FXML
-    protected Button historique;
+    protected Button history;
     @FXML
-    protected Button emprunter;
+    protected Button borrow;
     @FXML
-    protected Label nomLabel;
+    protected Label lastNameLabel;
 
     @FXML
-    protected Label prenomLabel;
+    protected Label firstNameLabel;
 
     @FXML
     protected Label mailLabel;
 
     @FXML
-    protected Label nbEmpruntsLabel;
+    protected Label nbBorrowsLabel;
     @FXML
-    protected Label historiquelabel;
+    protected Label historylabel;
     @FXML
-    protected Label emprunterlabel;
+    protected Label borrowlabel;
 
     @FXML
-    protected TextArea nomTextArea;
+    protected TextArea lastNameTextArea;
 
     @FXML
-    protected TextArea prenomTextArea;
+    protected TextArea firstNameTextArea;
 
     @FXML
     protected TextArea mailTextArea;
 
     @FXML
-    protected TableView<Book> livresTableView;
+    protected TableView<Book> bookTableView;
 
     @FXML
-    protected TableColumn<Book, String> titreColumn;
+    protected TableColumn<Book, String> titleColumn;
 
     @FXML
-    protected TableColumn<Book, String> auteurColumn;
+    protected TableColumn<Book, String> authorColumn;
 
     @FXML
     protected TableColumn<Book, String> isbnColumn;
 
     @FXML
-    protected TableColumn<Book, String> dateEmprunt;
+    protected TableColumn<Book, String> start;
 
     @FXML
-    protected TableColumn<Book, String> dateRendu;
+    protected TableColumn<Book, String> end;
 
-    protected ObservableList<Book> listeEmprunts;
+    protected ObservableList<Book> borrowList;
 
 
-    protected final ObservableList<Book> livresSelectionnes = FXCollections.observableArrayList();
+    protected final ObservableList<Book> selectedBooks = FXCollections.observableArrayList();
 
-    public void afficherDetailsUtilisateur(Utilisateur utilisateur) {
-        if (utilisateur != null) {
-            user = utilisateur;
+    public void displayUserDetails(User user) {
+        if (user != null) {
+            this.user = user;
 
-            titreColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-            auteurColumn.setCellValueFactory(new PropertyValueFactory<>("authors"));
+            titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+            authorColumn.setCellValueFactory(new PropertyValueFactory<>("authors"));
             isbnColumn.setCellValueFactory(new PropertyValueFactory<>("isbn"));
-            dateEmprunt.setCellValueFactory(new PropertyValueFactory<>("dateBorrow"));
-            dateRendu.setCellValueFactory(new PropertyValueFactory<>("dateGB"));
+            start.setCellValueFactory(new PropertyValueFactory<>("dateBorrow"));
+            end.setCellValueFactory(new PropertyValueFactory<>("dateGB"));
 
-            nomLabel.setText(utilisateur.getNom());
-            prenomLabel.setText(utilisateur.getPrenom());
-            mailLabel.setText(utilisateur.getEmail());
+            lastNameLabel.setText(user.getLastName());
+            firstNameLabel.setText(user.getFirstName());
+            mailLabel.setText(user.getEmail());
 
-            int maxEmprunt = 5 - getMaxEmpruntFromDatabase(utilisateur.getEmail());
-            nbEmpruntsLabel.setText(String.valueOf(maxEmprunt));
+            int maxBorrow = 5 - getMaxBorrowFromDatabase(user.getEmail());
+            nbBorrowsLabel.setText(String.valueOf(maxBorrow));
 
-            chargerLivresEmpruntes(utilisateur.getEmail());
+            loadBorrowedBooks(user.getEmail());
         } else {
-            nomLabel.setText("");
-            prenomLabel.setText("");
+            lastNameLabel.setText("");
+            firstNameLabel.setText("");
             mailLabel.setText("");
-            nbEmpruntsLabel.setText("");
+            nbBorrowsLabel.setText("");
         }
     }
 
-    private int getMaxEmpruntFromDatabase(String email) {
-        int maxEmprunt = 0;
+    private int getMaxBorrowFromDatabase(String email) {
+        int maxBorrow = 0;
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -116,13 +116,13 @@ public class AdherentController {
         try {
             connection = DatabaseConnection.getConnection();
 
-            String query = "SELECT MaxEmprunt FROM Utilisateur WHERE email = ?";
+            String query = "SELECT maxborrow FROM User WHERE email = ?";
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, email);
             resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                maxEmprunt = resultSet.getInt("MaxEmprunt");
+                maxBorrow = resultSet.getInt("maxborrow");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -130,27 +130,27 @@ public class AdherentController {
             // Fermeture des ressources...
         }
 
-        return maxEmprunt;
+        return maxBorrow;
     }
 
     @FXML
     public void initialize() {
-        historiquelabel.setVisible(false);
-        emprunter.setVisible(false);
-        nomTextArea.setVisible(false);
-        prenomTextArea.setVisible(false);
+        historylabel.setVisible(false);
+        borrow.setVisible(false);
+        lastNameTextArea.setVisible(false);
+        firstNameTextArea.setVisible(false);
         mailTextArea.setVisible(false);
 
-        nomLabel.setVisible(true);
-        prenomLabel.setVisible(true);
+        lastNameLabel.setVisible(true);
+        firstNameLabel.setVisible(true);
         mailLabel.setVisible(true);
 
-        livresTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        bookTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-        listeEmprunts = livresTableView.getItems();
+        borrowList = bookTableView.getItems();
 
         // Gestion de la sélection des livres dans la TableView
-        livresTableView.setOnMouseClicked(event -> {
+        bookTableView.setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
                 handleBookSelection();
             }
@@ -158,32 +158,32 @@ public class AdherentController {
     }
 
     @FXML
-    public void modifierAdherent(MouseEvent actionEvent) throws SQLException {
-        if (nomLabel.isVisible()) {
-            historiquelabel.setVisible(false);
-            nomLabel.setVisible(false);
-            prenomLabel.setVisible(false);
+    public void modifyUser(MouseEvent actionEvent) throws SQLException {
+        if (lastNameLabel.isVisible()) {
+            historylabel.setVisible(false);
+            lastNameLabel.setVisible(false);
+            firstNameLabel.setVisible(false);
             mailLabel.setVisible(false);
-            nomTextArea.setVisible(true);
-            prenomTextArea.setVisible(true);
+            lastNameTextArea.setVisible(true);
+            firstNameTextArea.setVisible(true);
             mailTextArea.setVisible(true);
 
-            nomTextArea.setText(nomLabel.getText());
-            prenomTextArea.setText(prenomLabel.getText());
+            lastNameTextArea.setText(lastNameLabel.getText());
+            firstNameTextArea.setText(firstNameLabel.getText());
             mailTextArea.setText(mailLabel.getText());
         } else {
-            nomLabel.setVisible(true);
-            prenomLabel.setVisible(true);
+            lastNameLabel.setVisible(true);
+            firstNameLabel.setVisible(true);
             mailLabel.setVisible(true);
-            nomTextArea.setVisible(false);
-            prenomTextArea.setVisible(false);
+            lastNameTextArea.setVisible(false);
+            firstNameTextArea.setVisible(false);
             mailTextArea.setVisible(false);
 
-            String nouveauNom = nomTextArea.getText();
-            String nouveauPrenom = prenomTextArea.getText();
-            String nouvelEmail = mailTextArea.getText();
+            String newLastName = lastNameTextArea.getText();
+            String newFirstName = firstNameTextArea.getText();
+            String newEmail = mailTextArea.getText();
 
-            if (!Utilisateur.isValidEmail(nouvelEmail)) {
+            if (!User.isValidEmail(newEmail)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Erreur de validation");
                 alert.setHeaderText(null);
@@ -193,15 +193,15 @@ public class AdherentController {
             }
 
 
-            int statut = user.getStatut();  // Assuming `statut` is part of your user object
-            int maxEmprunt = DatabaseConnection.getUserMaxEmprunt(user.getEmail());  // Assuming `maxEmprunt` is part of your user object
-            String ancienEmail = user.getEmail();
-            user.setEmail(nouvelEmail);
+            int state = user.getState();  // Assuming `statut` is part of your user object
+            int maxBorrow = DatabaseConnection.getUserMaxEmprunt(user.getEmail());  // Assuming `maxEmprunt` is part of your user object
+            String previousEmail = user.getEmail();
+            user.setEmail(newEmail);
 
             Connection connection = null;
             PreparedStatement insertNewUserStatement = null;
-            PreparedStatement updateEmpruntStatement = null;
-            PreparedStatement updateHistoriqueStatement = null;
+            PreparedStatement updateBorrowStatement = null;
+            PreparedStatement updateHistoryStatement = null;
             PreparedStatement deleteUserStatement = null;
 
             try {
@@ -209,41 +209,41 @@ public class AdherentController {
                 connection.setAutoCommit(false);  // Commence une transaction
 
                 // Insérer le nouvel utilisateur
-                String insertNewUserQuery = "INSERT INTO Utilisateur (email, nom, prenom, statut, MaxEmprunt) VALUES (?, ?, ?, ?, ?)";
+                String insertNewUserQuery = "INSERT INTO User (email, lastname, firstname, state, maxborrow) VALUES (?, ?, ?, ?, ?)";
                 insertNewUserStatement = connection.prepareStatement(insertNewUserQuery);
-                insertNewUserStatement.setString(1, nouvelEmail);
-                insertNewUserStatement.setString(2, nouveauNom);
-                insertNewUserStatement.setString(3, nouveauPrenom);
-                insertNewUserStatement.setInt(4, statut);
-                insertNewUserStatement.setInt(5, maxEmprunt);
+                insertNewUserStatement.setString(1, newEmail);
+                insertNewUserStatement.setString(2, newLastName);
+                insertNewUserStatement.setString(3, newFirstName);
+                insertNewUserStatement.setInt(4, state);
+                insertNewUserStatement.setInt(5, maxBorrow);
                 insertNewUserStatement.executeUpdate();
 
                 // Mettre à jour les emprunts pour utiliser le nouvel email
-                String updateEmpruntQuery = "UPDATE Emprunt SET user_email = ? WHERE user_email = ?";
-                updateEmpruntStatement = connection.prepareStatement(updateEmpruntQuery);
-                updateEmpruntStatement.setString(1, nouvelEmail);
-                updateEmpruntStatement.setString(2, ancienEmail);
-                updateEmpruntStatement.executeUpdate();
+                String updateBorrowQuery = "UPDATE Borrow SET user_email = ? WHERE user_email = ?";
+                updateBorrowStatement = connection.prepareStatement(updateBorrowQuery);
+                updateBorrowStatement.setString(1, newEmail);
+                updateBorrowStatement.setString(2, previousEmail);
+                updateBorrowStatement.executeUpdate();
 
                 // Mettre à jour l'historique pour utiliser le nouvel email
-                String updateHistoriqueQuery = "UPDATE Historique SET user_email = ? WHERE user_email = ?";
-                updateHistoriqueStatement = connection.prepareStatement(updateHistoriqueQuery);
-                updateHistoriqueStatement.setString(1, nouvelEmail);
-                updateHistoriqueStatement.setString(2, ancienEmail);
-                updateHistoriqueStatement.executeUpdate();
+                String updateHistoryQuery = "UPDATE History SET user_email = ? WHERE user_email = ?";
+                updateHistoryStatement = connection.prepareStatement(updateHistoryQuery);
+                updateHistoryStatement.setString(1, newEmail);
+                updateHistoryStatement.setString(2, previousEmail);
+                updateHistoryStatement.executeUpdate();
 
                 // Supprimer l'ancien utilisateur
-                String deleteUserQuery = "DELETE FROM Utilisateur WHERE email = ?";
+                String deleteUserQuery = "DELETE FROM User WHERE email = ?";
                 deleteUserStatement = connection.prepareStatement(deleteUserQuery);
-                deleteUserStatement.setString(1, ancienEmail);
+                deleteUserStatement.setString(1, previousEmail);
                 deleteUserStatement.executeUpdate();
 
                 connection.commit();  // Confirme la transaction
 
-                nomLabel.setText(nouveauNom);
-                prenomLabel.setText(nouveauPrenom);
-                mailLabel.setText(nouvelEmail);
-                nbEmpruntsLabel.setText(String.valueOf(5 - getMaxEmpruntFromDatabase(nouvelEmail)));
+                lastNameLabel.setText(newLastName);
+                firstNameLabel.setText(newFirstName);
+                mailLabel.setText(newEmail);
+                nbBorrowsLabel.setText(String.valueOf(5 - getMaxBorrowFromDatabase(newEmail)));
 
                 System.out.println("changement(s) effectué(s)");
 
@@ -261,8 +261,8 @@ public class AdherentController {
                     if (insertNewUserStatement != null) {
                         insertNewUserStatement.close();
                     }
-                    if (updateEmpruntStatement != null) {
-                        updateEmpruntStatement.close();
+                    if (updateBorrowStatement != null) {
+                        updateBorrowStatement.close();
                     }
                     if (deleteUserStatement != null) {
                         deleteUserStatement.close();
@@ -280,90 +280,92 @@ public class AdherentController {
 
 
     @FXML
-    public void rendreLivre() {
-        if (!livresSelectionnes.isEmpty()) {
+    public void giveBackBook() {
+        if (!selectedBooks.isEmpty()) {
             // Afficher la liste des livres sélectionnés dans la console
             System.out.println("Livres sélectionnés :");
-            for (Book livre : livresSelectionnes) {
+            for (Book livre : selectedBooks) {
                 System.out.println("- Titre : " + livre.getTitle() + ", Auteur(s) : " + livre.getAuthors() + ", ISBN : " + livre.getIsbn());
 
                 // Afficher un message pour chaque livre ajouté à la liste
                 System.out.println("Livre ajouté : " + livre.getTitle());
             }
 
-            rendreLivresSelectionnes(livresSelectionnes);
+            giveBackSelectedBooks(selectedBooks);
         } else {
             // Afficher un message à l'utilisateur ou effectuer une autre action appropriée
             System.out.println("Aucun livre sélectionné.");
         }
     }
-    private void rendreLivresSelectionnes(List<Book> livresARendre) {
+    private void giveBackSelectedBooks(List<Book> books) {
         Connection connection = null;
-        PreparedStatement updateEmpruntStatement = null;
-        PreparedStatement updateLivreStatement = null;
-        PreparedStatement insertHistoriqueStatement = null;
-        PreparedStatement deleteEmpruntStatement = null;
+        PreparedStatement updateBorrowStatement = null;
+        PreparedStatement updateBookStatement = null;
+        PreparedStatement insertHistoryStatement = null;
+        PreparedStatement deleteBorrowStatement = null;
 
         try {
             connection = DatabaseConnection.getConnection();
             connection.setAutoCommit(false);
 
-            String updateEmpruntQuery = "UPDATE Emprunt SET date_fin = ? WHERE livre_isbn = ?";
-            updateEmpruntStatement = connection.prepareStatement(updateEmpruntQuery);
+            String updateBorrowQuery = "UPDATE Borrow SET end = ? WHERE book_isbn = ? AND user_email = ?";
+            updateBorrowStatement = connection.prepareStatement(updateBorrowQuery);
 
-            String updateLivreQuery = "UPDATE Livre SET stock = stock + 1 WHERE isbn = ?";
-            updateLivreStatement = connection.prepareStatement(updateLivreQuery);
+            String updateBookQuery = "UPDATE Book SET stock = stock + 1 WHERE isbn = ?";
+            updateBookStatement = connection.prepareStatement(updateBookQuery);
 
-            String insertHistoriqueQuery = "INSERT INTO Historique (livre_isbn, user_email, date_debut, date_fin, retard) VALUES (?, ?, ?, ?, ?)";
-            insertHistoriqueStatement = connection.prepareStatement(insertHistoriqueQuery);
+            String insertHistoriqueQuery = "INSERT INTO History (book_isbn, user_email, start, end, delay) VALUES (?, ?, ?, ?, ?)";
+            insertHistoryStatement = connection.prepareStatement(insertHistoriqueQuery);
 
-            String deleteEmpruntQuery = "DELETE FROM Emprunt WHERE livre_isbn = ?";
-            deleteEmpruntStatement = connection.prepareStatement(deleteEmpruntQuery);
+            String deleteEmpruntQuery = "DELETE FROM Borrow WHERE book_isbn = ? AND user_email = ?";
+            deleteBorrowStatement = connection.prepareStatement(deleteEmpruntQuery);
 
-            for (Book livre : livresARendre) {
-                // Vérifier si le livre est déjà emprunté
-                if (DatabaseConnection.isBookAlreadyBorrowed(user.getEmail(), livre.getIsbn())) {
+            for (Book book : books) {
+                // Vérifier si le livre est déjà emprunté par l'utilisateur
+                if (DatabaseConnection.isBookAlreadyBorrowed(user.getEmail(), book.getIsbn())) {
                     // Mise à jour de la date de fin de l'emprunt
-                    updateEmpruntStatement.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
-                    updateEmpruntStatement.setString(2, livre.getIsbn());
-                    updateEmpruntStatement.executeUpdate();
+                    updateBorrowStatement.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
+                    updateBorrowStatement.setString(2, book.getIsbn());
+                    updateBorrowStatement.setString(3, user.getEmail());
+                    updateBorrowStatement.executeUpdate();
 
                     // Mise à jour du stock du livre
-                    updateLivreStatement.setString(1, livre.getIsbn());
-                    updateLivreStatement.executeUpdate();
+                    updateBookStatement.setString(1, book.getIsbn());
+                    updateBookStatement.executeUpdate();
 
                     // Calcul du retard
-                    LocalDate dateRetour = LocalDate.parse(livre.getDateGB());
-                    boolean retard = false;
-                    if (dateRetour != null && LocalDate.now().isAfter(dateRetour)) {
-                        retard = true;
+                    LocalDate giveBackDate = LocalDate.parse(book.getDateGB());
+                    boolean delay = false;
+                    if (giveBackDate != null && LocalDate.now().isAfter(giveBackDate)) {
+                        delay = true;
                     }
 
                     // Ajout des informations de l'emprunt dans la table Historique
-                    insertHistoriqueStatement.setString(1, livre.getIsbn());
-                    insertHistoriqueStatement.setString(2, user.getEmail());
-                    insertHistoriqueStatement.setString(3, livre.getDateBorrow());
-                    insertHistoriqueStatement.setString(4, LocalDate.now().toString());
-                    insertHistoriqueStatement.setBoolean(5, retard); // Utiliser directement le boolean "retard"
-                    // Mettre retard à 1 si le livre est rendu en retard, sinon à 0
-                    insertHistoriqueStatement.executeUpdate();
+                    insertHistoryStatement.setString(1, book.getIsbn());
+                    insertHistoryStatement.setString(2, user.getEmail());
+                    insertHistoryStatement.setString(3, book.getDateBorrow());
+                    insertHistoryStatement.setString(4, LocalDate.now().toString());
+                    insertHistoryStatement.setBoolean(5, delay);
+                    insertHistoryStatement.executeUpdate();
 
                     // Suppression de l'emprunt de la table Emprunt
-                    deleteEmpruntStatement.setString(1, livre.getIsbn());
-                    deleteEmpruntStatement.executeUpdate();
+                    deleteBorrowStatement.setString(1, book.getIsbn());
+                    deleteBorrowStatement.setString(2, user.getEmail());
+                    deleteBorrowStatement.executeUpdate();
 
-                    DatabaseConnection.updateUserMaxEmprunt(user.getEmail(), DatabaseConnection.getUserMaxEmprunt(user.getEmail()) + 1);
+                    // Mise à jour du nombre maximum d'emprunts de l'utilisateur
+                    DatabaseConnection.updateUserMaxBorrow(user.getEmail(), DatabaseConnection.getUserMaxEmprunt(user.getEmail()) + 1);
 
                     // Mise à jour de l'interface utilisateur
-                    listeEmprunts.remove(livre);
-                    nbEmpruntsLabel.setText(String.valueOf(5 - getMaxEmpruntFromDatabase(user.getEmail())));
-                    System.out.println("Livre rendu : " + livre.getTitle());
+                    borrowList.remove(book);
+                    nbBorrowsLabel.setText(String.valueOf(5 - getMaxBorrowFromDatabase(user.getEmail())));
+                    System.out.println("Livre rendu : " + book.getTitle());
                 } else {
-                    // Afficher un message d'erreur si le livre n'est pas emprunté
+                    // Afficher un message d'erreur si le livre n'est pas emprunté par l'utilisateur
                     Alert alert = new Alert(Alert.AlertType.WARNING);
                     alert.setTitle("Erreur de rendu");
                     alert.setHeaderText("Sélection Livre");
-                    alert.setContentText("Veuillez sélectionner un livre à rendre ! ");
+                    alert.setContentText("Veuillez sélectionner un livre à rendre !");
                     alert.showAndWait();
                 }
             }
@@ -381,10 +383,10 @@ public class AdherentController {
             e.printStackTrace();
         } finally {
             try {
-                if (updateEmpruntStatement != null) updateEmpruntStatement.close();
-                if (updateLivreStatement != null) updateLivreStatement.close();
-                if (insertHistoriqueStatement != null) insertHistoriqueStatement.close();
-                if (deleteEmpruntStatement != null) deleteEmpruntStatement.close();
+                if (updateBorrowStatement != null) updateBorrowStatement.close();
+                if (updateBookStatement != null) updateBookStatement.close();
+                if (insertHistoryStatement != null) insertHistoryStatement.close();
+                if (deleteBorrowStatement != null) deleteBorrowStatement.close();
                 if (connection != null) connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -393,32 +395,33 @@ public class AdherentController {
     }
 
 
-    protected void chargerLivresEmpruntes(String email) {
-        listeEmprunts = FXCollections.observableArrayList();
+
+    protected void loadBorrowedBooks(String email) {
+        borrowList = FXCollections.observableArrayList();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         try {
             connection = DatabaseConnection.getConnection();
 
-            String query = "SELECT L.titre, L.auteur, L.isbn, E.date_debut, E.date_fin " +
-                    "FROM Livre L " +
-                    "INNER JOIN Emprunt E ON L.isbn = E.livre_isbn " +
+            String query = "SELECT L.title, L.author, L.isbn, E.start, E.end " +
+                    "FROM Book L " +
+                    "INNER JOIN Borrow E ON L.isbn = E.book_isbn " +
                     "WHERE E.user_email = ? ";
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, email);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                String titre = resultSet.getString("titre");
-                String auteur = resultSet.getString("auteur");
+                String title = resultSet.getString("title");
+                String author = resultSet.getString("author");
                 String isbn = resultSet.getString("isbn");
-                String dateEmprunt = resultSet.getDate("date_debut").toString();
-                LocalDate dateRetour = resultSet.getDate("date_debut").toLocalDate().plusDays(30);
-                listeEmprunts.add(new Book(titre, auteur, isbn, dateEmprunt, dateRetour.toString()));
+                String start1 = resultSet.getDate("start").toString();
+                LocalDate end1 = resultSet.getDate("end").toLocalDate().plusDays(30);
+                borrowList.add(new Book(title, author, isbn, start1, end1.toString()));
             }
 
-            livresTableView.setItems(listeEmprunts);
+            bookTableView.setItems(borrowList);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -432,37 +435,37 @@ public class AdherentController {
         }
     }
     @FXML
-    protected void ButtonchargerLivresEmpruntes(javafx.event.ActionEvent ActionEvent) {
-        historiquelabel.setVisible(false);
-        emprunterlabel.setVisible(true);
-        listeEmprunts = FXCollections.observableArrayList();
+    protected void loadBooksButton(javafx.event.ActionEvent ActionEvent) {
+        historylabel.setVisible(false);
+        borrowlabel.setVisible(true);
+        borrowList = FXCollections.observableArrayList();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        rendre.setVisible(true);
-        emprunter.setVisible(false);
-        historique.setVisible(true);
+        giveBack.setVisible(true);
+        borrow.setVisible(false);
+        history.setVisible(true);
         try {
             connection = DatabaseConnection.getConnection();
 
-            String query = "SELECT L.titre, L.auteur, L.isbn, E.date_debut, E.date_fin " +
-                    "FROM Livre L " +
-                    "INNER JOIN Emprunt E ON L.isbn = E.livre_isbn " +
+            String query = "SELECT L.title, L.author, L.isbn, E.start, E.end " +
+                    "FROM Book L " +
+                    "INNER JOIN Borrow E ON L.isbn = E.book_isbn " +
                     "WHERE E.user_email = ? ";
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, user.getEmail());
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                String titre = resultSet.getString("titre");
-                String auteur = resultSet.getString("auteur");
+                String title = resultSet.getString("title");
+                String author = resultSet.getString("author");
                 String isbn = resultSet.getString("isbn");
-                String dateEmprunt = resultSet.getDate("date_debut").toString();
-                LocalDate dateRetour = resultSet.getDate("date_debut").toLocalDate().plusDays(30);
-                listeEmprunts.add(new Book(titre, auteur, isbn, dateEmprunt, dateRetour.toString()));
+                String start1 = resultSet.getDate("start").toString();
+                LocalDate end1 = resultSet.getDate("end").toLocalDate().plusDays(30);
+                borrowList.add(new Book(title, author, isbn, start1, end1.toString()));
             }
 
-            livresTableView.setItems(listeEmprunts);
+            bookTableView.setItems(borrowList);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -477,40 +480,40 @@ public class AdherentController {
     }
 
     @FXML
-    protected void chargerHistorique(javafx.event.ActionEvent ActionEvent) {
-        historiquelabel.setVisible(true);
-        emprunterlabel.setVisible(false);
-        ObservableList<Book> historiqueList = FXCollections.observableArrayList();
+    protected void loadHistory(javafx.event.ActionEvent ActionEvent) {
+        historylabel.setVisible(true);
+        borrowlabel.setVisible(false);
+        ObservableList<Book> historyList = FXCollections.observableArrayList();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        rendre.setVisible(false);
-        historique.setVisible(false);
-        emprunter.setVisible(true);
+        giveBack.setVisible(false);
+        history.setVisible(false);
+        borrow.setVisible(true);
 
         try {
             connection = DatabaseConnection.getConnection();
 
-            String query = "SELECT L.titre, L.auteur, L.isbn, H.date_debut, H.date_fin, H.retard " +
-                    "FROM Livre L " +
-                    "INNER JOIN Historique H ON L.isbn = H.livre_isbn " +
+            String query = "SELECT L.title, L.author, L.isbn, H.start, H.end, H.delay " +
+                    "FROM Book L " +
+                    "INNER JOIN History H ON L.isbn = H.book_isbn " +
                     "WHERE H.user_email = ?";
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, user.getEmail());
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                String titre = resultSet.getString("titre");
-                String auteur = resultSet.getString("auteur");
+                String title = resultSet.getString("title");
+                String author = resultSet.getString("author");
                 String isbn = resultSet.getString("isbn");
-                String dateDebut = resultSet.getDate("date_debut").toString();
-                String dateFin = resultSet.getDate("date_fin").toString();
-                boolean retard = resultSet.getBoolean("retard");
-                System.out.println(titre + " " + auteur + " " + isbn);
-                historiqueList.add(new Book(titre, auteur, isbn, dateDebut, dateFin.toString()));
+                String start1 = resultSet.getDate("start").toString();
+                String end1 = resultSet.getDate("end").toString();
+                boolean delay = resultSet.getBoolean("delay");
+                System.out.println(title + " " + author + " " + isbn);
+                historyList.add(new Book(title, author, isbn, start1, end1.toString()));
             }
 
-            livresTableView.setItems(historiqueList);
+            bookTableView.setItems(historyList);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -527,8 +530,8 @@ public class AdherentController {
     // Méthode pour gérer la sélection des livres dans la TableView
     @FXML
     protected void handleBookSelection() {
-        livresSelectionnes.clear();
-        livresSelectionnes.addAll(livresTableView.getSelectionModel().getSelectedItems());
+        selectedBooks.clear();
+        selectedBooks.addAll(bookTableView.getSelectionModel().getSelectedItems());
     }
 
     @FXML
@@ -565,7 +568,7 @@ public class AdherentController {
 
                 // Mise à jour dans la base de données
                 try (Connection connection = DatabaseConnection.getConnection();
-                     PreparedStatement updateUserStatement = connection.prepareStatement("UPDATE Utilisateur SET statut = ? WHERE email = ?")) {
+                     PreparedStatement updateUserStatement = connection.prepareStatement("UPDATE User SET state = ? WHERE email = ?")) {
 
                     updateUserStatement.setInt(1, 3);
                     updateUserStatement.setString(2, user.getEmail());

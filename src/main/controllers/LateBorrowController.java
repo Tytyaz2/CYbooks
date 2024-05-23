@@ -6,9 +6,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
+import main.models.Borrow;
 import main.models.DatabaseConnection;
-import main.models.Emprunt;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -17,13 +16,13 @@ import java.util.List;
 public class LateBorrowController {
 
     @FXML
-    private TableView<Emprunt> lateLoansTable;
+    private TableView<Borrow> lateLoansTable;
     @FXML
-    private TableColumn<Emprunt, String> bookTitleColumn;
+    private TableColumn<Borrow, String> bookTitleColumn;
     @FXML
-    private TableColumn<Emprunt, String> borrowerNameColumn;
+    private TableColumn<Borrow, String> borrowerNameColumn;
     @FXML
-    private TableColumn<Emprunt, LocalDate> dueDateColumn;
+    private TableColumn<Borrow, LocalDate> dueDateColumn;
 
     @FXML
     private void initialize() {
@@ -43,7 +42,7 @@ public class LateBorrowController {
 
     private void loadLateLoans() {
         try {
-            List<Emprunt> lateLoans = DatabaseConnection.getLateLoans();
+            List<Borrow> lateLoans = DatabaseConnection.getLateBorrow();
             // Display the late loans in your user interface
             displayLateLoans(lateLoans);
         } catch (SQLException e) {
@@ -52,8 +51,8 @@ public class LateBorrowController {
         }
     }
 
-    private void displayLateLoans(List<Emprunt> lateLoans) {
-        ObservableList<Emprunt> loanObservableList = FXCollections.observableArrayList(lateLoans);
+    private void displayLateLoans(List<Borrow> lateLoans) {
+        ObservableList<Borrow> loanObservableList = FXCollections.observableArrayList(lateLoans);
         lateLoansTable.setItems(loanObservableList);
     }
 }

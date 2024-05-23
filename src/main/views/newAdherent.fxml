@@ -15,10 +15,10 @@
       <Text layoutX="417.0" layoutY="323.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15;" text="Prenom" />
       <Text layoutX="417.0" layoutY="370.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15;" text="Mail" />
       <Text layoutX="574.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 40;" text="CYBooks" />
-      <TextArea fx:id="nomTextArea" layoutX="601.0" layoutY="258.0" prefHeight="31.0" prefWidth="201.0" />
+      <TextArea fx:id="lastNameTextArea" layoutX="601.0" layoutY="258.0" prefHeight="31.0" prefWidth="201.0" />
       <TextArea fx:id="mailTextArea" layoutX="601.0" layoutY="340.0" prefHeight="40.0" prefWidth="202.0" />
-      <TextArea fx:id="prenomTextArea" layoutX="601.0" layoutY="297.0" prefHeight="31.0" prefWidth="201.0" />
-      <Button layoutX="948.0" layoutY="495.0" mnemonicParsing="false" onAction="#handleAjouterAdherent" prefHeight="79.0" prefWidth="154.0" text="Nouvel adherent" />
+      <TextArea fx:id="firstNameTextArea" layoutX="601.0" layoutY="297.0" prefHeight="31.0" prefWidth="201.0" />
+      <Button layoutX="948.0" layoutY="495.0" mnemonicParsing="false" onAction="#handleAddNewUser" prefHeight="79.0" prefWidth="154.0" text="Nouvel adherent" />
       <Label fx:id="errorMessageLabel" layoutX="282.0" layoutY="420.0" style="-fx-font-size: 15; -fx-text-fill: red;" />
       <Button fx:id="returnButton" layoutX="51.0" layoutY="658.0" mnemonicParsing="false" onAction="#handleReturnButtonClick" prefHeight="38.0" prefWidth="81.0" text="Return" />
    </children>

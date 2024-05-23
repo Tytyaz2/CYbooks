@@ -4,10 +4,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import main.models.Utilisateur;
+import main.models.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import main.models.DatabaseConnection;
@@ -19,10 +18,10 @@ import java.sql.SQLException;
 public class NewAdherentController {
 
     @FXML
-    private TextArea nomTextArea;
+    private TextArea lastNameTextArea;
 
     @FXML
-    private TextArea prenomTextArea;
+    private TextArea firstNameTextArea;
 
     @FXML
     private TextArea mailTextArea;
@@ -32,70 +31,95 @@ public class NewAdherentController {
 
     private MainControllers mainController;
 
+
+    /**
+     * Handles the event when a new user is added.
+     *
+     * @param event the ActionEvent triggered by adding a new user
+     * @throws SQLException if a database access error occurs
+     */
     @FXML
-    void handleAjouterAdherent(ActionEvent event) throws SQLException {
-        // Récupérer les valeurs des champs texte
-        String nom = nomTextArea.getText();
-        String prenom = prenomTextArea.getText();
+    void handleAddNewUser(ActionEvent event) throws SQLException {
+        // Get the values from text fields
+        String lastname = lastNameTextArea.getText();
+        String firstname = firstNameTextArea.getText();
         String mail = mailTextArea.getText();
 
-        // Valider les données
-        if (nom.isEmpty() || prenom.isEmpty() || mail.isEmpty()) {
-            // Afficher un message d'erreur si les champs sont vides
+        // Validate the data
+        if (lastname.isEmpty() || firstname.isEmpty() || mail.isEmpty()) {
+            // Display error message if fields are empty
             errorMessageLabel.setText("Veuillez remplir tous les champs.");
-        } else if (!Utilisateur.isValidEmail(mail)) {
-            // Afficher un message d'erreur si le format de l'email est invalide
+        } else if (!User.isValidEmail(mail)) {
+            // Display error message if email format is invalid
             errorMessageLabel.setText("Veuillez entrer une adresse email valide.");
         } else {
             try {
-                // Ajouter l'adhérent à la base de données
-                DatabaseConnection.insertUserData(mail, prenom, nom);
-                System.out.println("Nouvel adhérent ajouté : " + nom + " " + prenom);
+                // Add the user to the database
+                DatabaseConnection.insertUserData(mail, firstname, lastname);
+                System.out.println("Nouvel adhérent ajouté : " + lastname + " " + firstname);
 
-                // Rafraîchissez les données des adhérents dans la table principale
+                // Refresh user data in the main table
                 if (mainController != null) {
                     mainController.refreshUserData();
                 } else {
                     System.out.println("MainController est null. Impossible de rafraîchir les données.");
                 }
 
-                // Rediriger vers la page principale après l'ajout de l'adhérent
+                // Redirect to the main page after adding the user
                 changeScene(event, "/main/views/pageprincipal.fxml", "Page Principale");
 
             } catch (SQLException e) {
-                // Afficher un message d'échec
-                errorMessageLabel.setText("Utilisateur déjà existant.");
+                // Display failure message
+                errorMessageLabel.setText("User déjà existant.");
             }
         }
     }
+
+    /**
+     * Sets the main controller for this controller.
+     *
+     * @param mainController the MainControllers instance
+     */
 
     public void setMainController(MainControllers mainController) {
         this.mainController = mainController;
     }
 
+
+    /**
+     * Handles the event when the return button is clicked.
+     *
+     * @param event the ActionEvent triggered by clicking the return button
+     */
     @FXML
     private void handleReturnButtonClick(ActionEvent event) {
         changeScene(event, "/main/views/pageprincipal.fxml", "Page Principale");
     }
 
-    // Méthode utilitaire pour changer de scène
+    /**
+     * Utility method to change the scene.
+     *
+     * @param event        the ActionEvent triggered by changing the scene
+     * @param fxmlFilePath the path of the FXML file for the new scene
+     * @param title        the title of the new scene
+     */
     private void changeScene(ActionEvent event, String fxmlFilePath, String title) {
         try {
-            // Charge la vue de la page principale
+            // Load the view of the main page
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFilePath));
             Parent root = loader.load();
 
-            // Obtient le stage actuel à partir de n'importe quel composant de la scène
+            // Get the current stage from any component of the scene
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-            // Définit la nouvelle scène avec la racine chargée
+            // Set the new scene with the loaded root
             Scene scene = new Scene(root);
             stage.setScene(scene);
 
-            // Optionnel : redéfinir le titre de la fenêtre
+            // Optional: set the window title
             stage.setTitle(title);
 
-            // Affiche la scène principale
+            // Show the main scene
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

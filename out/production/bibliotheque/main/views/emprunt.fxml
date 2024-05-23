@@ -25,8 +25,8 @@
                 <TableView fx:id="userTableView" onMouseClicked="#handleUserSelection" prefHeight="518.0" prefWidth="415.0">
                     <columns>
                         <TableColumn fx:id="emailColumn" prefWidth="148.0" text="Email" />
-                        <TableColumn fx:id="nomColumn" prefWidth="109.0" text="Nom" />
-                        <TableColumn fx:id="prenomColumn" prefWidth="157.0" text="Prénom" />
+                        <TableColumn fx:id="lastNameColumn" prefWidth="109.0" text="Nom" />
+                        <TableColumn fx:id="firsNameColumn" prefWidth="157.0" text="Prénom" />
                     </columns>
                 </TableView>
             </HBox>
@@ -67,10 +67,10 @@
             <Label fx:id="selectedUserLabel" />
             <Label text="Livres sélectionnés :" />
             <ListView fx:id="selectedBooksListView" prefHeight="300.0" />
-            <Button onAction="#handleRetirerLivre" text="Retirer Livre" />
+            <Button onAction="#handleRemoveBook" text="Retirer Livre" />
         </VBox>
 
-        <Button layoutX="1050.0" layoutY="634.0" onAction="#handleEmprunter" prefHeight="25.0" prefWidth="166.0" text="Emprunter" />
+        <Button layoutX="1050.0" layoutY="634.0" onAction="#handleBorrow" prefHeight="25.0" prefWidth="166.0" text="Emprunter" />
         <Button fx:id="returnButton" layoutX="51.0" layoutY="658.0" mnemonicParsing="false" onAction="#handleReturnButtonClick" prefHeight="38.0" prefWidth="81.0" text="Return" />
 
 

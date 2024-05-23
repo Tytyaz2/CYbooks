@@ -32,6 +32,8 @@ import java.util.TimerTask;
 import java.util.Objects;
 
 public class MainControllers {
+
+    // UI elements declaration
     public Button showLateBooksButton;
     private int startIndex = 1;
     private final int pageSize = 20;
@@ -46,23 +48,21 @@ public class MainControllers {
     private TextField searchTextField;
 
     @FXML
-    private TableView<Utilisateur> userTableView;
+    private TableView<User> userTableView;
 
     @FXML
-    private TableColumn<Utilisateur, String> nom;
+    private TableColumn<User, String> lastName;
 
     @FXML
-    private TableColumn<Utilisateur, String> prenom;
+    private TableColumn<User, String> firstName;
 
     @FXML
-    private TableColumn<Utilisateur, String> email;
+    private TableColumn<User, String> email;
 
-    private Utilisateur selectedUser;
+    private User selectedUser;
 
-    public void searchAndUpdateTableView(String keyword) {
-        List<Book> books = searchbookAPI.search("anywhere",keyword, startIndex, pageSize);
-        bookTableView.getItems().setAll(books);
-    }
+
+
 
 
 
@@ -87,13 +87,9 @@ public class MainControllers {
 
 
 
-    @FXML
-    private void handleSearchButtonAction(ActionEvent event) {
-        String keyword = searchTextField.getText();
-        searchAndUpdateTableView(keyword);
-    }
+
     private void loadData() throws SQLException {
-        List<Utilisateur> data = new ArrayList<>();
+        List<User> data = new ArrayList<>();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -105,19 +101,19 @@ public class MainControllers {
             System.out.println("Connexion réussie !");
 
             // Exécuter la requête pour récupérer les données
-            String query = "SELECT * FROM utilisateur WHERE statut != 3";
+            String query = "SELECT * FROM User WHERE state != 3";
             System.out.println("Exécution de la requête : " + query);
             preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
 
             // Itérer à travers le jeu de résultats et ajouter les données à la liste
             while (resultSet.next()) {
-                Utilisateur model = new Utilisateur(
+                User model = new User(
                         resultSet.getString("email"),
-                        resultSet.getString("prenom"),
-                        resultSet.getString("nom"),
-                        resultSet.getInt("statut"),
-                        resultSet.getInt("MaxEmprunt"));
+                        resultSet.getString("firstname"),
+                        resultSet.getString("lastname"),
+                        resultSet.getInt("state"),
+                        resultSet.getInt("maxborrow"));
 
                 data.add(model);
             }
@@ -153,7 +149,7 @@ public class MainControllers {
 
         // Rechargez les données depuis la base de données et ajoutez-les à la table
         // Utilisez une méthode de votre classe DatabaseConnection pour récupérer les données
-        List<Utilisateur> userList = DatabaseConnection.getAllUtilisateur();
+        List<User> userList = DatabaseConnection.getAllUser();
         userTableView.getItems().addAll(userList);
     }
 
@@ -184,6 +180,13 @@ public class MainControllers {
     private RadioButton searchbylanguage;
     private ToggleGroup searchToggleGroup;
 
+
+    /**
+     * Method to initialize the controller.
+     *
+     * @throws SQLException if a SQL exception occurs
+     * @throws InterruptedException if the thread is interrupted
+     */
     public void initialize() throws SQLException, InterruptedException {
         // Appeler la méthode pour charger les livres populaires
         loadTop20PopularBooksLastMonth();
@@ -192,12 +195,12 @@ public class MainControllers {
         loadData();
 
         // Définir les usines de valeurs de cellule personnalisées pour chaque colonne
-        nom.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNom()));
-        prenom.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPrenom()));
+        lastName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getLastName()));
+        firstName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFirstName()));
         email.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEmail()));
 
         // Appliquer les usines de cellules personnalisées pour changer la couleur en fonction du statut
-        nom.setCellFactory(column -> new TableCell<Utilisateur, String>() {
+        lastName.setCellFactory(column -> new TableCell<User, String>() {
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
@@ -206,12 +209,12 @@ public class MainControllers {
                     setStyle("");
                 } else {
                     setText(item);
-                    Utilisateur user = getTableView().getItems().get(getIndex());
-                    if (user.getStatut() == 1) {
+                    User user = getTableView().getItems().get(getIndex());
+                    if (user.getState() == 1) {
                         setTextFill(Color.RED);
-                    } else if (user.getStatut() == 2) {
+                    } else if (user.getState() == 2) {
                         setTextFill(Color.ORANGE);
-                    } else if (user.getStatut() == 0) {
+                    } else if (user.getState() == 0) {
                         setTextFill(Color.BLACK);
                     } else {
                         setTextFill(Color.BLACK); // Couleur par défaut si le statut n'est pas 0, 1 ou 2
@@ -220,7 +223,7 @@ public class MainControllers {
             }
         });
 
-        prenom.setCellFactory(column -> new TableCell<Utilisateur, String>() {
+        firstName.setCellFactory(column -> new TableCell<User, String>() {
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
@@ -229,12 +232,12 @@ public class MainControllers {
                     setStyle("");
                 } else {
                     setText(item);
-                    Utilisateur user = getTableView().getItems().get(getIndex());
-                    if (user.getStatut() == 1) {
+                    User user = getTableView().getItems().get(getIndex());
+                    if (user.getState() == 1) {
                         setTextFill(Color.RED);
-                    } else if (user.getStatut() == 2) {
+                    } else if (user.getState() == 2) {
                         setTextFill(Color.ORANGE);
-                    } else if (user.getStatut() == 0) {
+                    } else if (user.getState() == 0) {
                         setTextFill(Color.BLACK);
                     } else {
                         setTextFill(Color.BLACK); // Couleur par défaut si le statut n'est pas 0, 1 ou 2
@@ -243,7 +246,7 @@ public class MainControllers {
             }
         });
 
-        email.setCellFactory(column -> new TableCell<Utilisateur, String>() {
+        email.setCellFactory(column -> new TableCell<User, String>() {
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
@@ -252,12 +255,12 @@ public class MainControllers {
                     setStyle("");
                 } else {
                     setText(item);
-                    Utilisateur user = getTableView().getItems().get(getIndex());
-                    if (user.getStatut() == 1) {
+                    User user = getTableView().getItems().get(getIndex());
+                    if (user.getState() == 1) {
                         setTextFill(Color.RED);
-                    } else if (user.getStatut() == 2) {
+                    } else if (user.getState() == 2) {
                         setTextFill(Color.ORANGE);
-                    } else if (user.getStatut() == 0) {
+                    } else if (user.getState() == 0) {
                         setTextFill(Color.BLACK);
                     } else {
                         setTextFill(Color.BLACK); // Couleur par défaut si le statut n'est pas 0, 1 ou 2
@@ -476,17 +479,14 @@ public class MainControllers {
 
 
 
-    public Utilisateur getSelectedUser() {
-        return selectedUser;
-    }
+
 
     @FXML
     public void handleNewAdherentButtonClick(ActionEvent event) {
         showNewAdherentPage();
     }
 
-    @FXML
-    private Button empruntButton; // Assurez-vous d'annoter avec @FXML
+
 
     @FXML
     void handleNewBorrowButtonClick(ActionEvent event) {
@@ -511,7 +511,7 @@ public class MainControllers {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/pageadherent.fxml"));
             Parent root = loader.load();
             AdherentController adherentController = loader.getController();
-            adherentController.afficherDetailsUtilisateur(selectedUser);
+            adherentController.displayUserDetails(selectedUser);
             Stage stage = (Stage) bookTableView.getScene().getWindow();
             stage.getScene().setRoot(root);
         } catch (IOException e) {
@@ -538,32 +538,32 @@ public class MainControllers {
             public void run() {
                 try {
                     LocalDate currentDate = LocalDate.now();
-                    List<Utilisateur> users = DatabaseConnection.getAllUtilisateur();
+                    List<User> users = DatabaseConnection.getAllUser();
 
-                    for (Utilisateur user : users) {
-                        boolean hasOverdueLoans = user.hasOverdueLoans(currentDate);
+                    for (User user : users) {
+                        boolean hasOverdueLoans = user.hasOverdueBorrow(currentDate);
                         int maxEmprunt = DatabaseConnection.getUserMaxEmprunt(user.getEmail());
                         int lateCount = DatabaseConnection.getUserLateCount(user.getEmail());
 
-                        if (user.getStatut() != 3) {
+                        if (user.getState() != 3) {
                             if (lateCount >= 3) {
-                                if (user.getStatut() != 3) {
-                                    user.setStatut(3);
+                                if (user.getState() != 3) {
+                                    user.setState(3);
                                     DatabaseConnection.updateUserStatus(user.getEmail(), 3);
                                 }
                             } else if (hasOverdueLoans) {
-                                if (user.getStatut() != 1) {
-                                    user.setStatut(1);
+                                if (user.getState() != 1) {
+                                    user.setState(1);
                                     DatabaseConnection.updateUserStatus(user.getEmail(), 1);
                                 }
                             } else if (maxEmprunt == 0) {
-                                if (user.getStatut() != 2) {
-                                    user.setStatut(2);
+                                if (user.getState() != 2) {
+                                    user.setState(2);
                                     DatabaseConnection.updateUserStatus(user.getEmail(), 2);
                                 }
                             } else {
-                                if (user.getStatut() != 0) {
-                                    user.setStatut(0);
+                                if (user.getState() != 0) {
+                                    user.setState(0);
                                     DatabaseConnection.updateUserStatus(user.getEmail(), 0);
                                 }
                             }
@@ -593,7 +593,7 @@ public class MainControllers {
         }
     }
     public void handleSearchUser(ActionEvent actionEvent) throws SQLException {
-        List<Utilisateur> data = new ArrayList<>();
+        List<User> data = new ArrayList<>();
         String searchPattern = "%" + SearchUser.getText() + "%";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -609,7 +609,7 @@ public class MainControllers {
                 System.out.println("Connexion réussie !");
 
                 // Exécuter la requête pour récupérer les données
-                String query = "SELECT * FROM utilisateur WHERE (nom LIKE ? OR prenom LIKE ? OR email LIKE ?) AND statut != 3";
+                String query = "SELECT * FROM User WHERE (lastname LIKE ? OR firstname LIKE ? OR email LIKE ?) AND state != 3";
                 System.out.println("Exécution de la requête : " + query);
                 preparedStatement = connection.prepareStatement(query);
 
@@ -622,12 +622,12 @@ public class MainControllers {
 
                 // Itérer à travers le jeu de résultats et ajouter les données à la liste
                 while (resultSet.next()) {
-                    Utilisateur model = new Utilisateur(
+                    User model = new User(
                             resultSet.getString("email"),
-                            resultSet.getString("prenom"),
-                            resultSet.getString("nom"),
-                            resultSet.getInt("statut"),
-                            resultSet.getInt("MaxEmprunt"));
+                            resultSet.getString("firstname"),
+                            resultSet.getString("lastname"),
+                            resultSet.getInt("state"),
+                            resultSet.getInt("maxborrow"));
 
                     data.add(model);
                 }

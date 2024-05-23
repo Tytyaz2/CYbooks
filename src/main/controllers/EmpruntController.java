@@ -1,5 +1,6 @@
 package main.controllers;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -10,7 +11,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import main.models.*;
@@ -30,25 +30,23 @@ public class EmpruntController {
 
 
     @FXML
-    private TableView<Utilisateur> userTableView;
+    private TableView<User> userTableView;
 
-    @FXML
-    private TextArea textFieldTitre;
+
     @FXML
     private TextArea textFieldUser;
 
 
 
     @FXML
-    private TableColumn<Utilisateur, String> nomColumn;
+    private TableColumn<User, String> lastNameColumn ;
     @FXML
-    private TableColumn<Utilisateur, String> emailColumn;
+    private TableColumn<User, String> emailColumn;
 
     @FXML
-    private TableColumn<Utilisateur, String> prenomColumn;
+    private TableColumn<User, String> firsNameColumn ;
 
-    @FXML
-    private TextArea SearchUser;
+
 
 
     // Méthode appelée lors du chargement de la vue FXML
@@ -63,8 +61,8 @@ public class EmpruntController {
             // Configurer les colonnes pour afficher le nom et le prénom
 
             emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
-            nomColumn.setCellValueFactory(new PropertyValueFactory<>("nom"));
-            prenomColumn.setCellValueFactory(new PropertyValueFactory<>("prenom"));
+            lastNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getLastName()));
+            firsNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFirstName()));
         } catch (SQLException e) {
             e.printStackTrace(); // Gérer l'exception de manière appropriée
         }
@@ -75,32 +73,9 @@ public class EmpruntController {
 
 
 
-    // Méthode appelée lors du clic sur le bouton "Emprunter"
-    @FXML
-    private void handleEmpruntButtonClick() {
-        // Insérez ici le code pour gérer l'emprunt du livre
-        System.out.println("Bouton Emprunter cliqué !");
-    }
-
-    public void handleUserClick(MouseEvent mouseEvent) {
-        // Vérifier si le clic a été effectué avec le bouton gauche de la souris
-        if (mouseEvent.getButton() == MouseButton.PRIMARY) {
-            // Récupérer la source de l'événement (l'élément sur lequel le clic a été effectué)
-            Node source = (Node) mouseEvent.getSource();
-
-            // Afficher les coordonnées du clic
-            double x = mouseEvent.getSceneX();
-            double y = mouseEvent.getSceneY();
-            System.out.println("Clic à la position X: " + x + ", Y: " + y);
-
-            // Ajouter ici la logique spécifique à exécuter lorsque l'utilisateur clique
-            // sur l'élément source avec le bouton gauche de la souris
-        }
-    }
-
     // Méthode pour charger les données des utilisateurs depuis la base de données et les afficher dans le TableView
     private void loadData() throws SQLException {
-        List<Utilisateur> data = new ArrayList<>();
+        List<User> data = new ArrayList<>();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -110,18 +85,18 @@ public class EmpruntController {
             connection = DatabaseConnection.getConnection();
 
             // Exécuter la requête pour récupérer les données
-            String query = "SELECT * FROM utilisateur";
+            String query = "SELECT * FROM User";
             preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
 
             // Itérer à travers le jeu de résultats et ajouter les données à la liste
             while (resultSet.next()) {
-                Utilisateur model = new Utilisateur(
+                User model = new User(
                         resultSet.getString("email"),
-                        resultSet.getString("prenom"),
-                        resultSet.getString("nom"),
-                        resultSet.getInt("statut"),
-                        resultSet.getInt("MaxEmprunt")
+                        resultSet.getString("firstname"),
+                        resultSet.getString("lastname"),
+                        resultSet.getInt("state"),
+                        resultSet.getInt("maxborrow")
                         );
                 data.add(model);
             }
@@ -173,7 +148,7 @@ public class EmpruntController {
     @FXML
     private ListView<Book> selectedBooksListView;
 
-    private Utilisateur selectedUser;
+    private User selectedUser;
 
 
     @FXML
@@ -183,7 +158,7 @@ public class EmpruntController {
 
         if (selectedUser != null) {
             // Vérifier si l'utilisateur est banni ou en retard
-            if (selectedUser.getStatut() == 1) {
+            if (selectedUser.getState() == 1) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Statut incorrect");
                 alert.setHeaderText("Vous n'êtes pas en position pour emprunter un livre");
@@ -193,7 +168,7 @@ public class EmpruntController {
                 userTableView.getSelectionModel().clearSelection();
                 selectedUser = null;
                 return;
-            } else if (selectedUser.getStatut() == 3) {
+            } else if (selectedUser.getState() == 3) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Statut incorrect");
                 alert.setHeaderText("Vous n'êtes pas en position pour emprunter un livre");
@@ -205,10 +180,10 @@ public class EmpruntController {
                 return;
             }
 
-            selectedUserLabel.setText(selectedUser.getNom() + " " + selectedUser.getPrenom());
+            selectedUserLabel.setText(selectedUser.getLastName() + " " + selectedUser.getFirstName());
 
             // Vérifier si l'utilisateur a déjà atteint sa limite d'emprunt maximum
-            if (selectedUser.getMaxEmprunt() <= 0) {
+            if (selectedUser.getMaxBorrow() <= 0) {
                 // Afficher un message d'alerte
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Limite d'emprunt atteinte");
@@ -216,7 +191,7 @@ public class EmpruntController {
                 alert.setContentText("Vous ne pouvez pas emprunter plus de livres.");
                 alert.showAndWait();
             } else {
-                int maxEmprunt = selectedUser.getMaxEmprunt();
+                int maxEmprunt = selectedUser.getMaxBorrow();
                 // Mettre à jour la liste des livres sélectionnés pour refléter la limite d'emprunt maximum
                 selectedBooksListView.getItems().addAll(selectedBooks.subList(0, Math.min(selectedBooks.size(), maxEmprunt)));
             }
@@ -230,16 +205,16 @@ public class EmpruntController {
     @FXML
     private void handleBookSelection() throws SQLException {
         if (selectedUser != null) {
-            int maxEmprunt = selectedUser.getMaxEmprunt();
+            int maxBorrow = selectedUser.getMaxBorrow();
             int selectedBooksCount = selectedBooks.size();
 
             // Vérifier si la limite d'emprunt maximum est dépassée après la sélection
-            if (selectedBooksCount >= maxEmprunt) {
+            if (selectedBooksCount >= maxBorrow) {
                 // Afficher une alerte si la limite d'emprunt maximum est atteinte
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Limite d'emprunt atteinte");
                 alert.setHeaderText("Vous avez déjà atteint la limite d'emprunt");
-                alert.setContentText("La limite d'emprunt maximum est de " + maxEmprunt + " livres.");
+                alert.setContentText("La limite d'emprunt maximum est de " + maxBorrow + " livres.");
                 alert.showAndWait();
                 return;
             }
@@ -249,12 +224,12 @@ public class EmpruntController {
 
             for (Book selectedBook : selectedBooksFromTable) {
                 // Vérifier si la sélection dépasse la limite d'emprunt
-                if (selectedBooksCount + 1 > maxEmprunt) {
+                if (selectedBooksCount + 1 > maxBorrow) {
                     // Afficher une alerte si la limite d'emprunt maximum est dépassée
                     Alert alert = new Alert(Alert.AlertType.WARNING);
                     alert.setTitle("Limite d'emprunt dépassée");
                     alert.setHeaderText("Vous ne pouvez pas emprunter plus de livres");
-                    alert.setContentText("La limite d'emprunt maximum est de " + maxEmprunt + " livres. Veuillez sélectionner moins de livres.");
+                    alert.setContentText("La limite d'emprunt maximum est de " + maxBorrow + " livres. Veuillez sélectionner moins de livres.");
                     alert.showAndWait();
                     return;
                 }
@@ -271,7 +246,7 @@ public class EmpruntController {
                     System.out.println("Livre ajouté : " + selectedBook.getTitle());
 
                     // Décrémenter la limite d'emprunt restante
-                    maxEmprunt--;
+                    maxBorrow--;
 
 
                     // Afficher la liste complète des livres sélectionnés
@@ -295,7 +270,7 @@ public class EmpruntController {
 
 
     @FXML
-    private void handleRetirerLivre() {
+    private void handleRemoveBook() {
         // Effacer complètement la liste des livres sélectionnés
         selectedBooks.clear();
 
@@ -312,8 +287,8 @@ public class EmpruntController {
 
 
     @FXML
-    private void handleEmprunter() throws SQLException {
-        Utilisateur selectedUser = userTableView.getSelectionModel().getSelectedItem();
+    private void handleBorrow() throws SQLException {
+        User selectedUser = userTableView.getSelectionModel().getSelectedItem();
 
 
         // Affichez la liste des livres sélectionnés dans la console
@@ -337,8 +312,8 @@ public class EmpruntController {
         }
 
         // Vérifier si l'utilisateur a encore des emprunts disponibles
-        int maxEmpruntRestant = selectedUser.getMaxEmprunt();
-        if (maxEmpruntRestant <= 0) {
+        int remainingBorrows = selectedUser.getMaxBorrow();
+        if (remainingBorrows <= 0) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
             alert.setHeaderText("Limite d'emprunts atteinte");
@@ -348,7 +323,7 @@ public class EmpruntController {
         }
 
         // Vérifier si le nombre de livres sélectionnés ne dépasse pas le nombre maximal d'emprunts autorisés
-        if (selectedBooks.size() > maxEmpruntRestant) {
+        if (selectedBooks.size() > remainingBorrows) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
             alert.setHeaderText("Limite d'emprunts dépassée");
@@ -392,7 +367,7 @@ public class EmpruntController {
                 LocalDate endDate = startDate.plusDays(30);
 
                 // Insérer l'emprunt dans la base de données
-                DatabaseConnection.insertDataEmprunt(selectedUser.getEmail(), selectedBook.getIsbn(), startDate.toString(), endDate.toString());
+                DatabaseConnection.insertDataBorrow(selectedUser.getEmail(), selectedBook.getIsbn(), startDate.toString(), endDate.toString());
 
                 // Mettre à jour le stock dans la base de données en réduisant de 1
                 int newStock = currentStock - 1;
@@ -402,10 +377,10 @@ public class EmpruntController {
                 DatabaseConnection.updateStock(selectedBook.getIsbn(), newStock);
 
                 // Afficher un message de succès
-                System.out.println("L'emprunt du livre \"" + selectedBook.getTitle() + "\" a été ajouté avec succès pour l'utilisateur " + selectedUser.getPrenom() + " " + selectedUser.getNom());
+                System.out.println("L'emprunt du livre \"" + selectedBook.getTitle() + "\" a été ajouté avec succès pour l'utilisateur " + selectedUser.getFirstName() + " " + selectedUser.getLastName());
 
                 // Décrémenter le nombre maximal d'emprunts autorisés pour l'utilisateur
-                selectedUser.setMaxEmprunt(selectedUser.getMaxEmprunt() - 1);
+                selectedUser.setMaxBorrow(selectedUser.getMaxBorrow() - 1);
             }
 
             // Afficher un message de succès global après l'emprunt de tous les livres
@@ -421,7 +396,7 @@ public class EmpruntController {
 
 
             // Mettre à jour le nombre maximal d'emprunts autorisés pour l'utilisateur dans la base de données
-            DatabaseConnection.updateUserMaxEmprunt(selectedUser.getEmail(), selectedUser.getMaxEmprunt());
+            DatabaseConnection.updateUserMaxBorrow(selectedUser.getEmail(), selectedUser.getMaxBorrow());
         } catch (SQLException e) {
             e.printStackTrace(); // Gérer l'erreur de manière appropriée
             // Afficher un message d'erreur
@@ -461,7 +436,7 @@ public class EmpruntController {
     @FXML
 
     public void handleSearchUser(ActionEvent actionEvent) throws SQLException {
-        List<Utilisateur> data = new ArrayList<>();
+        List<User> data = new ArrayList<>();
 
         String searchPattern = textFieldUser.getText();
         Connection connection = null;
@@ -478,7 +453,7 @@ public class EmpruntController {
                 System.out.println("Connexion réussie !");
 
                 // Exécuter la requête pour récupérer les données
-                String query = "SELECT * FROM utilisateur WHERE nom LIKE ? OR prenom LIKE ? OR email LIKE ?";
+                String query = "SELECT * FROM User WHERE lastname LIKE ? OR firstname LIKE ? OR email LIKE ?";
                 System.out.println("Exécution de la requête : " + query);
                 preparedStatement = connection.prepareStatement(query);
 
@@ -491,15 +466,15 @@ public class EmpruntController {
 
                 // Itérer à travers le jeu de résultats et ajouter les données à la liste
                 while (resultSet.next()) {
-                    Utilisateur model = new Utilisateur(
+                    User model = new User(
                             resultSet.getString("email"),
-                            resultSet.getString("prenom"),
-                            resultSet.getString("nom"),
-                            resultSet.getInt("statut"),
-                            resultSet.getInt("MaxEmprunt"));
+                            resultSet.getString("firstname"),
+                            resultSet.getString("lastname"),
+                            resultSet.getInt("state"),
+                            resultSet.getInt("maxborrow"));
 
                     data.add(model);
-                    System.out.println("Bonjouré");
+
                 }
 
                 System.out.println("Données récupérées avec succès !");

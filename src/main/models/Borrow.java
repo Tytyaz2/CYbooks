@@ -2,13 +2,13 @@ package main.models;
 
 import java.time.LocalDate;
 
-public class Emprunt {
-    private Utilisateur user;
+public class Borrow {
+    private User user;
     private Book book;
     private LocalDate startDate;
     private LocalDate endDate;
 
-    public Emprunt(Utilisateur user, Book book, LocalDate startDate, LocalDate endDate) {
+    public Borrow(User user, Book book, LocalDate startDate, LocalDate endDate) {
         this.user = user;
         this.book = book;
         this.startDate = startDate;
@@ -24,7 +24,7 @@ public class Emprunt {
     }
 
     public String getBorrowerName() {
-        return user.getPrenom() + " " + user.getNom();
+        return user.getFirstName() + " " + user.getLastName();
     }
 
 
@@ -37,7 +37,7 @@ public class Emprunt {
         return startDate;
     }
 
-    public Utilisateur getUser() {
+    public User getUser() {
         return user;
     }
 
@@ -53,8 +53,8 @@ public class Emprunt {
         this.startDate = startDate;
     }
 
-    public void setUser(Utilisateur user) {
+    public void setUser(User user) {
         this.user = user;
     }
-    // Getters et setters
+    // Getters and setters
 }
