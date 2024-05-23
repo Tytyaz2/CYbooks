@@ -173,11 +173,11 @@ public class MainControllers {
     @FXML
     private RadioButton searchbydescription;
     @FXML
-    private RadioButton searchbypagecount;
+    private RadioButton searchbygenre;
     @FXML
-    private RadioButton searchbycategorie;
+    private RadioButton searchbycreation;
     @FXML
-    private RadioButton searchbyaveragerating;
+    private RadioButton searchbysubject;
     @FXML
     private RadioButton searchbyratingscount;
     @FXML
@@ -276,13 +276,13 @@ public class MainControllers {
         searchbypublisher.setToggleGroup(searchToggleGroup);
         searchbypublisheddate.setToggleGroup(searchToggleGroup);
         searchbydescription.setToggleGroup(searchToggleGroup);
-        searchbypagecount.setToggleGroup(searchToggleGroup);
-        searchbycategorie.setToggleGroup(searchToggleGroup);
-        searchbyaveragerating.setToggleGroup(searchToggleGroup);
+        searchbygenre.setToggleGroup(searchToggleGroup);
+        searchbycreation.setToggleGroup(searchToggleGroup);
+        searchbysubject.setToggleGroup(searchToggleGroup);
         searchbyratingscount.setToggleGroup(searchToggleGroup);
         searchbylanguage.setToggleGroup(searchToggleGroup);
 
-     /*   // Ajouter des écouteurs de changement pour les boutons radio
+        // Ajouter des écouteurs de changement pour les boutons radio
         searchToggleGroup.selectedToggleProperty().addListener((observable, oldToggle, newToggle) -> {
             if (newToggle == searchbyauthor) {
                 // Appeler la méthode de recherche par auteur
@@ -302,15 +302,15 @@ public class MainControllers {
             } else if (newToggle == searchbydescription) {
                 // Appeler la méthode de recherche par description
                 loadBooksByDescription();
-            } else if (newToggle == searchbypagecount) {
+            } else if (newToggle == searchbygenre) {
                 // Appeler la méthode de recherche par nombre de pages
-                loadBooksByPageCount();
-            } else if (newToggle == searchbycategorie) {
+                loadBooksByGenre();
+            } else if (newToggle == searchbycreation) {
                 // Appeler la méthode de recherche par catégories
-                loadBooksByCategories();
-            } else if (newToggle == searchbyaveragerating) {
+                loadBooksByCreation();
+            } else if (newToggle == searchbysubject) {
                 // Appeler la méthode de recherche par note moyenne
-                loadBooksByAverageRating();
+                loadBooksBySubject();
             } else if (newToggle == searchbyratingscount) {
                 // Appeler la méthode de recherche par nombre d'évaluations
                 loadBooksByRatingsCount();
@@ -318,7 +318,7 @@ public class MainControllers {
                 // Appeler la méthode de recherche par langue
                 loadBooksByLanguage();
             }
-        });*/
+        });
     }
 
 
@@ -350,9 +350,9 @@ public class MainControllers {
 
 
 
-   /* private void loadBooksByAuthor() {
+   private void loadBooksByAuthor() {
         String author = SearchBook.getText();
-        List<Book> books = Apicaller.call("author",author, startIndex, pageSize);
+        List<Book> books = searchbookAPI.search("author",author, startIndex, pageSize);
         if (books == null) {
             bookTableView.getItems().clear();
         } else {
@@ -362,7 +362,7 @@ public class MainControllers {
 
     private void loadBooksByTitle() {
         String title = SearchBook.getText();
-        List<Book> books = Apicaller.call.ByTitle(title, startIndex, pageSize);
+        List<Book> books = searchbookAPI.search("title",title, startIndex, pageSize);
         if (books == null) {
             bookTableView.getItems().clear();
         } else {
@@ -373,12 +373,12 @@ public class MainControllers {
 
     private void loadBooksByISBN() {
         String isbn = SearchBook.getText();
-        List<Book> books = Apicaller.call.ByISBN(isbn, startIndex, pageSize);
+        List<Book> books = searchbookAPI.search("isbn", isbn, startIndex, pageSize);
         bookTableView.getItems().setAll(books);
     }
     private void loadBooksByPublisher() {
         String publisher = SearchBook.getText();
-        List<Book> books = Apicaller.call.ByPublisher(publisher, startIndex, pageSize);
+        List<Book> books = searchbookAPI.search("publisher", publisher, startIndex, pageSize);
         if (books == null) {
             bookTableView.getItems().clear();
         } else {
@@ -388,7 +388,7 @@ public class MainControllers {
 
     private void loadBooksByPublishedDate() {
         String publishedDate = SearchBook.getText();
-        List<Book> books = Apicaller.call.ByPublishedDate(publishedDate, startIndex, pageSize);
+        List<Book> books = searchbookAPI.search("publicationdate", publishedDate, startIndex, pageSize);
         if (books == null) {
             bookTableView.getItems().clear();
         } else {
@@ -398,7 +398,7 @@ public class MainControllers {
 
     private void loadBooksByDescription() {
         String description = SearchBook.getText();
-        List<Book> books = Apicaller.call.ByDescription(description, startIndex, pageSize);
+        List<Book> books = searchbookAPI.search("anywhere",description, startIndex, pageSize);
         if (books == null) {
             bookTableView.getItems().clear();
         } else {
@@ -406,24 +406,9 @@ public class MainControllers {
         }
     }
 
-    private void loadBooksByPageCount() {
-        try {
-            int pageCount = Integer.parseInt(SearchBook.getText());
-            List<Book> books = Apicaller.call.ByPageCount(pageCount, startIndex, pageSize);
-            if (books == null) {
-                bookTableView.getItems().clear();
-            } else {
-                bookTableView.getItems().setAll(books);
-            }
-        } catch (NumberFormatException e) {
-            System.out.println("Veuillez entrer un nombre valide pour le nombre de pages.");
-            bookTableView.getItems().clear();
-        }
-    }
-
-    private void loadBooksByCategories() {
-        String category = SearchBook.getText();
-        List<Book> books = Apicaller.call.ByCategories(category, startIndex, pageSize);
+    private void loadBooksByGenre() {
+        String genre = SearchBook.getText();
+        List<Book> books = searchbookAPI.search("genre", genre, startIndex, pageSize);
         if (books == null) {
             bookTableView.getItems().clear();
         } else {
@@ -431,25 +416,30 @@ public class MainControllers {
         }
     }
 
-    private void loadBooksByAverageRating() {
-        try {
-            double averageRating = Double.parseDouble(SearchBook.getText());
-            List<Book> books = Apicaller.call.ByAverageRating(averageRating, startIndex, pageSize);
-            if (books == null) {
-                bookTableView.getItems().clear();
-            } else {
-                bookTableView.getItems().setAll(books);
-            }
-        } catch (NumberFormatException e) {
-            System.out.println("Veuillez entrer un nombre valide pour la note moyenne.");
+    private void loadBooksByCreation() {
+        String creation = SearchBook.getText();
+        List<Book> books = searchbookAPI.search("creationdate", creation, startIndex, pageSize);
+        if (books == null) {
             bookTableView.getItems().clear();
+        } else {
+            bookTableView.getItems().setAll(books);
+        }
+    }
+
+    private void loadBooksBySubject() {
+        String subject = SearchBook.getText();
+        List<Book> books = searchbookAPI.search("subject", subject, startIndex, pageSize);
+        if (books == null) {
+            bookTableView.getItems().clear();
+        } else {
+            bookTableView.getItems().setAll(books);
         }
     }
 
     private void loadBooksByRatingsCount() {
         try {
             int ratingsCount = Integer.parseInt(SearchBook.getText());
-            List<Book> books = Apicaller.call.ByRatingsCount(ratingsCount, startIndex, pageSize);
+            List<Book> books = searchbookAPI.search("cote", String.valueOf(ratingsCount), startIndex, pageSize);
             if (books == null) {
                 bookTableView.getItems().clear();
             } else {
@@ -463,13 +453,13 @@ public class MainControllers {
 
     private void loadBooksByLanguage() {
         String language = SearchBook.getText();
-        List<Book> books = Apicaller.call.ByLanguage(language, startIndex, pageSize);
+        List<Book> books = searchbookAPI.search("language", language, startIndex, pageSize);
         if (books == null) {
             bookTableView.getItems().clear();
         } else {
             bookTableView.getItems().setAll(books);
         }
-    }*/
+    }
 
 
     @FXML

@@ -88,11 +88,11 @@
             <RadioButton fx:id="searchbyisbn" layoutY="36.0" mnemonicParsing="false" text="Search by ISBN" />
             <RadioButton fx:id="searchbypublisher" layoutY="54.0" mnemonicParsing="false" text="Search by publisher" />
             <RadioButton fx:id="searchbypublisheddate" layoutY="72.0" mnemonicParsing="false" text="Search by published date" />
-            <RadioButton fx:id="searchbycategorie" layoutY="90.0" mnemonicParsing="false" text="Search by categorie" />
-            <RadioButton fx:id="searchbydescription" layoutY="108.0" mnemonicParsing="false" text="Search by description" />
-            <RadioButton fx:id="searchbyaveragerating" layoutY="126.0" mnemonicParsing="false" text="Search by average rating" />
-            <RadioButton fx:id="searchbyratingscount" layoutY="144.0" mnemonicParsing="false" text="Search by ratings count" />
-            <RadioButton fx:id="searchbypagecount" layoutY="162.0" mnemonicParsing="false" text="Search by page count" />
+            <RadioButton fx:id="searchbygenre" layoutY="90.0" mnemonicParsing="false" text="Search by Description" />
+            <RadioButton fx:id="searchbydescription" layoutY="108.0" mnemonicParsing="false" text="Search by Genre" />
+            <RadioButton fx:id="searchbycreation" layoutY="126.0" mnemonicParsing="false" text="Search by Creation date" />
+            <RadioButton fx:id="searchbysubject" layoutY="144.0" mnemonicParsing="false" text="Search by Subject" />
+            <RadioButton fx:id="searchbyratingscount" layoutY="162.0" mnemonicParsing="false" text="Search by rating count" />
             <RadioButton fx:id="searchbylanguage" layoutY="180.0" mnemonicParsing="false" text="Search by language" />
          </children>
       </Pane>
