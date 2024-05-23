@@ -159,10 +159,10 @@ public class EmpruntController {
 
     private void loadBooksByTitle() {
         String title = bookSearchTextArea.getText();
-        int startIndex = 0;
+        int startIndex = 1;
         int pageSize = 20;
-       List<Book> books = ApiCaller.call("anywhere",title, startIndex, pageSize);
-        //bookTableView.getItems().setAll(books);
+       List<Book> books = ApiCaller.call("title",title, startIndex, pageSize);
+       bookTableView.getItems().setAll(books);
     }
 
 
