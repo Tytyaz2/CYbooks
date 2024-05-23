@@ -1,7 +1,6 @@
 package main.controllers;
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +11,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -21,8 +19,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.control.TableCell;
 
 
-
-import java.awt.*;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -64,7 +60,7 @@ public class MainControllers {
     private Utilisateur selectedUser;
 
     public void searchAndUpdateTableView(String keyword) {
-        List<Book> books = ApiCaller.call("anywhere",keyword, startIndex, pageSize);
+        List<Book> books = searchbookAPI.search("anywhere",keyword, startIndex, pageSize);
         bookTableView.getItems().setAll(books);
     }
 
@@ -73,7 +69,7 @@ public class MainControllers {
     @FXML
     private void loadFirst20Books() {
         String recherche = SearchBook.getText();
-        List<Book> books = ApiCaller.call("anywhere",recherche, startIndex, pageSize);
+        List<Book> books = searchbookAPI.search("anywhere",recherche, startIndex, pageSize);
         bookTableView.getItems().setAll(books);
     }
     @FXML
@@ -356,7 +352,7 @@ public class MainControllers {
 
    /* private void loadBooksByAuthor() {
         String author = SearchBook.getText();
-        List<Book> books = Apicaller.call.ByAuthor(author, startIndex, pageSize);
+        List<Book> books = Apicaller.call("author",author, startIndex, pageSize);
         if (books == null) {
             bookTableView.getItems().clear();
         } else {

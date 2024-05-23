@@ -15,7 +15,7 @@ import java.net.URL;
  *
  * @author TDLT
  */
-public class ApiCaller {
+public class searchbookAPI {
 
     /**
      * @param query this is the submitted query
@@ -23,7 +23,7 @@ public class ApiCaller {
      * @param number the number of book we want
      * @return a list of books the API returned
      */
-    public static List<Book> call(String categorie,String query, int start, int number) {
+    public static List<Book> search(String categorie, String query, int start, int number) {
 // is appended to the query a link to the API, parameters to get only books,
 // options to get the API's response in the expected format
         System.out.println(start +" "+ number );

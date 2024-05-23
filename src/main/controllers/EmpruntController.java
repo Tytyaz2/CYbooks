@@ -13,7 +13,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import jdk.jshell.execution.Util;
 import main.models.*;
 
 import java.io.IOException;
@@ -161,7 +160,7 @@ public class EmpruntController {
         String title = bookSearchTextArea.getText();
         int startIndex = 1;
         int pageSize = 20;
-       List<Book> books = ApiCaller.call("title",title, startIndex, pageSize);
+       List<Book> books = searchbookAPI.search("title",title, startIndex, pageSize);
        bookTableView.getItems().setAll(books);
     }
 

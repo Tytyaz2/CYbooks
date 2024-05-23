@@ -26,7 +26,14 @@ public class Metamorph {
                 Element record = (Element) recordList.item(i);
                 String title = getElementValue(record, "dc:title");
                 String author = getElementValue(record, "dc:creator");
-                String isbn = getElementValue(record, "dc:identifier");
+                String isbn = getElementValue(record, "dc:identifier",1);
+                if (isbn.length() > 5) {
+                    isbn = isbn.substring(5);
+                }
+                else if (isbn.length() < 5) {
+                    isbn = getElementValue(record, "dc:identifier");
+                    isbn = isbn.substring(35);
+                }
                 Book book = new Book(title, author, isbn);
                 books.add(book);
             }
@@ -45,5 +52,11 @@ public class Metamorph {
         return "";
     }
 
-    // Constructeur, getters et setters
+    private static String getElementValue(Element element, String tagName, int index) {
+        NodeList nodeList = element.getElementsByTagName(tagName);
+        if (nodeList != null && nodeList.getLength() > index) {
+            return nodeList.item(index).getTextContent();
+        }
+        return "";
+    }
 }
