@@ -61,8 +61,7 @@ public class ConnexionController extends Application {
 
                 stage.show();
             } catch (javafx.fxml.LoadException e) {
-                // Gérer l'exception ici
-                e.printStackTrace(); // Ou afficher un message d'erreur, etc.
+                e.printStackTrace(); // afficher un message d'erreur
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
