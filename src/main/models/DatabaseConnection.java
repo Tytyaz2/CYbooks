@@ -893,4 +893,84 @@ public class DatabaseConnection {
 
         return borrowList;
     }
+    /**
+     * Load borrowed books for a user from the database.
+     *
+     * @param email The email of the user whose borrowed books are to be loaded.
+     * @return An observable list of borrowed books.
+     * @throws SQLException if a database access error occurs.
+     */
+    public static ObservableList<Book> loadBorrowedBooks(String email) throws SQLException {
+        ObservableList<Book> borrowList = FXCollections.observableArrayList();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = getConnection();
+            String query = "SELECT L.title, L.author, L.isbn, E.start, E.end " +
+                    "FROM Book L " +
+                    "INNER JOIN Borrow E ON L.isbn = E.book_isbn " +
+                    "WHERE E.user_email = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, email);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String title = resultSet.getString("title");
+                String author = resultSet.getString("author");
+                String isbn = resultSet.getString("isbn");
+                String start = resultSet.getDate("start").toString();
+                LocalDate end = resultSet.getDate("end").toLocalDate().plusDays(30);
+                borrowList.add(new Book(title, author, isbn, start, end.toString()));
+            }
+        } finally {
+            if (resultSet != null) resultSet.close();
+            if (preparedStatement != null) preparedStatement.close();
+            if (connection != null) connection.close();
+        }
+        return borrowList;
+    }
+
+    /**
+     * Load the history of borrowed books for a user from the database.
+     *
+     * @param email The email of the user whose borrowed book history is to be loaded.
+     * @return An observable list of borrowed book history.
+     * @throws SQLException if a database access error occurs.
+     */
+    public static ObservableList<Book> loadBorrowHistory(String email) throws SQLException {
+        ObservableList<Book> historyList = FXCollections.observableArrayList();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = getConnection();
+            String query = "SELECT L.title, L.author, L.isbn, H.start, H.end, H.delay " +
+                    "FROM Book L " +
+                    "INNER JOIN History H ON L.isbn = H.book_isbn " +
+                    "WHERE H.user_email = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, email);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String title = resultSet.getString("title");
+                String author = resultSet.getString("author");
+                String isbn = resultSet.getString("isbn");
+                String start = resultSet.getDate("start").toString();
+                String end = resultSet.getDate("end").toString();
+                boolean delay = resultSet.getBoolean("delay");
+                historyList.add(new Book(title, author, isbn, start, end));
+            }
+        } finally {
+            if (resultSet != null) resultSet.close();
+            if (preparedStatement != null) preparedStatement.close();
+            if (connection != null) connection.close();
+        }
+        return historyList;
+    }
+
+
 }

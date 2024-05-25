@@ -81,6 +81,12 @@ public class UserController {
 
     protected final ObservableList<Book> selectedBooks = FXCollections.observableArrayList();
 
+    /**
+     * Displays user details in the UI.
+     *
+     * @param user The user whose details are to be displayed.
+     * @throws SQLException if a database access error occurs.
+     */
     public void displayUserDetails(User user) throws SQLException {
         if (user != null) {
             this.user = user;
@@ -107,8 +113,9 @@ public class UserController {
         }
     }
 
-
-
+    /**
+     * Initializes the UI components.
+     */
     @FXML
     public void initialize() {
         historylabel.setVisible(false);
@@ -125,13 +132,14 @@ public class UserController {
 
         borrowList = bookTableView.getItems();
 
-        // Gestion de la sélection des livres dans la TableView
+        // Handle book selection in the TableView
         bookTableView.setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
                 handleBookSelection();
             }
         });
     }
+
 
     /**
      * Handles modifying user information.
@@ -215,6 +223,7 @@ public class UserController {
             }
 
             giveBackSelectedBooks(selectedBooks);
+            selectedBooks.removeAll(selectedBooks);
         } else {
             // Afficher un message à l'utilisateur ou effectuer une autre action appropriée
             System.out.println("Aucun livre sélectionné.");
@@ -231,6 +240,8 @@ public class UserController {
         try {
             // Call the method in the DatabaseConnection class to handle SQL transactions
             DatabaseConnection.giveBackSelectedBooks(user, books);
+            DatabaseConnection.updateUserMaxBorrow(user, DatabaseConnection.getUserMaxBorrow(user) + 1);
+
 
             // Update the user interface
             borrowList.removeAll(books);
@@ -243,177 +254,106 @@ public class UserController {
 
 
 
+    /**
+     * Load borrowed books from the database and display them in the TableView.
+     *
+     * @param email The email of the user whose borrowed books are to be loaded.
+     */
     protected void loadBorrowedBooks(String email) {
-        borrowList = FXCollections.observableArrayList();
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
         try {
-            connection = DatabaseConnection.getConnection();
-
-            String query = "SELECT L.title, L.author, L.isbn, E.start, E.end " +
-                    "FROM Book L " +
-                    "INNER JOIN Borrow E ON L.isbn = E.book_isbn " +
-                    "WHERE E.user_email = ? ";
-            preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, email);
-            resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                String title = resultSet.getString("title");
-                String author = resultSet.getString("author");
-                String isbn = resultSet.getString("isbn");
-                String start1 = resultSet.getDate("start").toString();
-                LocalDate end1 = resultSet.getDate("end").toLocalDate().plusDays(30);
-                borrowList.add(new Book(title, author, isbn, start1, end1.toString()));
-            }
-
+            borrowList = DatabaseConnection.loadBorrowedBooks(email);
             bookTableView.setItems(borrowList);
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
     }
     @FXML
-    protected void loadBooksButton(javafx.event.ActionEvent ActionEvent) {
+    protected void loadBooksButton(ActionEvent actionEvent) {
         historylabel.setVisible(false);
         borrowlabel.setVisible(true);
-        borrowList = FXCollections.observableArrayList();
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
         giveBack.setVisible(true);
         borrow.setVisible(false);
         history.setVisible(true);
+
         try {
-            connection = DatabaseConnection.getConnection();
-
-            String query = "SELECT L.title, L.author, L.isbn, E.start, E.end " +
-                    "FROM Book L " +
-                    "INNER JOIN Borrow E ON L.isbn = E.book_isbn " +
-                    "WHERE E.user_email = ? ";
-            preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, user.getEmail());
-            resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                String title = resultSet.getString("title");
-                String author = resultSet.getString("author");
-                String isbn = resultSet.getString("isbn");
-                String start1 = resultSet.getDate("start").toString();
-                LocalDate end1 = resultSet.getDate("end").toLocalDate().plusDays(30);
-                borrowList.add(new Book(title, author, isbn, start1, end1.toString()));
-            }
-
+            borrowList = DatabaseConnection.loadBorrowedBooks(user.getEmail());
             bookTableView.setItems(borrowList);
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
     }
 
+
+
+    /**
+     * Load history of borrowed books for the user and display them in the TableView.
+     *
+     * @param actionEvent The event that triggered the method call.
+     */
     @FXML
-    protected void loadHistory(javafx.event.ActionEvent ActionEvent) {
+    protected void loadHistory(ActionEvent actionEvent) {
         historylabel.setVisible(true);
         borrowlabel.setVisible(false);
-        ObservableList<Book> historyList = FXCollections.observableArrayList();
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
         giveBack.setVisible(false);
         history.setVisible(false);
         borrow.setVisible(true);
 
         try {
-            connection = DatabaseConnection.getConnection();
-
-            String query = "SELECT L.title, L.author, L.isbn, H.start, H.end, H.delay " +
-                    "FROM Book L " +
-                    "INNER JOIN History H ON L.isbn = H.book_isbn " +
-                    "WHERE H.user_email = ?";
-            preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, user.getEmail());
-            resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                String title = resultSet.getString("title");
-                String author = resultSet.getString("author");
-                String isbn = resultSet.getString("isbn");
-                String start1 = resultSet.getDate("start").toString();
-                String end1 = resultSet.getDate("end").toString();
-                boolean delay = resultSet.getBoolean("delay");
-                System.out.println(title + " " + author + " " + isbn);
-                historyList.add(new Book(title, author, isbn, start1, end1.toString()));
-            }
-
+            ObservableList<Book> historyList = DatabaseConnection.loadBorrowHistory(user.getEmail());
             bookTableView.setItems(historyList);
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
     }
-
-    // Méthode pour gérer la sélection des livres dans la TableView
+    /**
+     * Method to handle book selection in the TableView.
+     */
     @FXML
     protected void handleBookSelection() {
         selectedBooks.clear();
         selectedBooks.addAll(bookTableView.getSelectionModel().getSelectedItems());
     }
 
+    /**
+     * Handles the return button click event.
+     *
+     * @param event The event that triggered the method call.
+     */
     @FXML
     private void handleReturnButtonClick(ActionEvent event) {
         try {
-            //Charge la vue de la page principale
+            // Load the main page view
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/pageprincipal.fxml"));
-             Parent root = loader.load();
-            // Obtient le stage actuel à partir de n'importe quel composant de la scène
+            Parent root = loader.load();
+            // Get the current stage from any scene component
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            // Définit la nouvelle scène avec la racine chargée
-             Scene scene = new Scene(root);
+            // Set the new scene with the loaded root
+            Scene scene = new Scene(root);
             stage.setScene(scene);
-            // Optionnel : redéfinir le titre de la fenêtre
-            stage.setTitle("Page Principale");
-             //Affiche la scène principale
-             stage.show();
-            } catch (IOException e) {
-             e.printStackTrace();
+            // Optionally: redefine the window title
+            stage.setTitle("Main Page");
+            // Show the main scene
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-
+    /**
+     * Bans the user from the system.
+     */
     @FXML
     private void banUser() {
 
         if (user != null) {
-            // Afficher une boîte de dialogue de confirmation
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Voulez-vous vraiment bannir cet utilisateur ?", ButtonType.YES, ButtonType.NO);
+            // Display a confirmation dialog box
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Do you really want to ban this user?", ButtonType.YES, ButtonType.NO);
             alert.showAndWait();
 
             if (alert.getResult() == ButtonType.YES) {
-                // Mettre à jour le statut de l'utilisateur pour le bannir (statut 3)
+                // Update the user's status to ban (status 3)
 
-                // Mise à jour dans la base de données
+                // Update in the database
                 try (Connection connection = DatabaseConnection.getConnection();
                      PreparedStatement updateUserStatement = connection.prepareStatement("UPDATE User SET state = ? WHERE email = ?")) {
 
@@ -421,17 +361,17 @@ public class UserController {
                     updateUserStatement.setString(2, user.getEmail());
                     updateUserStatement.executeUpdate();
 
-                    // Optionnel : mettre à jour l'interface utilisateur pour refléter ce changement
-                    Alert info = new Alert(Alert.AlertType.INFORMATION, "L'utilisateur a été banni avec succès.");
+                    // Optionally: update the user interface to reflect this change
+                    Alert info = new Alert(Alert.AlertType.INFORMATION, "The user has been successfully banned.");
                     info.show();
                 } catch (SQLException e) {
                     e.printStackTrace();
-                    Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Une erreur s'est produite lors de la mise à jour de l'utilisateur.");
+                    Alert errorAlert = new Alert(Alert.AlertType.ERROR, "An error occurred while updating the user.");
                     errorAlert.show();
                 }
             }
         } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Aucun utilisateur sélectionné.");
+            Alert alert = new Alert(Alert.AlertType.WARNING, "No user selected.");
             alert.show();
         }
     }
