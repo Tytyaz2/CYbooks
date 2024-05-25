@@ -13,6 +13,10 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Controller class for the Late Borrow view.
+ * This class handles the display of late borrowed items in a TableView.
+ */
 public class LateBorrowController {
 
     @FXML
@@ -24,6 +28,11 @@ public class LateBorrowController {
     @FXML
     private TableColumn<Borrow, LocalDate> dueDateColumn;
 
+    /**
+     * Initializes the controller.
+     * This method is automatically called when the corresponding FXML file is loaded.
+     * It sets up the TableView columns and loads late loans from the database.
+     */
     @FXML
     private void initialize() {
         // Initialize the TableView columns using PropertyValueFactory to call getters
@@ -33,13 +42,13 @@ public class LateBorrowController {
 
         // Load late loans when the view is initialized
         loadLateLoans();
-
-//         Set the stage size to 720x1280
-//        Stage stage = (Stage) lateLoansTable.getScene().getWindow();
-//        stage.setWidth(720);
-//        stage.setHeight(1280);
     }
 
+    /**
+     * Loads late loans from the database and displays them in the TableView.
+     * This method retrieves late loans from the database using DatabaseConnection.getLateBorrow(),
+     * then displays them in the TableView using displayLateLoans().
+     */
     private void loadLateLoans() {
         try {
             List<Borrow> lateLoans = DatabaseConnection.getLateBorrow();
@@ -51,6 +60,13 @@ public class LateBorrowController {
         }
     }
 
+    /**
+     * Displays late loans in the TableView.
+     * This method takes a List of late loans and converts it into an ObservableList,
+     * which is then set as the items of the TableView.
+     *
+     * @param lateLoans The List of late loans to be displayed.
+     */
     private void displayLateLoans(List<Borrow> lateLoans) {
         ObservableList<Borrow> loanObservableList = FXCollections.observableArrayList(lateLoans);
         lateLoansTable.setItems(loanObservableList);

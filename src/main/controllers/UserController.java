@@ -81,7 +81,7 @@ public class UserController {
 
     protected final ObservableList<Book> selectedBooks = FXCollections.observableArrayList();
 
-    public void displayUserDetails(User user) {
+    public void displayUserDetails(User user) throws SQLException {
         if (user != null) {
             this.user = user;
 
@@ -95,7 +95,7 @@ public class UserController {
             firstNameLabel.setText(user.getFirstName());
             mailLabel.setText(user.getEmail());
 
-            int maxBorrow = 5 - getMaxBorrowFromDatabase(user.getEmail());
+            int maxBorrow = 5 - DatabaseConnection.getUserMaxBorrow(user);
             nbBorrowsLabel.setText(String.valueOf(maxBorrow));
 
             loadBorrowedBooks(user.getEmail());
@@ -107,31 +107,7 @@ public class UserController {
         }
     }
 
-    private int getMaxBorrowFromDatabase(String email) {
-        int maxBorrow = 0;
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
 
-        try {
-            connection = DatabaseConnection.getConnection();
-
-            String query = "SELECT maxborrow FROM User WHERE email = ?";
-            preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, email);
-            resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                maxBorrow = resultSet.getInt("maxborrow");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            // Fermeture des ressources...
-        }
-
-        return maxBorrow;
-    }
 
     @FXML
     public void initialize() {
@@ -157,9 +133,17 @@ public class UserController {
         });
     }
 
+    /**
+     * Handles modifying user information.
+     *
+     * @param actionEvent The mouse event triggering the modification.
+     * @throws SQLException if a database access error occurs.
+     */
     @FXML
     public void modifyUser(MouseEvent actionEvent) throws SQLException {
+        // Check if user information is currently being edited
         if (lastNameLabel.isVisible()) {
+            // If information is visible, hide labels and show text areas for editing
             historylabel.setVisible(false);
             lastNameLabel.setVisible(false);
             firstNameLabel.setVisible(false);
@@ -168,10 +152,12 @@ public class UserController {
             firstNameTextArea.setVisible(true);
             mailTextArea.setVisible(true);
 
+            // Set text areas with current information
             lastNameTextArea.setText(lastNameLabel.getText());
             firstNameTextArea.setText(firstNameLabel.getText());
             mailTextArea.setText(mailLabel.getText());
         } else {
+            // If information is not visible, hide text areas and show labels
             lastNameLabel.setVisible(true);
             firstNameLabel.setVisible(true);
             mailLabel.setVisible(true);
@@ -179,101 +165,38 @@ public class UserController {
             firstNameTextArea.setVisible(false);
             mailTextArea.setVisible(false);
 
+            // Get new information from text areas
             String newLastName = lastNameTextArea.getText();
             String newFirstName = firstNameTextArea.getText();
             String newEmail = mailTextArea.getText();
 
+            // Validate new email format
             if (!User.isValidEmail(newEmail)) {
+                // Display error message for invalid email
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Erreur de validation");
+                alert.setTitle("Validation Error");
                 alert.setHeaderText(null);
-                alert.setContentText("Veuillez entrer une adresse email valide.");
+                alert.setContentText("Please enter a valid email address.");
                 alert.showAndWait();
                 return;
             }
 
-
-            int state = user.getState();  // Assuming `statut` is part of your user object
-            int maxBorrow = DatabaseConnection.getUserMaxEmprunt(user.getEmail());  // Assuming `maxEmprunt` is part of your user object
-            String previousEmail = user.getEmail();
+            // Update user object with new email
+            int state = user.getState(); // Assuming `state` is part of your user object
+            int maxBorrow = DatabaseConnection.getUserMaxBorrow(user); // Assuming `maxBorrow` is part of your user object
             user.setEmail(newEmail);
 
-            Connection connection = null;
-            PreparedStatement insertNewUserStatement = null;
-            PreparedStatement updateBorrowStatement = null;
-            PreparedStatement updateHistoryStatement = null;
-            PreparedStatement deleteUserStatement = null;
-
+            // Modify user information in the database
             try {
-                connection = DatabaseConnection.getConnection();
-                connection.setAutoCommit(false);  // Commence une transaction
-
-                // Insérer le nouvel utilisateur
-                String insertNewUserQuery = "INSERT INTO User (email, lastname, firstname, state, maxborrow) VALUES (?, ?, ?, ?, ?)";
-                insertNewUserStatement = connection.prepareStatement(insertNewUserQuery);
-                insertNewUserStatement.setString(1, newEmail);
-                insertNewUserStatement.setString(2, newLastName);
-                insertNewUserStatement.setString(3, newFirstName);
-                insertNewUserStatement.setInt(4, state);
-                insertNewUserStatement.setInt(5, maxBorrow);
-                insertNewUserStatement.executeUpdate();
-
-                // Mettre à jour les emprunts pour utiliser le nouvel email
-                String updateBorrowQuery = "UPDATE Borrow SET user_email = ? WHERE user_email = ?";
-                updateBorrowStatement = connection.prepareStatement(updateBorrowQuery);
-                updateBorrowStatement.setString(1, newEmail);
-                updateBorrowStatement.setString(2, previousEmail);
-                updateBorrowStatement.executeUpdate();
-
-                // Mettre à jour l'historique pour utiliser le nouvel email
-                String updateHistoryQuery = "UPDATE History SET user_email = ? WHERE user_email = ?";
-                updateHistoryStatement = connection.prepareStatement(updateHistoryQuery);
-                updateHistoryStatement.setString(1, newEmail);
-                updateHistoryStatement.setString(2, previousEmail);
-                updateHistoryStatement.executeUpdate();
-
-                // Supprimer l'ancien utilisateur
-                String deleteUserQuery = "DELETE FROM User WHERE email = ?";
-                deleteUserStatement = connection.prepareStatement(deleteUserQuery);
-                deleteUserStatement.setString(1, previousEmail);
-                deleteUserStatement.executeUpdate();
-
-                connection.commit();  // Confirme la transaction
-
+                DatabaseConnection.modifyUser(user, user.getEmail());
+                // Update UI with new information
                 lastNameLabel.setText(newLastName);
                 firstNameLabel.setText(newFirstName);
                 mailLabel.setText(newEmail);
-                nbBorrowsLabel.setText(String.valueOf(5 - getMaxBorrowFromDatabase(newEmail)));
-
-                System.out.println("changement(s) effectué(s)");
-
+                nbBorrowsLabel.setText(String.valueOf(5 - maxBorrow)); // Assuming `nbBorrowsLabel` is a label for showing remaining borrows
+                System.out.println("Changes successfully made");
             } catch (SQLException e) {
-                if (connection != null) {
-                    try {
-                        connection.rollback();  // Annule la transaction en cas d'erreur
-                    } catch (SQLException rollbackEx) {
-                        rollbackEx.printStackTrace();
-                    }
-                }
-                System.out.println("Aucun changement apporté");
-            } finally {
-                try {
-                    if (insertNewUserStatement != null) {
-                        insertNewUserStatement.close();
-                    }
-                    if (updateBorrowStatement != null) {
-                        updateBorrowStatement.close();
-                    }
-                    if (deleteUserStatement != null) {
-                        deleteUserStatement.close();
-                    }
-                    if (connection != null) {
-                        connection.setAutoCommit(true);  // Réactive l'auto-commit
-                        connection.close();
-                    }
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
+                System.out.println("No changes made");
             }
         }
     }
@@ -297,100 +220,24 @@ public class UserController {
             System.out.println("Aucun livre sélectionné.");
         }
     }
+    /**
+     * Gives back selected books.
+     * This method is responsible for displaying the selected books and calling the appropriate
+     * method in the DatabaseConnection class to handle SQL transactions.
+     *
+     * @param books The list of books to be returned.
+     */
     private void giveBackSelectedBooks(List<Book> books) {
-        Connection connection = null;
-        PreparedStatement updateBorrowStatement = null;
-        PreparedStatement updateBookStatement = null;
-        PreparedStatement insertHistoryStatement = null;
-        PreparedStatement deleteBorrowStatement = null;
-
         try {
-            connection = DatabaseConnection.getConnection();
-            connection.setAutoCommit(false);
+            // Call the method in the DatabaseConnection class to handle SQL transactions
+            DatabaseConnection.giveBackSelectedBooks(user, books);
 
-            String updateBorrowQuery = "UPDATE Borrow SET end = ? WHERE book_isbn = ? AND user_email = ?";
-            updateBorrowStatement = connection.prepareStatement(updateBorrowQuery);
-
-            String updateBookQuery = "UPDATE Book SET stock = stock + 1 WHERE isbn = ?";
-            updateBookStatement = connection.prepareStatement(updateBookQuery);
-
-            String insertHistoriqueQuery = "INSERT INTO History (book_isbn, user_email, start, end, delay) VALUES (?, ?, ?, ?, ?)";
-            insertHistoryStatement = connection.prepareStatement(insertHistoriqueQuery);
-
-            String deleteEmpruntQuery = "DELETE FROM Borrow WHERE book_isbn = ? AND user_email = ?";
-            deleteBorrowStatement = connection.prepareStatement(deleteEmpruntQuery);
-
-            for (Book book : books) {
-                // Vérifier si le livre est déjà emprunté par l'utilisateur
-                if (DatabaseConnection.isBookAlreadyBorrowed(user.getEmail(), book.getIsbn())) {
-                    // Mise à jour de la date de fin de l'emprunt
-                    updateBorrowStatement.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
-                    updateBorrowStatement.setString(2, book.getIsbn());
-                    updateBorrowStatement.setString(3, user.getEmail());
-                    updateBorrowStatement.executeUpdate();
-
-                    // Mise à jour du stock du livre
-                    updateBookStatement.setString(1, book.getIsbn());
-                    updateBookStatement.executeUpdate();
-
-                    // Calcul du retard
-                    LocalDate giveBackDate = LocalDate.parse(book.getDateGB());
-                    boolean delay = false;
-                    if (giveBackDate != null && LocalDate.now().isAfter(giveBackDate)) {
-                        delay = true;
-                    }
-
-                    // Ajout des informations de l'emprunt dans la table Historique
-                    insertHistoryStatement.setString(1, book.getIsbn());
-                    insertHistoryStatement.setString(2, user.getEmail());
-                    insertHistoryStatement.setString(3, book.getDateBorrow());
-                    insertHistoryStatement.setString(4, LocalDate.now().toString());
-                    insertHistoryStatement.setBoolean(5, delay);
-                    insertHistoryStatement.executeUpdate();
-
-                    // Suppression de l'emprunt de la table Emprunt
-                    deleteBorrowStatement.setString(1, book.getIsbn());
-                    deleteBorrowStatement.setString(2, user.getEmail());
-                    deleteBorrowStatement.executeUpdate();
-
-                    // Mise à jour du nombre maximum d'emprunts de l'utilisateur
-                    DatabaseConnection.updateUserMaxBorrow(user.getEmail(), DatabaseConnection.getUserMaxEmprunt(user.getEmail()) + 1);
-
-                    // Mise à jour de l'interface utilisateur
-                    borrowList.remove(book);
-                    nbBorrowsLabel.setText(String.valueOf(5 - getMaxBorrowFromDatabase(user.getEmail())));
-                    System.out.println("Livre rendu : " + book.getTitle());
-                } else {
-                    // Afficher un message d'erreur si le livre n'est pas emprunté par l'utilisateur
-                    Alert alert = new Alert(Alert.AlertType.WARNING);
-                    alert.setTitle("Erreur de rendu");
-                    alert.setHeaderText("Sélection Livre");
-                    alert.setContentText("Veuillez sélectionner un livre à rendre !");
-                    alert.showAndWait();
-                }
-            }
-
-            connection.commit();
-
+            // Update the user interface
+            borrowList.removeAll(books);
+            nbBorrowsLabel.setText(String.valueOf(5 - DatabaseConnection.getUserMaxBorrow(user)));
+            books.forEach(book -> System.out.println("Book returned: " + book.getTitle()));
         } catch (SQLException e) {
-            if (connection != null) {
-                try {
-                    connection.rollback();
-                } catch (SQLException rollbackException) {
-                    rollbackException.printStackTrace();
-                }
-            }
             e.printStackTrace();
-        } finally {
-            try {
-                if (updateBorrowStatement != null) updateBorrowStatement.close();
-                if (updateBookStatement != null) updateBookStatement.close();
-                if (insertHistoryStatement != null) insertHistoryStatement.close();
-                if (deleteBorrowStatement != null) deleteBorrowStatement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
     }
 

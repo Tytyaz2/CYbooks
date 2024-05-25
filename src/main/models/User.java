@@ -131,7 +131,7 @@ public class User {
      * @throws SQLException if a database access error occurs
      */
     public boolean hasOverdueBorrow(LocalDate currentDate) throws SQLException {
-        List<Borrow> borrows = DatabaseConnection.getUserBorrow(this.getEmail());
+        List<Borrow> borrows = DatabaseConnection.getUserBorrow(this);
         for (Borrow borrow : borrows) {
             if (borrow.getEndDate().isBefore(currentDate)) {
                 return true; // There is at least one overdue borrow

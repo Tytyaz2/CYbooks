@@ -11,26 +11,19 @@ import java.util.List;
 import java.net.URL;
 
 /**
- * ApiCaller is the class that access BNF's API
- *
- * @author TDLT
+ * SearchBookAPI is the class that access BNF's API
  */
-public class searchbookAPI {
+public class SearchBookAPI {
 
     /**
      * @param query this is the submitted query
-     * @param start from which book do we want to start
+     * @param start from which index do we want to start ( begins with 1 )
      * @param number the number of book we want
      * @return a list of books the API returned
      */
     public static List<Book> search(String categorie, String query, int start, int number) {
-// is appended to the query a link to the API, parameters to get only books,
-// options to get the API's response in the expected format
-        System.out.println(start +" "+ number );
         String myURL = "https://catalogue.bnf.fr/api/SRU?version=1.2&operation=searchRetrieve&query=bib.doctype any \"a\" and bib."+ categorie +" all \""+ query +"\"&recordSchema=dublincore&maximumRecords="+number+"&startRecord="+start;
         URI juri = null;
-
-// this is to encode special characters in a usable format eg. " " gives " "
         try {
             URL url = new URL(myURL);
             String nullFragment = null;
@@ -41,12 +34,11 @@ public class searchbookAPI {
             System.out.println("URI " + myURL + " is a malformed URL");
         }
 
-// building the request
-        HttpRequest request = HttpRequest.newBuilder().uri(juri).method("GET", HttpRequest.BodyPublishers.noBody())
-                .build();
+        // building the request
+        HttpRequest request = HttpRequest.newBuilder().uri(juri).method("GET", HttpRequest.BodyPublishers.noBody()).build();
         HttpResponse<String> response = null;
 
-// getting the response
+        // getting the response
         try {
             response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
         } catch (IOException e) {
@@ -54,11 +46,10 @@ public class searchbookAPI {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-// writing the response in a file and then parsing the file to get usable
-// instances of books
-        OperaFile.createFile("answer.xml");
-        OperaFile.writeFile("answer.xml", response.body());
-        List<Book> books = Metamorph.createBook("answer.xml");
+        // writing the response in a file and then parsing the file to get usable
+        OperationOnXMLFIle.createFile("src/main/ressources/answer.xml");
+        OperationOnXMLFIle.writeFile("src/main/ressources/answer.xml", response.body());
+        List<Book> books = Metamorph.createBook("src/main/ressources/answer.xml");
 
         return books;
     }

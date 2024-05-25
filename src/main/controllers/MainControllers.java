@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import main.models.*;
 import javafx.scene.paint.Color;
 import javafx.scene.control.TableCell;
@@ -61,99 +62,6 @@ public class MainControllers {
 
     private User selectedUser;
 
-
-
-
-
-
-    @FXML
-    private void loadFirst20Books() {
-        String recherche = SearchBook.getText();
-        List<Book> books = searchbookAPI.search("anywhere",recherche, startIndex, pageSize);
-        bookTableView.getItems().setAll(books);
-    }
-    @FXML
-    private void handleNextButtonAction() {
-        startIndex += pageSize;
-        loadFirst20Books();
-    }
-
-    @FXML
-    private void handlePreviousButtonAction() {
-        startIndex = Math.max(0, startIndex - pageSize);
-        loadFirst20Books();
-    }
-
-
-
-
-
-    private void loadData() throws SQLException {
-        List<User> data = new ArrayList<>();
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
-        try {
-            // Utiliser la méthode getConnection() de DatabaseConnection
-            System.out.println("Tentative de connexion à la base de données...");
-            connection = DatabaseConnection.getConnection();
-            System.out.println("Connexion réussie !");
-
-            // Exécuter la requête pour récupérer les données
-            String query = "SELECT * FROM User WHERE state != 3";
-            System.out.println("Exécution de la requête : " + query);
-            preparedStatement = connection.prepareStatement(query);
-            resultSet = preparedStatement.executeQuery();
-
-            // Itérer à travers le jeu de résultats et ajouter les données à la liste
-            while (resultSet.next()) {
-                User model = new User(
-                        resultSet.getString("email"),
-                        resultSet.getString("firstname"),
-                        resultSet.getString("lastname"),
-                        resultSet.getInt("state"),
-                        resultSet.getInt("maxborrow"));
-
-                data.add(model);
-            }
-            System.out.println("Données récupérées avec succès !");
-
-            // Peupler TableView avec les données
-            userTableView.getItems().addAll(data);
-            System.out.println("Données ajoutées à la TableView avec succès !");
-
-        } catch (SQLException e) {
-            System.err.println("Erreur lors de la récupération des données : " + e.getMessage());
-        } finally {
-            // Fermer les ressources
-            try {
-                if (resultSet != null) resultSet.close();
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
-                System.out.println("Ressources fermées avec succès !");
-            } catch (SQLException e) {
-                System.err.println("Erreur lors de la fermeture des ressources : " + e.getMessage());
-            }
-        }
-    }
-
-
-
-
-
-    // Méthode pour rafraîchir les données des adhérents
-    public void refreshUserData() throws SQLException {
-        // Effacez les données actuelles de la table
-        userTableView.getItems().clear();
-
-        // Rechargez les données depuis la base de données et ajoutez-les à la table
-        // Utilisez une méthode de votre classe DatabaseConnection pour récupérer les données
-        List<User> userList = DatabaseConnection.getAllUser();
-        userTableView.getItems().addAll(userList);
-    }
-
-
     @FXML
     private RadioButton searchbyauthor;
 
@@ -181,98 +89,95 @@ public class MainControllers {
     private ToggleGroup searchToggleGroup;
 
 
+
+
     /**
-     * Method to initialize the controller.
+     * Loads the first 20 books based on the search query and updates the TableView.
+     */
+    @FXML
+    private void loadFirst20Books() {
+        String searchQuery = SearchBook.getText();
+        List<Book> books = SearchBookAPI.search("anywhere", searchQuery, startIndex, pageSize);
+        bookTableView.getItems().setAll(books);
+    }
+
+    /**
+     * Handles the action when the Next button is clicked.
+     * Increments the startIndex and reloads the first 20 books.
+     */
+    @FXML
+    private void handleNextButtonAction() {
+        startIndex += pageSize;
+        loadFirst20Books();
+    }
+
+    /**
+     * Handles the action when the Previous button is clicked.
+     * Decrements the startIndex (minimum 0) and reloads the first 20 books.
+     */
+    @FXML
+    private void handlePreviousButtonAction() {
+        startIndex = Math.max(0, startIndex - pageSize);
+        loadFirst20Books();
+    }
+
+    /**
+     * Loads user data from the database and populates the TableView.
      *
-     * @throws SQLException if a SQL exception occurs
-     * @throws InterruptedException if the thread is interrupted
+     * @throws SQLException if a database access error occurs.
+     */
+    private void loadData() throws SQLException {
+        userTableView.getItems().clear(); // Clear the TableView before loading new data
+        try {
+            List<User> data = DatabaseConnection.loadUsers();
+            userTableView.getItems().addAll(data);
+        } catch (SQLException e) {
+            System.err.println("Error loading data: " + e.getMessage());
+            throw e; // Re-throw the exception for handling in the caller
+        }
+    }
+
+    /**
+     * Refreshes user data in the TableView.
+     *
+     * @throws SQLException if a database access error occurs.
+     */
+    public void refreshUserData() throws SQLException {
+        // Clear current data from the table
+        userTableView.getItems().clear();
+
+        // Reload data from the database and add it to the table
+        List<User> userList = DatabaseConnection.getAllUser();
+        userTableView.getItems().addAll(userList);
+    }
+
+    /**
+     * Initializes the controller.
+     *
+     * @throws SQLException        if a SQL exception occurs.
+     * @throws InterruptedException if the thread is interrupted.
      */
     public void initialize() throws SQLException, InterruptedException {
-        // Appeler la méthode pour charger les livres populaires
+        // Call the method to load popular books
         loadTop20PopularBooksLastMonth();
         checkAndUpdateUserStatus();
-        // Charger les données dans TableView
+        // Load data into TableView
         loadData();
 
-        // Définir les usines de valeurs de cellule personnalisées pour chaque colonne
+        // Set custom cell value factories for each column
         lastName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getLastName()));
         firstName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFirstName()));
         email.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEmail()));
 
-        // Appliquer les usines de cellules personnalisées pour changer la couleur en fonction du statut
-        lastName.setCellFactory(column -> new TableCell<User, String>() {
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText(null);
-                    setStyle("");
-                } else {
-                    setText(item);
-                    User user = getTableView().getItems().get(getIndex());
-                    if (user.getState() == 1) {
-                        setTextFill(Color.RED);
-                    } else if (user.getState() == 2) {
-                        setTextFill(Color.ORANGE);
-                    } else if (user.getState() == 0) {
-                        setTextFill(Color.BLACK);
-                    } else {
-                        setTextFill(Color.BLACK); // Couleur par défaut si le statut n'est pas 0, 1 ou 2
-                    }
-                }
-            }
-        });
+        // Apply custom cell factories to change color based on status
+        lastName.setCellFactory(getColorCellFactory());
+        firstName.setCellFactory(getColorCellFactory());
+        email.setCellFactory(getColorCellFactory());
 
-        firstName.setCellFactory(column -> new TableCell<User, String>() {
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText(null);
-                    setStyle("");
-                } else {
-                    setText(item);
-                    User user = getTableView().getItems().get(getIndex());
-                    if (user.getState() == 1) {
-                        setTextFill(Color.RED);
-                    } else if (user.getState() == 2) {
-                        setTextFill(Color.ORANGE);
-                    } else if (user.getState() == 0) {
-                        setTextFill(Color.BLACK);
-                    } else {
-                        setTextFill(Color.BLACK); // Couleur par défaut si le statut n'est pas 0, 1 ou 2
-                    }
-                }
-            }
-        });
-
-        email.setCellFactory(column -> new TableCell<User, String>() {
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText(null);
-                    setStyle("");
-                } else {
-                    setText(item);
-                    User user = getTableView().getItems().get(getIndex());
-                    if (user.getState() == 1) {
-                        setTextFill(Color.RED);
-                    } else if (user.getState() == 2) {
-                        setTextFill(Color.ORANGE);
-                    } else if (user.getState() == 0) {
-                        setTextFill(Color.BLACK);
-                    } else {
-                        setTextFill(Color.BLACK); // Couleur par défaut si le statut n'est pas 0, 1 ou 2
-                    }
-                }
-            }
-        });
-
-        // Créer un groupe de bascule pour les boutons radio de recherche
+        // Create a toggle group for the search radio buttons
         searchToggleGroup = new ToggleGroup();
 
-        // Ajouter les boutons radio au groupe de bascule
+        // Add radio buttons to the toggle group
         searchbyauthor.setToggleGroup(searchToggleGroup);
         searchbytitle.setToggleGroup(searchToggleGroup);
         searchbyisbn.setToggleGroup(searchToggleGroup);
@@ -285,62 +190,96 @@ public class MainControllers {
         searchbyratingscount.setToggleGroup(searchToggleGroup);
         searchbylanguage.setToggleGroup(searchToggleGroup);
 
-        // Ajouter des écouteurs de changement pour les boutons radio
+        // Add change listeners for the radio buttons
         searchToggleGroup.selectedToggleProperty().addListener((observable, oldToggle, newToggle) -> {
             if (newToggle == searchbyauthor) {
-                // Appeler la méthode de recherche par auteur
+                // Call method to search by author
                 loadBooksByAuthor();
             } else if (newToggle == searchbytitle) {
-                // Appeler la méthode de recherche par titre
+                // Call method to search by title
                 loadBooksByTitle();
             } else if (newToggle == searchbyisbn) {
-                // Appeler la méthode de recherche par ISBN
+                // Call method to search by ISBN
                 loadBooksByISBN();
             } else if (newToggle == searchbypublisher) {
-                // Appeler la méthode de recherche par éditeur
+                // Call method to search by publisher
                 loadBooksByPublisher();
             } else if (newToggle == searchbypublisheddate) {
-                // Appeler la méthode de recherche par date de publication
+                // Call method to search by published date
                 loadBooksByPublishedDate();
             } else if (newToggle == searchbydescription) {
-                // Appeler la méthode de recherche par description
+                // Call method to search by description
                 loadBooksByDescription();
             } else if (newToggle == searchbygenre) {
-                // Appeler la méthode de recherche par nombre de pages
+                // Call method to search by genre
                 loadBooksByGenre();
             } else if (newToggle == searchbycreation) {
-                // Appeler la méthode de recherche par catégories
+                // Call method to search by creation
                 loadBooksByCreation();
             } else if (newToggle == searchbysubject) {
-                // Appeler la méthode de recherche par note moyenne
+                // Call method to search by subject
                 loadBooksBySubject();
             } else if (newToggle == searchbyratingscount) {
-                // Appeler la méthode de recherche par nombre d'évaluations
+                // Call method to search by ratings count
                 loadBooksByRatingsCount();
             } else if (newToggle == searchbylanguage) {
-                // Appeler la méthode de recherche par langue
+                // Call method to search by language
                 loadBooksByLanguage();
             }
         });
     }
 
+    /**
+     * Returns a TableCell factory to set text color based on user status.
+     *
+     * @return TableCell factory
+     */
+    private Callback<TableColumn<User, String>, TableCell<User, String>> getColorCellFactory() {
+        return column -> new TableCell<User, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    setText(item);
+                    User user = getTableView().getItems().get(getIndex());
+                    switch (user.getState()) {
+                        case 1:
+                            setTextFill(Color.RED);
+                            break;
+                        case 2:
+                            setTextFill(Color.ORANGE);
+                            break;
+                        case 0:
+                            setTextFill(Color.BLACK);
+                            break;
+                        case 3:
 
-    // This method will be called when you want to show the Late Loans view
+                        default:
+                            setTextFill(Color.BLACK); // Default color if status is not 0, 1, or 2
+                            break;
+                    }
+                }
+            }
+        };
+    }
+
+
+    /**
+     * Shows the Late Loans view by loading the Late Borrow FXML file in a new stage.
+     * This method loads the FXML file, creates a new stage with the loaded FXML, sets the scene, and displays the stage.
+     * If an IOException occurs during loading, it is printed and optionally handled.
+     */
     public void showLateLoansView() {
         try {
-            // Load the FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/lateBorrow.fxml"));
             Parent root = loader.load();
-
-            // Create a new scene with the loaded FXML
             Scene scene = new Scene(root);
-
-            // Create a new stage (window) and set the scene
             Stage stage = new Stage();
             stage.setTitle("Late Loans");
             stage.setScene(scene);
-
-            // Show the new stage
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -348,14 +287,14 @@ public class MainControllers {
         }
     }
 
-
-
-
-
-
-   private void loadBooksByAuthor() {
+    /**
+     * Loads books by author name.
+     * This method fetches books using the provided author name via the SearchBookAPI.
+     * If the fetched list is null, it clears the bookTableView; otherwise, it populates the table with the fetched books.
+     */
+    private void loadBooksByAuthor() {
         String author = SearchBook.getText();
-        List<Book> books = searchbookAPI.search("author",author, startIndex, pageSize);
+        List<Book> books = SearchBookAPI.search("author", author, startIndex, pageSize);
         if (books == null) {
             bookTableView.getItems().clear();
         } else {
@@ -363,25 +302,40 @@ public class MainControllers {
         }
     }
 
+    /**
+     * Loads books by title.
+     * This method fetches books using the provided title via the SearchBookAPI.
+     * If the fetched list is null, it clears the bookTableView; otherwise, it populates the table with the fetched books.
+     */
     private void loadBooksByTitle() {
         String title = SearchBook.getText();
-        List<Book> books = searchbookAPI.search("title",title, startIndex, pageSize);
+        List<Book> books = SearchBookAPI.search("title", title, startIndex, pageSize);
         if (books == null) {
             bookTableView.getItems().clear();
         } else {
             bookTableView.getItems().setAll(books);
         }
-
     }
 
+
+    /**
+     * Loads books by ISBN.
+     * This method fetches books using the provided ISBN via the SearchBookAPI and populates the bookTableView with the fetched books.
+     */
     private void loadBooksByISBN() {
         String isbn = SearchBook.getText();
-        List<Book> books = searchbookAPI.search("isbn", isbn, startIndex, pageSize);
+        List<Book> books = SearchBookAPI.search("isbn", isbn, startIndex, pageSize);
         bookTableView.getItems().setAll(books);
     }
+
+    /**
+     * Loads books by publisher.
+     * This method fetches books using the provided publisher name via the SearchBookAPI.
+     * If the fetched list is null, it clears the bookTableView; otherwise, it populates the table with the fetched books.
+     */
     private void loadBooksByPublisher() {
         String publisher = SearchBook.getText();
-        List<Book> books = searchbookAPI.search("publisher", publisher, startIndex, pageSize);
+        List<Book> books = SearchBookAPI.search("publisher", publisher, startIndex, pageSize);
         if (books == null) {
             bookTableView.getItems().clear();
         } else {
@@ -389,9 +343,14 @@ public class MainControllers {
         }
     }
 
+    /**
+     * Loads books by published date.
+     * This method fetches books using the provided published date via the SearchBookAPI.
+     * If the fetched list is null, it clears the bookTableView; otherwise, it populates the table with the fetched books.
+     */
     private void loadBooksByPublishedDate() {
         String publishedDate = SearchBook.getText();
-        List<Book> books = searchbookAPI.search("publicationdate", publishedDate, startIndex, pageSize);
+        List<Book> books = SearchBookAPI.search("publicationdate", publishedDate, startIndex, pageSize);
         if (books == null) {
             bookTableView.getItems().clear();
         } else {
@@ -399,9 +358,14 @@ public class MainControllers {
         }
     }
 
+    /**
+     * Loads books by description.
+     * This method fetches books using the provided description via the SearchBookAPI.
+     * If the fetched list is null, it clears the bookTableView; otherwise, it populates the table with the fetched books.
+     */
     private void loadBooksByDescription() {
         String description = SearchBook.getText();
-        List<Book> books = searchbookAPI.search("anywhere",description, startIndex, pageSize);
+        List<Book> books = SearchBookAPI.search("anywhere", description, startIndex, pageSize);
         if (books == null) {
             bookTableView.getItems().clear();
         } else {
@@ -409,9 +373,14 @@ public class MainControllers {
         }
     }
 
+    /**
+     * Loads books by genre.
+     * This method fetches books using the provided genre via the SearchBookAPI.
+     * If the fetched list is null, it clears the bookTableView; otherwise, it populates the table with the fetched books.
+     */
     private void loadBooksByGenre() {
         String genre = SearchBook.getText();
-        List<Book> books = searchbookAPI.search("genre", genre, startIndex, pageSize);
+        List<Book> books = SearchBookAPI.search("genre", genre, startIndex, pageSize);
         if (books == null) {
             bookTableView.getItems().clear();
         } else {
@@ -419,9 +388,14 @@ public class MainControllers {
         }
     }
 
+    /**
+     * Loads books by creation date.
+     * This method fetches books using the provided creation date via the SearchBookAPI.
+     * If the fetched list is null, it clears the bookTableView; otherwise, it populates the table with the fetched books.
+     */
     private void loadBooksByCreation() {
         String creation = SearchBook.getText();
-        List<Book> books = searchbookAPI.search("creationdate", creation, startIndex, pageSize);
+        List<Book> books = SearchBookAPI.search("creationdate", creation, startIndex, pageSize);
         if (books == null) {
             bookTableView.getItems().clear();
         } else {
@@ -429,9 +403,14 @@ public class MainControllers {
         }
     }
 
+    /**
+     * Loads books by subject.
+     * This method fetches books using the provided subject via the SearchBookAPI.
+     * If the fetched list is null, it clears the bookTableView; otherwise, it populates the table with the fetched books.
+     */
     private void loadBooksBySubject() {
         String subject = SearchBook.getText();
-        List<Book> books = searchbookAPI.search("subject", subject, startIndex, pageSize);
+        List<Book> books = SearchBookAPI.search("subject", subject, startIndex, pageSize);
         if (books == null) {
             bookTableView.getItems().clear();
         } else {
@@ -439,10 +418,16 @@ public class MainControllers {
         }
     }
 
+    /**
+     * Loads books by ratings count.
+     * This method fetches books using the provided ratings count via the SearchBookAPI.
+     * If the fetched list is null, it clears the bookTableView; otherwise, it populates the table with the fetched books.
+     * If the provided ratings count is not a valid number, it prints a message to the console and clears the bookTableView.
+     */
     private void loadBooksByRatingsCount() {
         try {
             int ratingsCount = Integer.parseInt(SearchBook.getText());
-            List<Book> books = searchbookAPI.search("cote", String.valueOf(ratingsCount), startIndex, pageSize);
+            List<Book> books = SearchBookAPI.search("cote", String.valueOf(ratingsCount), startIndex, pageSize);
             if (books == null) {
                 bookTableView.getItems().clear();
             } else {
@@ -454,9 +439,14 @@ public class MainControllers {
         }
     }
 
+    /**
+     * Loads books by language.
+     * This method fetches books using the provided language via the SearchBookAPI.
+     * If the fetched list is null, it clears the bookTableView; otherwise, it populates the table with the fetched books.
+     */
     private void loadBooksByLanguage() {
         String language = SearchBook.getText();
-        List<Book> books = searchbookAPI.search("language", language, startIndex, pageSize);
+        List<Book> books = SearchBookAPI.search("language", language, startIndex, pageSize);
         if (books == null) {
             bookTableView.getItems().clear();
         } else {
@@ -464,15 +454,16 @@ public class MainControllers {
         }
     }
 
-
+    /**
+     * Handles the user click event in the TableView by retrieving the selected user and showing the adherent page.
+     * This method retrieves the selected user from the TableView and calls the method to show the adherent page in a new scene.
+     *
+     * @param mouseEvent The MouseEvent representing the user's click action.
+     */
     @FXML
     public void handleUserClick(MouseEvent mouseEvent) {
-        // Récupérer l'adhérent sélectionné dans la TableView
         selectedUser = userTableView.getSelectionModel().getSelectedItem();
-
-        // Vérifier si un adhérent est sélectionné
         if (selectedUser != null) {
-            // Appelle la méthode pour afficher la page adhérent dans une nouvelle scène
             showAdherentPage();
         }
     }
@@ -481,31 +472,42 @@ public class MainControllers {
 
 
 
+
+    /**
+     * Handles the event when the "New Adherent" button is clicked to show the new adherent page.
+     * This method triggers the display of the new adherent page when the button is clicked.
+     *
+     * @param event The ActionEvent representing the button click event.
+     */
     @FXML
     public void handleNewAdherentButtonClick(ActionEvent event) {
         showNewAdherentPage();
     }
 
-
-
+    /**
+     * Handles the event when the "New Borrow" button is clicked to show the emprunt.fxml page.
+     * This method loads the emprunt.fxml file and replaces the current scene's children with those of the new view.
+     *
+     * @param event The ActionEvent representing the button click event.
+     */
     @FXML
     void handleNewBorrowButtonClick(ActionEvent event) {
         try {
-            // Charger le fichier FXML de la scène d'emprunt
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/emprunt.fxml"));
             Parent empruntRoot = loader.load();
-
-
-            // Obtenir le conteneur racine de la scène actuelle et le convertir en AnchorPane
             AnchorPane root = (AnchorPane) ((Node) event.getSource()).getScene().getRoot();
-            // Accéder à la liste des enfants du conteneur racine et remplacer les enfants par ceux de la nouvelle vue
             root.getChildren().setAll(empruntRoot);
-
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+
+
+    /**
+     * Shows the adherent page.
+     * This method loads the pageadherent.fxml file, displays the details of the selected user, and sets it as the scene.
+     */
     public void showAdherentPage() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/pageadherent.fxml"));
@@ -516,9 +518,15 @@ public class MainControllers {
             stage.getScene().setRoot(root);
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
+    /**
+     * Shows the new adherent page.
+     * This method loads the newAdherent.fxml file, sets the main controller, and sets it as the scene.
+     */
     public void showNewAdherentPage() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/newAdherent.fxml"));
@@ -531,7 +539,14 @@ public class MainControllers {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Checks and updates user status.
+     * This method checks for overdue loans, maximum number of loans, and updates user status accordingly.
+     * It runs periodically using a Timer task.
+     */
     private void checkAndUpdateUserStatus() {
+        // Timer task to run the update periodically
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -542,29 +557,29 @@ public class MainControllers {
 
                     for (User user : users) {
                         boolean hasOverdueLoans = user.hasOverdueBorrow(currentDate);
-                        int maxEmprunt = DatabaseConnection.getUserMaxEmprunt(user.getEmail());
-                        int lateCount = DatabaseConnection.getUserLateCount(user.getEmail());
+                        int maxEmprunt = DatabaseConnection.getUserMaxBorrow(user);
+                        int lateCount = DatabaseConnection.getUserLateCount(user);
 
                         if (user.getState() != 3) {
                             if (lateCount >= 3) {
                                 if (user.getState() != 3) {
                                     user.setState(3);
-                                    DatabaseConnection.updateUserStatus(user.getEmail(), 3);
+                                    DatabaseConnection.updateUserStatus(user, 3);
                                 }
                             } else if (hasOverdueLoans) {
                                 if (user.getState() != 1) {
                                     user.setState(1);
-                                    DatabaseConnection.updateUserStatus(user.getEmail(), 1);
+                                    DatabaseConnection.updateUserStatus(user, 1);
                                 }
                             } else if (maxEmprunt == 0) {
                                 if (user.getState() != 2) {
                                     user.setState(2);
-                                    DatabaseConnection.updateUserStatus(user.getEmail(), 2);
+                                    DatabaseConnection.updateUserStatus(user, 2);
                                 }
                             } else {
                                 if (user.getState() != 0) {
                                     user.setState(0);
-                                    DatabaseConnection.updateUserStatus(user.getEmail(), 0);
+                                    DatabaseConnection.updateUserStatus(user, 0);
                                 }
                             }
                         }
@@ -573,93 +588,54 @@ public class MainControllers {
                     e.printStackTrace();
                 }
             }
-        }, 0, 24 * 60 * 60 * 1000); // Exécuter la tâche tous les jours
+        }, 0, 24 * 60 * 60 * 1000); // Runs daily
     }
 
-
-
-
-
-
+    /**
+     * Loads the top 20 popular books of the last month.
+     * This method fetches the top 20 popular books from the database and updates the TableView with the data.
+     */
     private void loadTop20PopularBooksLastMonth() {
         try {
-            // Appeler la méthode pour obtenir les 20 livres les plus populaires du mois dernier
             List<Book> popularBooks = DatabaseConnection.getTop20PopularBooksLast30Days();
-
-            // Mettre à jour la TableView avec les données des livres populaires
             bookTableView.getItems().setAll(popularBooks);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Handles the search action for users.
+     * This method searches for users based on the entered search pattern and updates the userTableView accordingly.
+     *
+     * @param actionEvent The ActionEvent representing the search action event.
+     * @throws SQLException if a SQL exception occurs.
+     */
     public void handleSearchUser(ActionEvent actionEvent) throws SQLException {
-        List<User> data = new ArrayList<>();
         String searchPattern = "%" + SearchUser.getText() + "%";
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
         userTableView.getItems().clear();
+
         if (Objects.equals(searchPattern, "")) {
             loadData();
         } else {
             try {
-                // Utiliser la méthode getConnection() de DatabaseConnection
-                System.out.println("Tentative de connexion à la base de données...");
-                connection = DatabaseConnection.getConnection();
-                System.out.println("Connexion réussie !");
-
-                // Exécuter la requête pour récupérer les données
-                String query = "SELECT * FROM User WHERE (lastname LIKE ? OR firstname LIKE ? OR email LIKE ?) AND state != 3";
-                System.out.println("Exécution de la requête : " + query);
-                preparedStatement = connection.prepareStatement(query);
-
-                // Définir les valeurs des paramètres de substitution
-                preparedStatement.setString(1, searchPattern); // Pour le nom
-                preparedStatement.setString(2, searchPattern); // Pour le prénom
-                preparedStatement.setString(3, searchPattern); // Pour l'email
-
-                resultSet = preparedStatement.executeQuery();
-
-                // Itérer à travers le jeu de résultats et ajouter les données à la liste
-                while (resultSet.next()) {
-                    User model = new User(
-                            resultSet.getString("email"),
-                            resultSet.getString("firstname"),
-                            resultSet.getString("lastname"),
-                            resultSet.getInt("state"),
-                            resultSet.getInt("maxborrow"));
-
-                    data.add(model);
-                }
-
-                System.out.println("Données récupérées avec succès !");
-
-                // Peupler TableView avec les données
+                List<User> data = DatabaseConnection.searchUsers(searchPattern);
                 userTableView.getItems().addAll(data);
-                System.out.println("Données ajoutées à la TableView avec succès !");
-
             } catch (SQLException e) {
-                System.err.println("Erreur lors de la récupération des données : " + e.getMessage());
-            } finally {
-                // Fermer les ressources
-                try {
-                    if (resultSet != null) resultSet.close();
-                    if (preparedStatement != null) preparedStatement.close();
-                    if (connection != null) connection.close();
-                    System.out.println("Ressources fermées avec succès !");
-                } catch (SQLException e) {
-                    System.err.println("Erreur lors de la fermeture des ressources : " + e.getMessage());
-                }
+                System.err.println("Error lors de la récupération des données : " + e.getMessage());
             }
         }
     }
 
-
+    /**
+     * Refreshes user status.
+     * Clears the current data in the table.
+     * Reloads the data from the database and adds it to the table.
+     *
+     * @throws SQLException if a SQL exception occurs.
+     */
     public void refreshStatut() throws SQLException {
-        // Effacez les données actuelles de la table
         userTableView.getItems().clear();
-
-        // Rechargez les données depuis la base de données et ajoutez-les à la table
         loadData();
     }
 

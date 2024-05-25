@@ -1,6 +1,5 @@
 package main.models;
 
-import main.models.Book;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -11,8 +10,18 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Metamorph class provides methods to parse XML files and create
+ * Book objects from the parsed data.
+ */
 public class Metamorph {
 
+    /**
+     * Creates a list of Book objects from an XML file.
+     *
+     * @param file the path to the XML file
+     * @return a list of Book objects created from the XML file
+     */
     public static List<Book> createBook(String file) {
         List<Book> books = new ArrayList<>();
 
@@ -26,11 +35,10 @@ public class Metamorph {
                 Element record = (Element) recordList.item(i);
                 String title = getElementValue(record, "dc:title");
                 String author = getElementValue(record, "dc:creator");
-                String isbn = getElementValue(record, "dc:identifier",1);
+                String isbn = getElementValue(record, "dc:identifier", 1);
                 if (isbn.length() > 5) {
                     isbn = isbn.substring(5);
-                }
-                else if (isbn.length() < 5) {
+                } else if (isbn.length() < 5) {
                     isbn = getElementValue(record, "dc:identifier");
                     isbn = isbn.substring(35);
                 }
@@ -44,6 +52,13 @@ public class Metamorph {
         return books;
     }
 
+    /**
+     * Gets the text content of the first element with the specified tag name.
+     *
+     * @param element the parent element
+     * @param tagName the tag name of the child element
+     * @return the text content of the first child element with the specified tag name
+     */
     private static String getElementValue(Element element, String tagName) {
         NodeList nodeList = element.getElementsByTagName(tagName);
         if (nodeList != null && nodeList.getLength() > 0) {
@@ -52,6 +67,14 @@ public class Metamorph {
         return "";
     }
 
+    /**
+     * Gets the text content of the indexed element with the specified tag name.
+     *
+     * @param element the parent element
+     * @param tagName the tag name of the child element
+     * @param index the index of the child element
+     * @return the text content of the indexed child element with the specified tag name
+     */
     private static String getElementValue(Element element, String tagName, int index) {
         NodeList nodeList = element.getElementsByTagName(tagName);
         if (nodeList != null && nodeList.getLength() > index) {

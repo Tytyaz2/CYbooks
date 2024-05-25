@@ -5,27 +5,37 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
 
+/**
+ * The Authentication class provides a method to verify user authentication
+ * using credentials stored in a text file.
+ */
 public class Authentication {
 
-    // Méthode pour vérifier l'authentification à partir d'un fichier texte
+    /**
+     * Verifies authentication from a text file.
+     *
+     * @param username the username to authenticate
+     * @param password the password to authenticate
+     * @return true if the username and password match an entry in the text file, false otherwise
+     */
     public static boolean authenticate(String username, String password) {
-        // Chemin vers le fichier contenant les informations d'identification
-        String filePath = "/main/ressources/users.txt";
+        // Path to the file containing authentication information
+        String filePath = "/main/resources/users.txt";
 
         try (InputStream inputStream = Authentication.class.getResourceAsStream(filePath);
              BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
 
             String line;
             while ((line = br.readLine()) != null) {
-                // Divise la ligne en utilisant le caractère ":" comme séparateur
+                // Split the line using ":" as a separator
                 String[] parts = line.split(":");
                 if (parts.length == 2) {
                     String storedUsername = parts[0];
                     String storedPassword = parts[1];
 
-                    // Vérifie si l'utilisateur et le mot de passe correspondent
+                    // Check if the username and password match
                     if (storedUsername.equals(username) && storedPassword.equals(password)) {
-                        return true; // Authentification réussie
+                        return true; // Authentication successful
                     }
                 }
             }
@@ -33,7 +43,7 @@ public class Authentication {
             e.printStackTrace();
         }
 
-        return false; // Authentification échouée
+        return false; // Authentication failed
     }
 
 }

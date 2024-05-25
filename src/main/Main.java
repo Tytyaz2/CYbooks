@@ -5,6 +5,7 @@ import javafx.stage.Stage;
 import main.controllers.ConnexionController;
 import main.models.DatabaseConnection;
 import main.models.MySQLStarter;
+import main.models.User;
 
 import java.sql.SQLException;
 
@@ -21,8 +22,8 @@ public class Main extends Application {
 
             MySQLStarter.startMySQL();
             // Effectuer les opérations de base de données nécessaires
-            DatabaseConnection.insertUserData("nadir1401@gmail.com", "Nadir", "NEHILI");
-            DatabaseConnection.insertUserData("flavio2002@gmail.com", "Flavio", "Soares");
+            DatabaseConnection.insertUserData(new User("nadir1401@gmail.com", "Nadir", "NEHILI",0,5));
+            DatabaseConnection.insertUserData(new User("flavio2002@gmail.com", "Flavio", "Soares",0,5));
 
 
         } catch (SQLException e) {

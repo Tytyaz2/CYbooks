@@ -1,5 +1,7 @@
 package main.models;
 
+import java.sql.SQLException;
+
 public class Book {
     private String title;
     private String authors;
@@ -11,13 +13,13 @@ public class Book {
 
     private int stock;
 
-    public Book(String title,String authors, String isbn, String dateBorrow, String dateGB){
+    public Book(String title,String authors, String isbn, String dateBorrow, String dateGB) throws SQLException {
         this.title=title;
         this.authors=authors;
         this.isbn=isbn;
         this.dateBorrow=dateBorrow;
         this.dateGB=dateGB;
-        this.stock = DatabaseConnection.getStockFromDatabase(isbn);
+        this.stock = DatabaseConnection.getStockFromDatabase(DatabaseConnection.getBookByISBN(isbn));
     }
 
     public Book(String title, String authors, String isbn) {

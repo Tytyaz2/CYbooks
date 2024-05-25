@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import main.models.DatabaseConnection;
 import javafx.scene.control.Label;
 
+import javax.print.MultiDocPrintService;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -45,6 +46,7 @@ public class NewAdherentController {
         String firstname = firstNameTextArea.getText();
         String mail = mailTextArea.getText();
 
+
         // Validate the data
         if (lastname.isEmpty() || firstname.isEmpty() || mail.isEmpty()) {
             // Display error message if fields are empty
@@ -55,7 +57,7 @@ public class NewAdherentController {
         } else {
             try {
                 // Add the user to the database
-                DatabaseConnection.insertUserData(mail, firstname, lastname);
+                DatabaseConnection.insertUserData(new User(mail, firstname, lastname, 0,5));
                 System.out.println("Nouvel adhérent ajouté : " + lastname + " " + firstname);
 
                 // Refresh user data in the main table
