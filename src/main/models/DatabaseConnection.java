@@ -319,7 +319,7 @@ public class DatabaseConnection {
             // Execute the Query
             preparedStatement.executeUpdate();
         } finally {
-            // Fermer les ressources
+            // Close resources
             if (preparedStatement != null) {
                 preparedStatement.close();
             }
@@ -340,19 +340,19 @@ public class DatabaseConnection {
         PreparedStatement preparedStatement = null;
 
         try {
-            // Obtenez la connexion à la base de données
+            // Get database connection
             connection = getConnection();
 
-            // Préparez la requête SQL pour mettre à jour le nombre d'emprunts maximal de l'utilisateur
+            // Prepare SQL query to update user's maximum borrow count
             String query = "UPDATE User SET state = ? WHERE email = ?";
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, newState);
             preparedStatement.setString(2, user.getEmail());
 
-            // Exécutez la requête
+            // Run the query
             preparedStatement.executeUpdate();
         } finally {
-            // Fermer les ressources
+            // Close resources
             if (preparedStatement != null) {
                 preparedStatement.close();
             }
@@ -389,7 +389,7 @@ public class DatabaseConnection {
             }
             return false;
         } finally {
-            // Assurez-vous de fermer toutes les ressources JDBC pour éviter les fuites de ressources
+            // close all JDBC resources to avoid resource leaks
             closeResources(rs, stmt, conn);
         }
     }
@@ -567,7 +567,7 @@ public class DatabaseConnection {
                 int maxborrow = resultSet.getInt("maxborrow");
 
 
-                // Création de l'objet User avec la nouvelle colonne nbrEmprunt
+                // Creation of the User object with the new nbrLoan column
                 User user = new User(email, firstname, lastname, state, maxborrow);
                 userList.add(user);
             }
@@ -592,16 +592,16 @@ public class DatabaseConnection {
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
-                    // Récupérer les données de l'emprunt depuis le résultat de la requête
+                    // Retrieve loan data from query result
                     String bookIsbn = resultSet.getString("book_isbn");
                     LocalDate start = resultSet.getDate("start").toLocalDate();
                     LocalDate end = resultSet.getDate("end").toLocalDate();
 
 
-                    // Supposez que vous ayez une méthode pour récupérer un livre à partir de son ISBN
+                    // Suppose you have a method to retrieve a book from its ISBN
                     Book book = getBookByISBN(bookIsbn);
 
-                    // Créer un nouvel objet Emprunt et l'ajouter à la liste
+                    // Create a new Loan object and add it to the list
                     Borrow borrow = new Borrow(user, book, start, end);
                     borrows.add(borrow);
                 }
@@ -645,7 +645,7 @@ public class DatabaseConnection {
     public static List<Book> getTop20PopularBooksLast30Days() throws SQLException {
         List<Book> popularBooks = new ArrayList<>();
 
-        // Obtenir la date d'il y a 30 jours à partir de la date actuelle
+        // Get date 30 days ago from current date
         LocalDate thirtyDaysAgo = LocalDate.now().minusDays(30);
 
         String query = "SELECT l.isbn, l.title, l.author, COUNT(h.book_isbn) AS borrow_count " +

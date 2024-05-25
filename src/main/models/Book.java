@@ -2,6 +2,9 @@ package main.models;
 
 import java.sql.SQLException;
 
+/**
+ * Represents an instance of book.
+ */
 public class Book {
     private String title;
     private String authors;
