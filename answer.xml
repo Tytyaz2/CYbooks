@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?><srw:searchRetrieveResponse xmlns:srw="http://www.loc.gov/zing/srw/" xmlns="http://catalogue.bnf.fr/namespaces/InterXMarc" xmlns:ixm="http://catalogue.bnf.fr/namespaces/InterXMarc" xmlns:mn="http://catalogue.bnf.fr/namespaces/motsnotices" xmlns:sd="http://www.loc.gov/zing/srw/diagnostic/">
+<srw:version>1.2</srw:version>
+<srw:echoedSearchRetrieveRequest>
+<srw:version>1.2</srw:version>
+<srw:query>bib.doctype any "a" and bib.anywhere all "Nabil "</srw:query>
+</srw:echoedSearchRetrieveRequest>
+<srw:numberOfRecords>607</srw:numberOfRecords>
+<srw:records>
+<srw:record>
+<srw:recordSchema>dc</srw:recordSchema>
+<srw:recordPacking>xml</srw:recordPacking>
+<srw:recordData>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb45438672x</dc:identifier>   <dc:title>Catalogue des manuscrits coptes des pères jésuites au Caire / Nabil Farouk Fayez et Jacques Masson S.J.</dc:title>   <dc:creator>Fārūq Fāyīz, Nabīl. Auteur du texte</dc:creator>   <dc:creator>Masson, Jacques. Auteur du texte</dc:creator>   <dc:publisher>Société d'archéologie copte (Le Caire)</dc:publisher>   <dc:date>2015</dc:date>   <dc:subject xml:lang="fre">Manuscrits coptes -- Le Caire (Égypte)</dc:subject>   <dc:format>1 vol. (pp.60-150) : ill. ; 24 cm</dc:format>   <dc:language>fre</dc:language>   <dc:language>français</dc:language>   <dc:type xml:lang="fre">texte imprimé</dc:type>   <dc:type xml:lang="eng">printed text</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
+</oai_dc:dc>      </srw:recordData>
+<srw:recordIdentifier>ark:/12148/cb45438672x</srw:recordIdentifier>
+<srw:recordPosition>1</srw:recordPosition>
+<srw:extraRecordData>
+<ixm:attr name="CreationDate">20180201</ixm:attr>
+<ixm:attr name="LastModificationDate">20221214</ixm:attr>
+<mn:score>9.295141</mn:score>
+</srw:extraRecordData>
+</srw:record>
+<srw:record>
+<srw:recordSchema>dc</srw:recordSchema>
+<srw:recordPacking>xml</srw:recordPacking>
+<srw:recordData>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb44095744n</dc:identifier>   <dc:title xml:lang="ara">Ḥaraẗ al-Naṣārá maʿa rasāʾil min al-Quds / Nabīl H̱ūrī</dc:title>   <dc:title xml:lang="ara">حارة النصارى مع رسائل من القدس / نتيل خوري</dc:title>   <dc:creator>H̲ūrī, Nabīl (1929-....). Auteur du texte</dc:creator>   <dc:publisher>Bayrūt ()</dc:publisher>   <dc:publisher>Dār al-Nahār ()</dc:publisher>   <dc:publisher>دار النهار (بيروت)</dc:publisher>   <dc:date>1969</dc:date>   <dc:format>1 vol. (162 p.) ; 19 cm</dc:format>   <dc:language>ara</dc:language>   <dc:language>arabe</dc:language>   <dc:type xml:lang="fre">texte imprimé</dc:type>   <dc:type xml:lang="eng">printed text</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
+</oai_dc:dc>      </srw:recordData>
+<srw:recordIdentifier>ark:/12148/cb44095744n</srw:recordIdentifier>
+<srw:recordPosition>2</srw:recordPosition>
+<srw:extraRecordData>
+<ixm:attr name="CreationDate">20160302</ixm:attr>
+<ixm:attr name="LastModificationDate">20160509</ixm:attr>
+<mn:score>9.19412</mn:score>
+</srw:extraRecordData>
+</srw:record>
+<srw:record>
+<srw:recordSchema>dc</srw:recordSchema>
+<srw:recordPacking>xml</srw:recordPacking>
+<srw:recordData>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb46975385j</dc:identifier>   <dc:title>Sciences, arts et lettres / dr. Nabil Naaman</dc:title>   <dc:creator>Naaman, Nabil (1951-....). Auteur du texte</dc:creator>   <dc:publisher>Éditions Complicités (Paris)</dc:publisher>   <dc:date>2019</dc:date>   <dc:language>fre</dc:language>   <dc:language>français</dc:language>   <dc:type xml:lang="fre">texte imprimé</dc:type>   <dc:type xml:lang="eng">printed text</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
+</oai_dc:dc>      </srw:recordData>
+<srw:recordIdentifier>ark:/12148/cb46975385j</srw:recordIdentifier>
+<srw:recordPosition>3</srw:recordPosition>
+<srw:extraRecordData>
+<ixm:attr name="CreationDate">20220224</ixm:attr>
+<ixm:attr name="LastModificationDate">20220224</ixm:attr>
+<mn:score>9.185208</mn:score>
+</srw:extraRecordData>
+</srw:record>
+<srw:record>
+<srw:recordSchema>dc</srw:recordSchema>
+<srw:recordPacking>xml</srw:recordPacking>
+<srw:recordData>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb457422723</dc:identifier>   <dc:title xml:lang="eng">Tartib al-bay'ah (ordination of the Church) according to the manuscript : Coptic number 5898 British museum, London / by Nabil Farouk Fayez</dc:title>   <dc:title xml:lang="ara">ترتيب البيعة حسب المخطوط القبطي رقم ٥٨٩٨ بلمتحف البريطبي لندن / حققه وقدم له و علق عليه نبيل فاروق فايز</dc:title>   <dc:creator>Fārūq Fāyīz, Nabīl. Auteur du texte</dc:creator>   <dc:publisher>Société d'archéologie copte (Le Caire)</dc:publisher>   <dc:date>2016</dc:date>   <dc:subject xml:lang="fre">Ordination -- Églises coptes</dc:subject>   <dc:format>P. 196-267 ; 24 cm</dc:format>   <dc:language>ara</dc:language>   <dc:type xml:lang="fre">texte imprimé</dc:type>   <dc:type xml:lang="eng">printed text</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
+</oai_dc:dc>      </srw:recordData>
+<srw:recordIdentifier>ark:/12148/cb457422723</srw:recordIdentifier>
+<srw:recordPosition>4</srw:recordPosition>
+<srw:extraRecordData>
+<ixm:attr name="CreationDate">20190605</ixm:attr>
+<ixm:attr name="LastModificationDate">20190605</ixm:attr>
+<mn:score>9.161319</mn:score>
+</srw:extraRecordData>
+</srw:record>
+<srw:record>
+<srw:recordSchema>dc</srw:recordSchema>
+<srw:recordPacking>xml</srw:recordPacking>
+<srw:recordData>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb39274176w</dc:identifier>   <dc:title xml:lang="ara">Al-ʿuṭaylī : riwāyaẗ / Nabīl Abū Ḥamid</dc:title>   <dc:title xml:lang="ara">العطيلي : رواية / نبيل أبو حمد</dc:title>   <dc:creator>Abū Ḥamid, Nabīl (1943?-....). Auteur du texte</dc:creator>   <dc:publisher>Dār al-Sāqī (London)</dc:publisher>   <dc:publisher>دار الساقي (London)</dc:publisher>   <dc:date>2002</dc:date>   <dc:identifier>ISBN 1855168472</dc:identifier>   <dc:format>119 p. ; 21 cm</dc:format>   <dc:language>ara</dc:language>   <dc:language>arabe</dc:language>   <dc:type xml:lang="fre">texte imprimé</dc:type>   <dc:type xml:lang="eng">printed text</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
+</oai_dc:dc>      </srw:recordData>
+<srw:recordIdentifier>ark:/12148/cb39274176w</srw:recordIdentifier>
+<srw:recordPosition>5</srw:recordPosition>
+<srw:extraRecordData>
+<ixm:attr name="CreationDate">20041109</ixm:attr>
+<ixm:attr name="LastModificationDate">20110511</ixm:attr>
+<mn:score>9.134327</mn:score>
+</srw:extraRecordData>
+</srw:record>
+<srw:record>
+<srw:recordSchema>dc</srw:recordSchema>
+<srw:recordPacking>xml</srw:recordPacking>
+<srw:recordData>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb40000318c</dc:identifier>   <dc:title xml:lang="ara">Bayt min al-šarq : riwāyaẗ / Nabīl Abū Ḥamid</dc:title>   <dc:title xml:lang="ara">بيت من الشرق : رواية / نبيل أبو حمد</dc:title>   <dc:creator>Abū Ḥamid, Nabīl (1943?-....). Auteur du texte</dc:creator>   <dc:publisher>Dār al-Sāqī (London)</dc:publisher>   <dc:publisher>دار الساقي (London)</dc:publisher>   <dc:date>2004</dc:date>   <dc:identifier>ISBN 1855164922</dc:identifier>   <dc:format>158 p. ; 21 cm</dc:format>   <dc:language>ara</dc:language>   <dc:language>arabe</dc:language>   <dc:type xml:lang="fre">texte imprimé</dc:type>   <dc:type xml:lang="eng">printed text</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
+</oai_dc:dc>      </srw:recordData>
+<srw:recordIdentifier>ark:/12148/cb40000318c</srw:recordIdentifier>
+<srw:recordPosition>6</srw:recordPosition>
+<srw:extraRecordData>
+<ixm:attr name="CreationDate">20050704</ixm:attr>
+<ixm:attr name="LastModificationDate">20110512</ixm:attr>
+<mn:score>9.1048155</mn:score>
+</srw:extraRecordData>
+</srw:record>
+<srw:record>
+<srw:recordSchema>dc</srw:recordSchema>
+<srw:recordPacking>xml</srw:recordPacking>
+<srw:recordData>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb400656190</dc:identifier>   <dc:title xml:lang="ara">Rašād Rušdī / Nabīl Rāġib</dc:title>   <dc:title xml:lang="ara">رشاد رشدي / نبيل راغب</dc:title>   <dc:creator>Rāġib, Nabīl. Auteur du texte</dc:creator>   <dc:publisher>Al-Hayʾaẗ al-miṣriyyaẗ al-ʿāmmaẗ li-l-kitāb (Al-Qāhirat)</dc:publisher>   <dc:publisher>الهيئة المصرية العامة للكتاب (القاهرة)</dc:publisher>   <dc:date>1993</dc:date>   <dc:description>Collection : نقّاد الأدب ; 12</dc:description>   <dc:subject xml:lang="fre">Rušdī, Rašād (1912-1983) -- Critique et interprétation</dc:subject>   <dc:identifier>ISBN 9770134236</dc:identifier>   <dc:format>311 p. ; 20 cm</dc:format>   <dc:language>ara</dc:language>   <dc:language>arabe</dc:language>   <dc:type xml:lang="fre">texte imprimé</dc:type>   <dc:type xml:lang="eng">printed text</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
+</oai_dc:dc>      </srw:recordData>
+<srw:recordIdentifier>ark:/12148/cb400656190</srw:recordIdentifier>
+<srw:recordPosition>7</srw:recordPosition>
+<srw:extraRecordData>
+<ixm:attr name="CreationDate">20051105</ixm:attr>
+<ixm:attr name="LastModificationDate">20110512</ixm:attr>
+<mn:score>9.0755</mn:score>
+</srw:extraRecordData>
+</srw:record>
+<srw:record>
+<srw:recordSchema>dc</srw:recordSchema>
+<srw:recordPacking>xml</srw:recordPacking>
+<srw:recordData>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb35295577f</dc:identifier>   <dc:title>Die Interpretation der Welt bei Ephraem dem Syrer : Beitrag zur Geistesgeschichte / Nabil el-Khoury</dc:title>   <dc:creator>H̱ūrī, Nabīl al- (1941-....). Auteur du texte</dc:creator>   <dc:publisher>Matthias-Grünewald-Verlag (Mainz)</dc:publisher>   <dc:date>1976</dc:date>   <dc:description>Collection : Tübinger theologische Studien ; 6</dc:description>   <dc:identifier>ISBN 3786705100</dc:identifier>   <dc:format>180 p. ; 23 cm</dc:format>   <dc:language>ger</dc:language>   <dc:language>allemand</dc:language>   <dc:type xml:lang="fre">texte imprimé</dc:type>   <dc:type xml:lang="eng">printed text</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
+</oai_dc:dc>      </srw:recordData>
+<srw:recordIdentifier>ark:/12148/cb35295577f</srw:recordIdentifier>
+<srw:recordPosition>8</srw:recordPosition>
+<srw:extraRecordData>
+<ixm:attr name="CreationDate">19910205</ixm:attr>
+<ixm:attr name="LastModificationDate">20141231</ixm:attr>
+<mn:score>9.0462</mn:score>
+</srw:extraRecordData>
+</srw:record>
+<srw:record>
+<srw:recordSchema>dc</srw:recordSchema>
+<srw:recordPacking>xml</srw:recordPacking>
+<srw:recordData>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb375229059</dc:identifier>   <dc:title>Ḥāraẗ al-naṣārá : maʿa rasāʼil min al-Quds (Al-ṭabʿaẗ 2) Nabīl H̲ūrī</dc:title>   <dc:creator>H̲ūrī, Nabīl (1929-....). Auteur du texte</dc:creator>   <dc:publisher>Dār al-Nahār (Bayrūt)</dc:publisher>   <dc:date>1994</dc:date>   <dc:format>165 p. ; 22 cm</dc:format>   <dc:language>ara</dc:language>   <dc:language>arabe</dc:language>   <dc:type xml:lang="fre">texte imprimé</dc:type>   <dc:type xml:lang="eng">printed text</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
+</oai_dc:dc>      </srw:recordData>
+<srw:recordIdentifier>ark:/12148/cb375229059</srw:recordIdentifier>
+<srw:recordPosition>9</srw:recordPosition>
+<srw:extraRecordData>
+<ixm:attr name="CreationDate">19971016</ixm:attr>
+<ixm:attr name="LastModificationDate">20000707</ixm:attr>
+<mn:score>9.046036</mn:score>
+</srw:extraRecordData>
+</srw:record>
+<srw:record>
+<srw:recordSchema>dc</srw:recordSchema>
+<srw:recordPacking>xml</srw:recordPacking>
+<srw:recordData>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb43487147v</dc:identifier>   <dc:title xml:lang="und">Al-balah al-'ahmar</dc:title>   <dc:title xml:lang="und">Les dattes rouges</dc:title>   <dc:creator>Omar, Mahjoub. Auteur du texte</dc:creator>   <dc:contributor>Abū Ḥamid, Nabīl (1943?-....). Illustrateur</dc:contributor>   <dc:publisher>Dar Al-Fata Al-Arabi (Beyrouth)</dc:publisher>   <dc:date>1982</dc:date>   <dc:description>Collection : Al-Ofq al- Jadid ; 3</dc:description>   <dc:format>31 p. : ill.en coul., couv. ill. en coul. ; 21 x 14 cm</dc:format>   <dc:language>ara</dc:language>   <dc:language>arabe</dc:language>   <dc:type xml:lang="fre">texte imprimé</dc:type>   <dc:type xml:lang="eng">printed text</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
+</oai_dc:dc>      </srw:recordData>
+<srw:recordIdentifier>ark:/12148/cb43487147v</srw:recordIdentifier>
+<srw:recordPosition>10</srw:recordPosition>
+<srw:extraRecordData>
+<ixm:attr name="CreationDate">20140820</ixm:attr>
+<ixm:attr name="LastModificationDate">20140820</ixm:attr>
+<mn:score>9.0297365</mn:score>
+</srw:extraRecordData>
+</srw:record>
+<srw:record>
+<srw:recordSchema>dc</srw:recordSchema>
+<srw:recordPacking>xml</srw:recordPacking>
+<srw:recordData>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb38826321h</dc:identifier>   <dc:title>Šaẖṣiyyaẗ al-lubnānī fī ẖaṣāʾiṣihā wa šumūlihā : muqārabaẗ iǧrāʾiyyaẗ ʿalā ḍawʾ al-qiyās al-nafsī / Nabīl Qanbar,...</dc:title>   <dc:creator>Qanbar, Nabīl Y.. Auteur du texte</dc:creator>   <dc:publisher>USEK (Kaslīk)</dc:publisher>   <dc:date>1991</dc:date>   <dc:description>Collection : Bibliothèque de l'Université Saint-Esprit- Kaslik ; 18</dc:description>   <dc:subject xml:lang="fre">Construits personnels, Théorie des -- Liban</dc:subject>   <dc:format>430 p. ; 24 cm</dc:format>   <dc:language>ara</dc:language>   <dc:language>arabe</dc:language>   <dc:type xml:lang="fre">texte imprimé</dc:type>   <dc:type xml:lang="eng">printed text</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
+</oai_dc:dc>      </srw:recordData>
+<srw:recordIdentifier>ark:/12148/cb38826321h</srw:recordIdentifier>
+<srw:recordPosition>11</srw:recordPosition>
+<srw:extraRecordData>
+<ixm:attr name="CreationDate">20020521</ixm:attr>
+<ixm:attr name="LastModificationDate">20030416</ixm:attr>
+<mn:score>9.017264</mn:score>
+</srw:extraRecordData>
+</srw:record>
+<srw:record>
+<srw:recordSchema>dc</srw:recordSchema>
+<srw:recordPacking>xml</srw:recordPacking>
+<srw:recordData>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb390015216</dc:identifier>   <dc:title xml:lang="ara">موسوعة الإبداع الأدبي / نبيل راغب</dc:title>   <dc:title xml:lang="ara">Mawsūʿaẗ al-ibdāʿ al-adabī / Nabīl Rāġib</dc:title>   <dc:creator>Rāġib, Nabīl. Auteur du texte</dc:creator>   <dc:publisher>الشركة المصريّة العالميّة للنشر لونجمان (الجيزة)</dc:publisher>   <dc:publisher>Al-Šarikaẗ al-Miṣriyyaẗ al-ʿĀlamiyyaẗ li-l-Našr Lūnǧmān (al-Ǧīzaẗ)</dc:publisher>   <dc:date>1996</dc:date>   <dc:description>Collection : Adabiyyāt ; 24</dc:description>   <dc:subject xml:lang="fre">Arabe (langue) -- Rhétorique</dc:subject>   <dc:identifier>ISBN 9771602020</dc:identifier>   <dc:format>378 p. ; 20 cm</dc:format>   <dc:language>ara</dc:language>   <dc:language>arabe</dc:language>   <dc:type xml:lang="fre">texte imprimé</dc:type>   <dc:type xml:lang="eng">printed text</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
+</oai_dc:dc>      </srw:recordData>
+<srw:recordIdentifier>ark:/12148/cb390015216</srw:recordIdentifier>
+<srw:recordPosition>12</srw:recordPosition>
+<srw:extraRecordData>
+<ixm:attr name="CreationDate">20030522</ixm:attr>
+<ixm:attr name="LastModificationDate">20190921</ixm:attr>
+<mn:score>9.0171</mn:score>
+</srw:extraRecordData>
+</srw:record>
+<srw:record>
+<srw:recordSchema>dc</srw:recordSchema>
+<srw:recordPacking>xml</srw:recordPacking>
+<srw:recordData>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb392299319</dc:identifier>   <dc:title xml:lang="ara">Mawsūʿaẗ al-naẓariyyāt al-adabiyyaẗ / Nabīl Rāġib</dc:title>   <dc:title xml:lang="ara">موسوعة النظريّات الأدبيّة / نبيل راغب</dc:title>   <dc:creator>Rāġib, Nabīl. Auteur du texte</dc:creator>   <dc:publisher>al-Šarikaẗ al-Miṣriyyaẗ al-ʿālamiyyaẗ li-l-našr (al-Ǧīzaẗ)</dc:publisher>   <dc:publisher>الشركة المصريّة العالميّة للنشر لونجمان (الجيزة)</dc:publisher>   <dc:date>2003</dc:date>   <dc:description>Collection : أدبيّات ; 47</dc:description>   <dc:subject xml:lang="fre">Critique littéraire -- Pays arabes</dc:subject>   <dc:identifier>ISBN 9771606662</dc:identifier>   <dc:format>XIV-736 p. ; 20 cm</dc:format>   <dc:language>ara</dc:language>   <dc:language>arabe</dc:language>   <dc:type xml:lang="fre">texte imprimé</dc:type>   <dc:type xml:lang="eng">printed text</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
+</oai_dc:dc>      </srw:recordData>
+<srw:recordIdentifier>ark:/12148/cb392299319</srw:recordIdentifier>
+<srw:recordPosition>13</srw:recordPosition>
+<srw:extraRecordData>
+<ixm:attr name="CreationDate">20040826</ixm:attr>
+<ixm:attr name="LastModificationDate">20190921</ixm:attr>
+<mn:score>9.0171</mn:score>
+</srw:extraRecordData>
+</srw:record>
+<srw:record>
+<srw:recordSchema>dc</srw:recordSchema>
+<srw:recordPacking>xml</srw:recordPacking>
+<srw:recordData>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb37504125s</dc:identifier>   <dc:title>Awrāq al-šitāʼ / Nabīl H̲ūrī</dc:title>   <dc:creator>H̲ūrī, Nabīl (1929-....). Auteur du texte</dc:creator>   <dc:publisher>Riyāḍ al-Rayyis (London)</dc:publisher>   <dc:date>1993</dc:date>   <dc:identifier>ISBN 1855131048</dc:identifier>   <dc:format>164 p. : ill. ; 17 cm</dc:format>   <dc:language>ara</dc:language>   <dc:language>arabe</dc:language>   <dc:type xml:lang="fre">texte imprimé</dc:type>   <dc:type xml:lang="eng">printed text</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
+</oai_dc:dc>      </srw:recordData>
+<srw:recordIdentifier>ark:/12148/cb37504125s</srw:recordIdentifier>
+<srw:recordPosition>14</srw:recordPosition>
+<srw:extraRecordData>
+<ixm:attr name="CreationDate">19961127</ixm:attr>
+<ixm:attr name="LastModificationDate">20000707</ixm:attr>
+<mn:score>9.0171</mn:score>
+</srw:extraRecordData>
+</srw:record>
+<srw:record>
+<srw:recordSchema>dc</srw:recordSchema>
+<srw:recordPacking>xml</srw:recordPacking>
+<srw:recordData>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb375480092</dc:identifier>   <dc:title>Al-qamar fī iktimāl : qiṣaṣ / Nabīl Naʿūm</dc:title>   <dc:creator>Naʿʿūm, Nabīl (1944-....). Auteur du texte</dc:creator>   <dc:publisher>Dār al-Šarqiyāt li-l-našr wa-l-tawzīʿ (Al-Qāhiraẗ)</dc:publisher>   <dc:date>1993</dc:date>   <dc:format>124 p. : ill. ; 20 cm</dc:format>   <dc:language>ara</dc:language>   <dc:language>arabe</dc:language>   <dc:type xml:lang="fre">texte imprimé</dc:type>   <dc:type xml:lang="eng">printed text</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
+</oai_dc:dc>      </srw:recordData>
+<srw:recordIdentifier>ark:/12148/cb375480092</srw:recordIdentifier>
+<srw:recordPosition>15</srw:recordPosition>
+<srw:extraRecordData>
+<ixm:attr name="CreationDate">19990317</ixm:attr>
+<ixm:attr name="LastModificationDate">20000421</ixm:attr>
+<mn:score>9.0171</mn:score>
+</srw:extraRecordData>
+</srw:record>
+<srw:record>
+<srw:recordSchema>dc</srw:recordSchema>
+<srw:recordPacking>xml</srw:recordPacking>
+<srw:recordData>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb39296932c</dc:identifier>   <dc:title xml:lang="fre">Le Caire est petit : nouvelles / Nabil Naoum ; trad. de l'arabe par Ghislaine Alleaume, Luc Barbulesco, Philippe Cardinal, Rokeya Gabr</dc:title>   <dc:title xml:lang="ara">Al-Qāhiraẗ madīnaẗ ṣaġīraẗ : qiṣaṣ qaṣīraẗ / Nabīl Naʿʿūm</dc:title>   <dc:title xml:lang="ara">ينة صغيرة : قصص قصيرة / نبيل نعّوم</dc:title>   <dc:creator>Naʿʿūm, Nabīl (1944-....). Auteur du texte</dc:creator>   <dc:publisher>Centre de traduction franco-égyptien (Le Caire)</dc:publisher>   <dc:date>1985</dc:date>   <dc:format>50-54 p. ; 21 cm</dc:format>   <dc:language>ara</dc:language>   <dc:type xml:lang="fre">texte imprimé</dc:type>   <dc:type xml:lang="eng">printed text</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
+</oai_dc:dc>      </srw:recordData>
+<srw:recordIdentifier>ark:/12148/cb39296932c</srw:recordIdentifier>
+<srw:recordPosition>16</srw:recordPosition>
+<srw:extraRecordData>
+<ixm:attr name="CreationDate">20041222</ixm:attr>
+<ixm:attr name="LastModificationDate">20110511</ixm:attr>
+<mn:score>8.975288</mn:score>
+</srw:extraRecordData>
+</srw:record>
+<srw:record>
+<srw:recordSchema>dc</srw:recordSchema>
+<srw:recordPacking>xml</srw:recordPacking>
+<srw:recordData>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb37694869c</dc:identifier>   <dc:title>Golden pages : Qur'ans and other manuscripts from the collection of Ghassan I. Shaker / Nabil F. Safwat</dc:title>   <dc:creator>Safwat, Nabil. Auteur du texte</dc:creator>   <dc:publisher>Oxford university press for Azimuth ed. (Oxford)</dc:publisher>   <dc:date>2000</dc:date>   <dc:subject xml:lang="fre">Shaker, Ghassan Ibrahim (19..-....) -- Collections d'art</dc:subject>   <dc:subject xml:lang="fre">Calligraphie islamique</dc:subject>   <dc:subject xml:lang="fre">Manuscrits arabes -- Collections privées -- Arabie saoudite</dc:subject>   <dc:subject xml:lang="fre">Calligraphie -- Collections privées -- Arabie saoudite</dc:subject>   <dc:identifier>ISBN 0199201935</dc:identifier>   <dc:format>303 p. : ill. ; 35 cm</dc:format>   <dc:language>eng</dc:language>   <dc:language>anglais</dc:language>   <dc:type xml:lang="fre">texte imprimé</dc:type>   <dc:type xml:lang="eng">printed text</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
+</oai_dc:dc>      </srw:recordData>
+<srw:recordIdentifier>ark:/12148/cb37694869c</srw:recordIdentifier>
+<srw:recordPosition>17</srw:recordPosition>
+<srw:extraRecordData>
+<ixm:attr name="CreationDate">20011119</ixm:attr>
+<ixm:attr name="LastModificationDate">20190916</ixm:attr>
+<mn:score>8.970248</mn:score>
+</srw:extraRecordData>
+</srw:record>
+<srw:record>
+<srw:recordSchema>dc</srw:recordSchema>
+<srw:recordPacking>xml</srw:recordPacking>
+<srw:recordData>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb438274908</dc:identifier>   <dc:title xml:lang="ara">Madāʾin al-urǧuwān / Nabīl Sulaymān</dc:title>   <dc:title xml:lang="ara">مدائن الأرجوان / نبيل سليمان</dc:title>   <dc:creator>Sulaymān, Nabīl (1945-....). Auteur du texte</dc:creator>   <dc:publisher>Dār al-Ḥiwār (Al-Lāḏiqiyyaẗ)</dc:publisher>   <dc:publisher>دار الحوار (اللاذقيّة)</dc:publisher>   <dc:date>2013</dc:date>   <dc:identifier>ISBN 9789933477547</dc:identifier>   <dc:format>319 p. ; 21 cm</dc:format>   <dc:language>ara</dc:language>   <dc:language>arabe</dc:language>   <dc:type xml:lang="fre">texte imprimé</dc:type>   <dc:type xml:lang="eng">printed text</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
+</oai_dc:dc>      </srw:recordData>
+<srw:recordIdentifier>ark:/12148/cb438274908</srw:recordIdentifier>
+<srw:recordPosition>18</srw:recordPosition>
+<srw:extraRecordData>
+<ixm:attr name="CreationDate">20140522</ixm:attr>
+<ixm:attr name="LastModificationDate">20150624</ixm:attr>
+<mn:score>8.967643</mn:score>
+</srw:extraRecordData>
+</srw:record>
+<srw:record>
+<srw:recordSchema>dc</srw:recordSchema>
+<srw:recordPacking>xml</srw:recordPacking>
+<srw:recordData>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb444483636</dc:identifier>   <dc:title>Les clefs de la maison d'Al-Bassa en Galilée / Nabil Naaman</dc:title>   <dc:creator>Naaman, Nabil (1951-....). Auteur du texte</dc:creator>   <dc:publisher>Société des écrivains (Paris)</dc:publisher>   <dc:date>2015</dc:date>   <dc:identifier>ISBN 9782342037951</dc:identifier>   <dc:description>Code à barres commercial : EAN 9782342037951</dc:description>   <dc:format>1 vol. (423 p.) ; 21 cm</dc:format>   <dc:language>fre</dc:language>   <dc:language>français</dc:language>   <dc:type xml:lang="fre">texte imprimé</dc:type>   <dc:type xml:lang="eng">printed text</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
+</oai_dc:dc>      </srw:recordData>
+<srw:recordIdentifier>ark:/12148/cb444483636</srw:recordIdentifier>
+<srw:recordPosition>19</srw:recordPosition>
+<srw:extraRecordData>
+<ixm:attr name="CreationDate">20151109</ixm:attr>
+<ixm:attr name="LastModificationDate">20160303</ixm:attr>
+<mn:score>8.967643</mn:score>
+</srw:extraRecordData>
+</srw:record>
+<srw:record>
+<srw:recordSchema>dc</srw:recordSchema>
+<srw:recordPacking>xml</srw:recordPacking>
+<srw:recordData>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb457402373</dc:identifier>   <dc:title>L'homme aimé des femmes : entre confidences et confessions : carnet intime / Nabil Naaman</dc:title>   <dc:creator>Naaman, Nabil (1951-....). Auteur du texte</dc:creator>   <dc:publisher>Éditions Complicités (Paris)</dc:publisher>   <dc:date>2018</dc:date>   <dc:identifier>ISBN 9782351201565</dc:identifier>   <dc:description>Code à barres commercial : EAN 9782351201565</dc:description>   <dc:format>1 vol. (313 p.) ; 21 cm</dc:format>   <dc:language>fre</dc:language>   <dc:language>français</dc:language>   <dc:type xml:lang="fre">texte imprimé</dc:type>   <dc:type xml:lang="eng">printed text</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
+</oai_dc:dc>      </srw:recordData>
+<srw:recordIdentifier>ark:/12148/cb457402373</srw:recordIdentifier>
+<srw:recordPosition>20</srw:recordPosition>
+<srw:extraRecordData>
+<ixm:attr name="CreationDate">20190603</ixm:attr>
+<ixm:attr name="LastModificationDate">20200930</ixm:attr>
+<mn:score>8.967643</mn:score>
+</srw:extraRecordData>
+</srw:record>
+</srw:records>
+<srw:nextRecordPosition>21</srw:nextRecordPosition>
+</srw:searchRetrieveResponse>
