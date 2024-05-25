@@ -47,9 +47,9 @@ public class SearchBookAPI {
             e.printStackTrace();
         }
         // writing the response in a file and then parsing the file to get usable
-        OperationOnXMLFIle.createFile("src/main/ressources/answer.xml");
-        OperationOnXMLFIle.writeFile("src/main/ressources/answer.xml", response.body());
-        List<Book> books = Metamorph.createBook("src/main/ressources/answer.xml");
+        OperationOnXMLFIle.createFile("src/main/resources/answer.xml");
+        OperationOnXMLFIle.writeFile("src/main/resources/answer.xml", response.body());
+        List<Book> books = Metamorph.createBook("src/main/resources/answer.xml");
 
         return books;
     }
