@@ -213,8 +213,8 @@ public class UserController {
                 // Afficher un message pour chaque livre ajouté à la liste
                 System.out.println("Livre ajouté : " + livre.getTitle());
             }
+
             giveBackSelectedBooks(selectedBooks);
-            selectedBooks.removeAll(selectedBooks);
         } else {
             // Afficher un message à l'utilisateur ou effectuer une autre action appropriée
             System.out.println("Aucun livre sélectionné.");
@@ -231,7 +231,6 @@ public class UserController {
         try {
             // Call the method in the DatabaseConnection class to handle SQL transactions
             DatabaseConnection.giveBackSelectedBooks(user, books);
-                DatabaseConnection.updateUserMaxBorrow(user, DatabaseConnection.getUserMaxBorrow(user) + 1);
 
             // Update the user interface
             borrowList.removeAll(books);
