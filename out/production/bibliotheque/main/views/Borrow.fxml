@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controllers.BorrowController">
+    <children>
+
+
+        <VBox layoutX="93.0" layoutY="50.0" prefHeight="584.0" prefWidth="452.0" spacing="10">
+            <Label text="Liste d'adhérent :" />
+            <HBox prefHeight="37.0" prefWidth="421.0" spacing="10">
+                <TextArea fx:id="textFieldUser" prefHeight="37.0" prefWidth="235.0" promptText="Recherche d'Utilisateur" />
+                <Button onAction="#handleSearchUser" prefHeight="25.0" prefWidth="166.0" text="Rechercher" />
+            </HBox>
+            <HBox prefHeight="512.0" prefWidth="405.0">
+                <TableView fx:id="userTableView" onMouseClicked="#handleUserSelection" prefHeight="518.0" prefWidth="415.0">
+                    <columns>
+                        <TableColumn fx:id="emailColumn" prefWidth="148.0" text="Email" />
+                        <TableColumn fx:id="lastNameColumn" prefWidth="109.0" text="Nom" />
+                        <TableColumn fx:id="firsNameColumn" prefWidth="157.0" text="Prénom" />
+                    </columns>
+                </TableView>
+            </HBox>
+        </VBox>
+
+        <VBox layoutX="562.0" layoutY="58.0" prefHeight="576.0" prefWidth="415.0" spacing="10">
+            <Label text="Liste des livres :" />
+            <HBox spacing="10">
+                <TextArea fx:id="bookSearchTextArea" prefHeight="26.0" prefWidth="387.0" promptText="Recherche de livres..." />
+                <!-- Bouton de recherche avec gestionnaire d'événements -->
+                <Button onAction="#searchBooks" prefHeight="25.0" prefWidth="205.0" text="Rechercher" />
+            </HBox>
+            <TableView fx:id="bookTableView" layoutX="748.0" layoutY="148.0" onMouseReleased="#handleBookSelection" prefHeight="501.0" prefWidth="434.0">
+
+                <columns>
+                    <TableColumn prefWidth="168.0" text="Titre">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="title" />
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn prefWidth="119.0" text="Auteur">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="authors" />
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn prefWidth="127.0" text="ISBN">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="isbn" />
+                        </cellValueFactory>
+                    </TableColumn>
+
+                </columns>
+            </TableView>
+        </VBox>
+
+        <VBox layoutX="1050.0" layoutY="58.0" prefHeight="576.0" prefWidth="200.0" spacing="10">
+            <Label text="Utilisateur sélectionné :" />
+            <Label fx:id="selectedUserLabel" />
+            <Label text="Livres sélectionnés :" />
+            <ListView fx:id="selectedBooksListView" prefHeight="300.0" />
+            <Button onAction="#handleRemoveBook" text="Retirer Livre" />
+        </VBox>
+
+        <Button layoutX="1050.0" layoutY="634.0" onAction="#handleBorrow" prefHeight="25.0" prefWidth="166.0" text="Emprunter" />
+        <Button fx:id="returnButton" layoutX="51.0" layoutY="658.0" mnemonicParsing="false" onAction="#handleReturnButtonClick" prefHeight="38.0" prefWidth="81.0" text="Return" />
+
+
+
+
+
+
+
+    </children>
+</AnchorPane>

@@ -2,7 +2,7 @@ package main;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import main.controllers.ConnexionController;
+import main.controllers.ConnectionController;
 import main.dataBase.DatabaseConnection;
 import main.dataBase.MySQLStarter;
 import main.models.*;
@@ -15,7 +15,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         // Launch the JavaFX application by calling the launch() method with the connection controller
-        new ConnexionController().start(primaryStage);
+        new ConnectionController().start(primaryStage);
     }
 
     public static void main(String[] args) {

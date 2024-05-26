@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.Button?>
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="main.controllers.LateBorrowController">
+    <TableView fx:id="lateLoansTable">
+        <columns>
+            <TableColumn fx:id="bookTitleColumn" text="Book Title"/>
+            <TableColumn fx:id="borrowerNameColumn" text="Borrower Name"/>
+            <TableColumn fx:id="dueDateColumn" text="Due Date"/>
+        </columns>
+    </TableView>
+
+</VBox>
