@@ -27,6 +27,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Objects;
 
+/**
+ * Controller that handle the main page of the application.
+ */
 public class MainController {
 
     // UI elements declaration
@@ -501,11 +504,11 @@ public class MainController {
 
     /**
      * Shows the adherent page.
-     * This method loads the AdherentPage.fxml file, displays the details of the selected user, and sets it as the scene.
+     * This method loads the UserPage.fxml file, displays the details of the selected user, and sets it as the scene.
      */
     public void showAdherentPage() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/AdherentPage.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/UserPage.fxml"));
             Parent root = loader.load();
             UserController userController = loader.getController();
             userController.displayUserDetails(selectedUser);
@@ -520,13 +523,13 @@ public class MainController {
 
     /**
      * Shows the new adherent page.
-     * This method loads the newAdherent.fxml file, sets the main controller, and sets it as the scene.
+     * This method loads the newUser.fxml file, sets the main controller, and sets it as the scene.
      */
     public void showNewAdherentPage() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/newAdherent.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/newUser.fxml"));
             Parent root = loader.load();
-            NewAdherentController controller = loader.getController();
+            NewUserController controller = loader.getController();
             controller.setMainController(this);
             Stage stage = (Stage) bookTableView.getScene().getWindow();
             stage.getScene().setRoot(root);

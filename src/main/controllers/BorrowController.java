@@ -22,6 +22,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Controller class for management of user's borrows
+ */
 public class BorrowController {
 
     @FXML

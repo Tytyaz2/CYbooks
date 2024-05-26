@@ -27,6 +27,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+/**
+ * Controller that handle the information of a user.
+ */
 public class UserController {
 
     protected User user;
@@ -257,6 +260,9 @@ public class UserController {
         }
     }
 
+    /**
+     * this method is called by the button to select the book you want to give back
+     */
 
     @FXML
     public void giveBackBook() {
@@ -313,6 +319,11 @@ public class UserController {
             e.printStackTrace();
         }
     }
+
+    /**
+     * load books in the table view
+     * @param actionEvent The event that triggered the method call.
+     */
     @FXML
     protected void loadBooksButton(ActionEvent actionEvent) {
         historylabel.setVisible(false);
