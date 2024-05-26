@@ -7,7 +7,6 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
 /**
  * The DatabaseConnection class provides methods to interact with the database.
  */

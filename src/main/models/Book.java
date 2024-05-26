@@ -168,7 +168,7 @@ public class Book {
      */
     @Override
     public String toString() {
-        return this.title + "," + this.authors;
+        return "Titre: " + title + ", Auteur: " + this.authors + ", ISBN: " + isbn;
     }
 
 

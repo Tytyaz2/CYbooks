@@ -111,8 +111,9 @@ public class User {
 
     @Override
     public String toString() {
-        return super.toString();
+        return "Nom: " + lastName + ", Prénom: " + firstName + ", Email: " + email + ", Statut: " + state + ", Max emprunts: " + maxBorrow;
     }
+
 
     /**
      * Sets the email address of the user.
