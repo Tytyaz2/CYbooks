@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controllers.NewUserController">
+   <children>
+      <Label fx:id="nomLabel" layoutX="282.0" layoutY="277.0" style="-fx-font-size: 15;" />
+      <Label fx:id="prenomLabel" layoutX="282.0" layoutY="325.0" style="-fx-font-size: 15;" />
+      <Label fx:id="mailLabel" layoutX="282.0" layoutY="372.0" style="-fx-font-size: 15;" />
+      <Text layoutX="415.0" layoutY="283.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15;" text="Nom" />
+      <Text layoutX="417.0" layoutY="323.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15;" text="Prenom" />
+      <Text layoutX="417.0" layoutY="370.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15;" text="Mail" />
+      <Text layoutX="574.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 40;" text="CYBooks" />
+      <TextArea fx:id="lastNameTextArea" layoutX="601.0" layoutY="258.0" prefHeight="31.0" prefWidth="201.0" />
+      <TextArea fx:id="mailTextArea" layoutX="601.0" layoutY="340.0" prefHeight="40.0" prefWidth="202.0" />
+      <TextArea fx:id="firstNameTextArea" layoutX="601.0" layoutY="297.0" prefHeight="31.0" prefWidth="201.0" />
+      <Button layoutX="948.0" layoutY="495.0" mnemonicParsing="false" onAction="#handleAddNewUser" prefHeight="79.0" prefWidth="154.0" text="Nouvel adherent" />
+      <Label fx:id="errorMessageLabel" layoutX="282.0" layoutY="420.0" style="-fx-font-size: 15; -fx-text-fill: red;" />
+      <Button fx:id="returnButton" layoutX="51.0" layoutY="658.0" mnemonicParsing="false" onAction="#handleReturnButtonClick" prefHeight="38.0" prefWidth="81.0" text="Return" />
+   </children>
+</AnchorPane>
