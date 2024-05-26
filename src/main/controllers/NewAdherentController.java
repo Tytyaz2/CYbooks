@@ -28,7 +28,7 @@ public class NewAdherentController {
     @FXML
     private Label errorMessageLabel;
 
-    private MainControllers mainController;
+    private MainController mainController;
 
 
     /**
@@ -38,7 +38,7 @@ public class NewAdherentController {
      * @throws SQLException if a database access error occurs
      */
     @FXML
-    void handleAddNewUser(ActionEvent event) throws SQLException {
+    void handleAddNewUser(ActionEvent event) {
         // Get the values from text fields
         String lastname = lastNameTextArea.getText();
         String firstname = firstNameTextArea.getText();
@@ -81,7 +81,7 @@ public class NewAdherentController {
      * @param mainController the MainControllers instance
      */
 
-    public void setMainController(MainControllers mainController) {
+    public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }
 

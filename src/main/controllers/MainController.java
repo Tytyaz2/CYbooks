@@ -27,7 +27,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Objects;
 
-public class MainControllers {
+public class MainController {
 
     // UI elements declaration
     public Button showLateBooksButton;

@@ -5,7 +5,6 @@ import javafx.collections.ObservableList;
 import main.models.Book;
 import main.models.Borrow;
 import main.models.User;
-
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -60,7 +59,7 @@ public class DatabaseConnection {
                     String lastName = resultSet.getString("lastname");
                     String title = resultSet.getString("title");
 
-                    User user = new User(userEmail, firstName, lastName, 0, 0); // Status and maxLoan are placeholders
+                    User user = new User(userEmail, firstName, lastName, 0, 0); // State and maxBorrow are placeholders
                     Book book = new Book(bookIsbn, title, ""); // Author is a placeholder
                     Borrow borrow = new Borrow(user, book, startDate, endDate);
 

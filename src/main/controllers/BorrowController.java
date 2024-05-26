@@ -16,7 +16,6 @@ import javafx.stage.Stage;
 import main.API.SearchBookAPI;
 import main.dataBase.DatabaseConnection;
 import main.models.*;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;

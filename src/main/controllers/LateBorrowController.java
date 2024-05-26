@@ -8,7 +8,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import main.models.Borrow;
 import main.dataBase.DatabaseConnection;
-
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;

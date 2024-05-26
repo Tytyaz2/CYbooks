@@ -13,7 +13,10 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
 
-public class ConnexionController extends Application {
+/**
+ * Controller class for handling user login and transitioning to the main page.
+ */
+public class ConnectionController extends Application {
 
     @FXML
     private TextField usernameField;
@@ -23,73 +26,88 @@ public class ConnexionController extends Application {
 
     private Stage primaryStage;
 
+    /**
+     * Sets the primary stage of the application.
+     *
+     * @param primaryStage the primary stage
+     */
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
 
-    // Méthode pour activer/désactiver le mode plein écran
+    /**
+     * Toggles full-screen mode.
+     */
     public void toggleFullScreen() {
         primaryStage.setFullScreen(!primaryStage.isFullScreen());
     }
 
-
+    /**
+     * Handles the login process.
+     * Authenticates the user and transitions to the main page if successful.
+     */
     @FXML
     private void handleLogin() {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        // Appeler la fonction d'authentification
+        // Call the authentication function
         boolean isAuthenticated = Authentication.authenticate(username, password);
 
-        // Vérifier si l'authentification est réussie
+        // Check if authentication is successful
         if (isAuthenticated) {
-            // Charger la nouvelle page
-// Charger la nouvelle page
+            // Load the new page
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/MainPage.fxml"));
                 Parent root = loader.load();
                 Scene scene = new Scene(root);
                 Stage stage = new Stage();
                 stage.setScene(scene);
-                stage.setTitle("Page Principale");
+                stage.setTitle("Main Page");
 
-                // Ajouter un gestionnaire d'événements pour fermer l'application lorsque la fenêtre est fermée
+                // Add event handler to close the application when the window is closed
                 stage.setOnCloseRequest(event -> {
-                    // Code à exécuter lors de la fermeture de la fenêtre
-                    Platform.exit(); // Fermer l'application
+                    // Code to execute when the window is closed
+                    Platform.exit(); // Close the application
                 });
 
                 stage.show();
             } catch (javafx.fxml.LoadException e) {
-                e.printStackTrace(); // afficher un message d'erreur
+                e.printStackTrace(); // Display an error message
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
 
-            // Fermer la fenêtre de connexion actuelle
+            // Close the current login window
             Stage currentStage = (Stage) usernameField.getScene().getWindow();
             currentStage.close();
         } else {
-            // Afficher un message d'échec
+            // Display a failure message
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Échec de la connexion");
+            alert.setTitle("Login Failed");
             alert.setHeaderText(null);
-            alert.setContentText("Identifiant ou mot de passe incorrect.");
+            alert.setContentText("Incorrect username or password.");
             alert.showAndWait();
         }
     }
 
+    /**
+     * Starts the JavaFX application.
+     *
+     * @param primaryStage the primary stage
+     * @throws Exception if an error occurs during loading
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
-        // Charger le fichier FXML
+        // Load the FXML file
         Parent root = FXMLLoader.load(getClass().getResource("/main/views/connection.fxml"));
 
-        // Créer une scène
+        // Create a scene
         Scene scene = new Scene(root, 1280, 720);
 
-        // Définir la scène et afficher la fenêtre principale
+        // Set the scene and display the main window
         primaryStage.setScene(scene);
-        primaryStage.setTitle("connexion");
+        primaryStage.setTitle("Login");
         primaryStage.show();
     }
 }

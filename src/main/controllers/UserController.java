@@ -1,4 +1,5 @@
 package main.controllers;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -236,7 +237,6 @@ public class UserController {
             }
 
             // Update user object with new email
-            int state = user.getState(); // Assuming `state` is part of your user object
             int maxBorrow = DatabaseConnection.getUserMaxBorrow(user); // Assuming `maxBorrow` is part of your user object
             user.setEmail(newEmail);
             user.setFirstName(newFirstName);
@@ -288,8 +288,6 @@ public class UserController {
         try {
             // Call the method in the DatabaseConnection class to handle SQL transactions
             DatabaseConnection.giveBackSelectedBooks(user, books);
-            DatabaseConnection.updateUserMaxBorrow(user, DatabaseConnection.getUserMaxBorrow(user) + 1);
-
             DatabaseConnection.updateUserMaxBorrow(user, DatabaseConnection.getUserMaxBorrow(user) + 1);
             // Update the user interface
             borrowList.removeAll(books);
