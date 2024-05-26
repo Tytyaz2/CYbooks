@@ -5,9 +5,18 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 import java.time.LocalDate;
+import main.models.User;
 import main.dataBase.DatabaseConnection;
+import main.models.Book;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+
+
+/**
+ * Main class to run the application and interact with users.
+ * Provides a command-line interface for various functionalities such as searching for books,
+ * adding new users, borrowing books, etc.
+ */
 
 public class MainTerminal {
 
@@ -15,7 +24,13 @@ public class MainTerminal {
     protected static ObservableList<Book> borrowList;
     private static final Scanner scanner = new Scanner(System.in);
 
-
+    /**
+     * Main method to start the application.
+     * Provides a command-line interface for interacting with users.
+     *
+     * @param args command-line arguments (not used)
+     * @throws SQLException if there is an error with database operations
+     */
     public static void main(String[] args) throws SQLException {
         Scanner scanner = new Scanner(System.in);
 
@@ -26,10 +41,11 @@ public class MainTerminal {
             System.out.println("4. Ajout");
             System.out.println("5. Emprunter un livre");
             System.out.println("6. Selectionner un utilisateur");
+
             System.out.println("7. Quitter");
             System.out.print("Choisissez une option : ");
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Consomme la nouvelle ligne
+            scanner.nextLine(); // Consume the new line
 
             switch (choice) {
                 case 1:
@@ -67,7 +83,13 @@ public class MainTerminal {
             }
         }
     }
-
+    /**
+     * Adds a new user to the system.
+     * Prompts the user to enter the user's last name, first name, and email address.
+     * Validates the input data and adds the user to the database if valid.
+     *
+     * @param 'scanner' scanner object to read user input
+     */
     public static void addNewUser() {
         try {
             System.out.println("Veuillez entrer le nom de famille de l'utilisateur : ");
@@ -79,22 +101,28 @@ public class MainTerminal {
             System.out.println("Veuillez entrer l'adresse email de l'utilisateur : ");
             String email = scanner.nextLine();
 
-            // Valider les données
+            // Validate data
             if (lastName.isEmpty() || firstName.isEmpty() || email.isEmpty()) {
                 System.out.println("Veuillez remplir tous les champs.");
             } else if (!User.isValidEmail(email)) {
                 System.out.println("Veuillez entrer une adresse email valide.");
             } else {
-                // Ajouter l'utilisateur à la base de données
+                // Add user to database
                 DatabaseConnection.insertUserData(new User(email, firstName, lastName, 0, 5));
                 System.out.println("Nouvel adhérent ajouté : " + lastName + " " + firstName);
             }
         } catch (SQLException e) {
-            // Afficher un message d'erreur si l'ajout échoue
+            // Show an error message if the addition fails
             System.err.println("Erreur lors de l'ajout de l'utilisateur : " + e.getMessage());
         }
     }
-
+    /**
+     * Searches for books based on user input.
+     * Prompts the user to enter the category, search query, start index, and number of books to retrieve.
+     * Displays the search results or a message if no books are found.
+     *
+     * @param scanner scanner object to read user input
+     */
     private static void searchBooks(Scanner scanner) {
         System.out.print("Entrez la catégorie : ");
         String categorie = scanner.nextLine();
@@ -104,7 +132,7 @@ public class MainTerminal {
         int start = scanner.nextInt();
         System.out.print("Entrez le nombre de livres à récupérer : ");
         int number = scanner.nextInt();
-        scanner.nextLine(); // Consomme la nouvelle ligne
+        scanner.nextLine(); // Consume the new line
 
         books = SearchBookAPI.search(categorie, searchQuery, start, number);
         if (books.isEmpty()) {
@@ -115,14 +143,24 @@ public class MainTerminal {
             }
         }
     }
-
+    /**
+     * Displays all users in the system.
+     * Retrieves user data from the database and prints it to the console.
+     *
+     * @throws SQLException if there is an error with database operations
+     */
     private static void displayUsers() throws SQLException {
         List<User> users = DatabaseConnection.loadUsers();
         for (User user : users) {
             System.out.println(user);
         }
     }
-
+    /**
+     * Handles searching for users based on a search pattern.
+     * Prompts the user for a search pattern and performs the search.
+     *
+     * @param searchPattern the search pattern to use for finding users
+     */
     public static void handleSearchUser(String searchPattern) {
         if (searchPattern.isBlank()) {
             System.out.println("Le motif de recherche est vide.");
@@ -130,7 +168,12 @@ public class MainTerminal {
             searchUsersInDatabase("%" + searchPattern + "%");
         }
     }
-
+    /**
+     * Searches for users in the database based on a search pattern.
+     * Retrieves and prints user data that matches the search pattern.
+     *
+     * @param searchPattern the search pattern to use for finding users
+     */
     public static void searchUsersInDatabase(String searchPattern) {
         try {
             List<User> users = DatabaseConnection.searchUsers(searchPattern);
@@ -146,145 +189,171 @@ public class MainTerminal {
             System.err.println("Erreur lors de la recherche d'utilisateurs : " + e.getMessage());
         }
     }
-
+    /**
+     * Selects a user and a book, then handles borrowing the selected book for the selected user.
+     * Prompts the user to choose a user and a book, then processes the borrowing transaction.
+     *
+     * @param userList the list of users to choose from
+     * @throws SQLException if there is an error with database operations
+     */
     public static void selectUserAndBookAndHandleBorrow(List<User> userList) throws SQLException {
         Scanner scanner = new Scanner(System.in);
 
-        // Afficher la liste des utilisateurs avec un index pour chaque utilisateur
-        System.out.println("Select a user:");
+        // Show list of users with an index for each user
+        System.out.println("Sélectionnez un utilisateur:");
         for (int i = 0; i < userList.size(); i++) {
             User user = userList.get(i);
             System.out.println((i + 1) + ". " + user.getFirstName() + " " + user.getLastName());
         }
 
-        // Demander à l'utilisateur de choisir un utilisateur
-        System.out.print("Enter the number corresponding to the user: ");
+        // Ask user to choose a user
+        System.out.print("Saisissez le numéro correspondant à l'utilisateur :");
         int userIndex = scanner.nextInt();
 
-        // Vérifier si l'index est valide
+        // Check if the index is valid
         if (userIndex < 1 || userIndex > userList.size()) {
-            System.out.println("Invalid user selection.");
+            System.out.println("Sélection d'utilisateur non valide.");
             return;
         }
 
-        // Récupérer l'utilisateur sélectionné
+        // Retrieve selected user
         User selectedUser = userList.get(userIndex - 1);
 
-        // Afficher la liste des livres avec un index pour chaque livre
-        System.out.println("Select a book:");
+        // Show list of books with an index for each book
+        System.out.println("Sélectionnez un livre :");
         for (int i = 0; i < books.size(); i++) {
             Book book = books.get(i);
             System.out.println((i + 1) + ". " + book.getTitle() + " by " + book.getAuthors());
         }
 
-        // Demander à l'utilisateur de choisir un livre
-        System.out.print("Enter the number corresponding to the book: ");
+        // Ask the user to choose a book
+        System.out.print("Saisissez le numéro correspondant au livre :");
         int bookIndex = scanner.nextInt();
 
-        // Vérifier si l'index est valide
+        // Check if the index is valid
         if (bookIndex < 1 || bookIndex > books.size()) {
-            System.out.println("Invalid book selection.");
+            System.out.println("Sélection de livres non valide.");
             return;
         }
 
-        // Appeler la fonction handleBorrow avec l'utilisateur sélectionné et le livre sélectionné
+        // Call handleBorrow function with selected user and selected book
         handleBorrow(selectedUser,books.get(bookIndex - 1));
     }
+
+    /**
+     * Handles the borrowing process for a selected user and book.
+     * Validates user and book information, updates the database, and prints appropriate messages.
+     *
+     * @param selectedUser the user who is borrowing the book
+     * @param selectedBook the book to be borrowed
+     * @throws SQLException if there is an error with database operations
+     */
     public static void handleBorrow(User selectedUser, Book selectedBook) throws SQLException {
-        // Récupération de la date actuelle
+        // Retrieving the current date
         LocalDate startDate = LocalDate.now();
 
-        // Vérification si un utilisateur et au moins un livre ont été sélectionnés
+        // Checking if a user and at least one book have been selected
         if (selectedUser == null) {
-            System.out.println("Error: Selection Required");
-            System.out.println("Please select a user.");
+            System.out.println("Erreur sélection requise");
+            System.out.println("Veuillez sélectionner un utilisateur.");
             return;
         }
 
-        // Vérification si l'utilisateur a atteint sa limite d'emprunts
+        // Checking if the user has reached their borrowing limit
         int remainingBorrows = selectedUser.getMaxBorrow();
         if (remainingBorrows <= 0) {
-            System.out.println("Error: Borrow Limit Reached");
-            System.out.println("You have reached the borrow limit.");
+            System.out.println("Erreur limite d'emprunt atteinte");
+            System.out.println("Vous avez atteint la limite d'emprunt.");
             return;
         }
 
-        // Vérification si le livre existe dans la base de données
+        // Checking if the book exists in the database
         if (!DatabaseConnection.isBookExists(selectedBook)) {
             // Insérer le livre dans la base de données s'il n'existe pas déjà
             DatabaseConnection.insertBook(selectedBook);
         }
 
-        // Vérification si l'utilisateur a déjà emprunté ce livre
+        // Checking if the user has already borrowed this book
         if (DatabaseConnection.isBookAlreadyBorrowed(selectedUser, selectedBook)) {
-            System.out.println("Error: Book Already Borrowed");
-            System.out.println("You have already borrowed the book \"" + selectedBook.getTitle() + "\".");
+            System.out.println("Erreur livre déjà emprunté");
+            System.out.println("Vous avez déjà emprunté le livre \"" + selectedBook.getTitle() + "\".");
             return;
         }
 
-        // Vérification si le livre est disponible en stock
+        // Checking if the book is available in stock
         int currentStock = DatabaseConnection.getBookStock(selectedBook);
         if (currentStock <= 0) {
-            System.out.println("Error: Out of Stock");
+            System.out.println("Erreur : En rupture de stock");
             System.out.println("The selected book is not available in the stock.");
             return;
         }
 
-        // Date de fin = 30 jours après la date de début
+        // End date = 30 days after start date
         LocalDate endDate = startDate.plusDays(30);
 
-        // Insertion de l'emprunt dans la base de données
+        // Insertion of the loan into the database
         DatabaseConnection.insertDataBorrow(new Borrow(selectedUser, selectedBook, startDate, endDate));
 
-        // Mise à jour du stock dans la base de données en le réduisant de 1
+        // Updating the stock in the database by reducing it by 1
         int newStock = currentStock - 1;
         selectedBook.setStock(newStock);
         DatabaseConnection.updateStock(selectedBook.getIsbn(), newStock);
 
-        // Affichage d'un message de succès
-        System.out.println("Borrow of the book \"" + selectedBook.getTitle() + "\" added successfully for user " + selectedUser.getFirstName() + " " + selectedUser.getLastName());
+        // Displaying a success message
+        System.out.println("Emprunter le livre \"" + selectedBook.getTitle() + "\" ajouté avec succès pour l'utilisateur " + selectedUser.getFirstName() + " " + selectedUser.getLastName());
 
-        // Décrémentation du nombre maximal d'emprunts autorisés pour l'utilisateur
+        // Decrementing the maximum number of borrowings authorized for the user
         selectedUser.setMaxBorrow(selectedUser.getMaxBorrow() - 1);
 
 
-        // Affichage d'un message de succès global après l'emprunt de tous les livres
-        System.out.println("Success: Borrows Added Successfully");
-        System.out.println("Borrows have been added successfully to the database.");
+        // Displaying an overall success message after borrowing all books
+        System.out.println("Succès emprunts ajoutés avec succès");
+        System.out.println("Les emprunts ont été ajoutés avec succès à la base de données.");
 
-        // Mise à jour de la limite d'emprunts de l'utilisateur dans la base de données
+        // Updating the user's borrowing limit in the database
         DatabaseConnection.updateUserMaxBorrow(selectedUser, selectedUser.getMaxBorrow());
     }
-
+    /**
+     * Selects a user and shows their information.
+     * Prompts the user to choose a user from a list, then displays the user's information and options to perform actions.
+     *
+     * @throws SQLException if there is an error with database operations
+     */
     public static void selectUserAndShowInfo() throws SQLException {
         List<User> userList = DatabaseConnection.getAllUser();
         Scanner scanner = new Scanner(System.in);
 
-        // Afficher la liste des utilisateurs avec un index pour chaque utilisateur
-        System.out.println("Select a user:");
+        // Show list of users with an index for each user
+        System.out.println("Sélectionnez un utilisateur :");
         for (int i = 0; i < userList.size(); i++) {
             User user = userList.get(i);
             System.out.println((i + 1) + ". " + user.getFirstName() + " " + user.getLastName());
         }
 
-        // Demander à l'utilisateur de choisir un utilisateur
-        System.out.print("Enter the number corresponding to the user: ");
+        // Ask user to choose a user
+        System.out.print("Saisissez le numéro correspondant à l'utilisateur : ");
         int userIndex = scanner.nextInt();
 
-        // Vérifier si l'index est valide
+        // Check if the index is valid
         if (userIndex < 1 || userIndex > userList.size()) {
-            System.out.println("Invalid user selection.");
+            System.out.println("Sélection d'utilisateur non valide.");
             return;
         }
 
-        // Récupérer l'utilisateur sélectionné
+        // Retrieve selected user
         User selectedUser = userList.get(userIndex - 1);
         handleUserInfo(selectedUser);
     }
-
+    /**
+     * Handles displaying and managing information for a selected user.
+     * Displays user information and provides options for returning books, banning the user, modifying user details, viewing borrows, and viewing borrowing history.
+     *
+     * @param selectedUser the user whose information is being managed
+     * @throws SQLException if there is an error with database operations
+     */
     public static void handleUserInfo(User selectedUser) throws SQLException {
 
-        // Afficher toutes les informations de l'utilisateur sélectionné
+        // Show all information for selected user
         System.out.println(selectedUser.toString());
 
         System.out.println("\nOptions:");
@@ -295,11 +364,11 @@ public class MainTerminal {
         System.out.println("5. Voir l'historique d'emprunt");
         System.out.println("6. Retourner à la page principale");
 
-        // Demander à l'utilisateur de choisir une option
-        System.out.print("\nEnter the number corresponding to the option: ");
+        // Ask the user to choose an option
+        System.out.print("\nSaisissez le numéro correspondant à l'option :");
         int option = scanner.nextInt();
 
-        // Exécuter l'action correspondante en fonction de l'option choisie
+        // Execute the corresponding action depending on the chosen option
         switch (option) {
             case 1:
                 giveBackSelectedBooks(selectedUser,borrowList);
@@ -318,72 +387,91 @@ public class MainTerminal {
             case 6:
                 break;
             default:
-                System.out.println("Invalid option.");
-                }
+                System.out.println("Option invalide.");
+        }
 
     }
+
+    /**
+     * Loads borrowed books for a user and displays them.
+     *
+     * @param email the email of the user whose borrowed books are to be loaded
+     */
     protected static void loadBorrowedBooks(String email) {
         try {
             borrowList = DatabaseConnection.loadBorrowedBooks(email);
-            // Afficher les livres empruntés dans le terminal
+            // View borrowed books in the terminal
             for (Book book : borrowList) {
-                System.out.println("Title: " + book.getTitle() + ", Author(s): " + book.getAuthors() + ", ISBN: " + book.getIsbn());
+                System.out.println("Titre: " + book.getTitle() + ", Author(s): " + book.getAuthors() + ", ISBN: " + book.getIsbn());
             }
             System.out.println("\n");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Handles returning selected books for a user.
+     * Prompts the user to select a book to return from a list and processes the return transaction.
+     *
+     * @param user  the user who is returning books
+     * @param books the list of books to choose from
+     */
     private static void giveBackSelectedBooks(User user, List<Book> books) {
         try {
             Scanner scanner = new Scanner(System.in);
 
-            // Afficher la liste des livres à rendre avec un index pour chaque livre
-            System.out.println("Select a book to give back:");
+            // Display the list of books to return with an index for each book
+            System.out.println("Sélectionnez un livre à redonner :");
             for (int i = 0; i < books.size(); i++) {
                 Book book = books.get(i);
                 System.out.println((i + 1) + ". Title: " + book.getTitle());
             }
 
-            // Demander à l'utilisateur de choisir un livre à rendre
-            System.out.print("Enter the number corresponding to the book to give back: ");
+            // Ask the user to choose a book to return
+            System.out.print("Saisissez le numéro correspondant au livre à rendre :");
             int bookIndex = scanner.nextInt();
 
-            // Vérifier si l'index est valide
+            // Check if the index is valid
             if (bookIndex < 1 || bookIndex > books.size()) {
-                System.out.println("Invalid book selection.");
+                System.out.println("Sélection de livres non valide.");
                 return;
             }
 
-            // Récupérer le livre sélectionné
+            // Retrieve selected book
             Book selectedBook = books.get(bookIndex - 1);
 
             // Call the method in the DatabaseConnection class to handle SQL transactions
             DatabaseConnection.giveBackSelectedBooks(user, List.of(selectedBook));
             int updatedMaxBorrow = DatabaseConnection.getUserMaxBorrow(user) + 1;
 
-            // Afficher un message de confirmation
-            System.out.println("Book returned successfully: " + selectedBook.getTitle());
+            // Show a confirmation message
+            System.out.println("Livre renvoyé avec succès : " + selectedBook.getTitle());
 
-            // Afficher le nombre de prêts restants
-            System.out.println("Remaining borrows: " + (5 - updatedMaxBorrow));
+            // Show number of remaining loans
+            System.out.println("Emprunts restants : " + (5 - updatedMaxBorrow));
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Bans a user by updating their status in the database.
+     * Prompts for confirmation before banning the user.
+     *
+     * @param user the user to be banned
+     */
     private static void banUser(User user) {
         if (user != null) {
             Scanner scanner = new Scanner(System.in);
 
-            // Demander une confirmation de l'utilisateur
-            System.out.print("Do you really want to ban this user? (yes/no): ");
+            // Request user confirmation
+            System.out.print("Voulez-vous vraiment bannir cet utilisateur ? (Oui/Non): ");
             String response = scanner.nextLine();
 
-            if (response.equalsIgnoreCase("yes")) {
-                // Mettre à jour l'état de l'utilisateur pour le bannir (état 3)
+            if (response.equalsIgnoreCase("Oui")) {
+                // Update user status to ban them (state 3)
 
-                // Mise à jour dans la base de données
+                // Update in database
                 try (Connection connection = DatabaseConnection.getConnection();
                      PreparedStatement updateUserStatement = connection.prepareStatement("UPDATE User SET state = ? WHERE email = ?")) {
 
@@ -391,84 +479,102 @@ public class MainTerminal {
                     updateUserStatement.setString(2, user.getEmail());
                     updateUserStatement.executeUpdate();
 
-                    // Afficher un message de confirmation
-                    System.out.println("The user has been successfully banned.");
+                    // Show a confirmation message
+                    System.out.println("L'utilisateur a été banni avec succès.");
                 } catch (SQLException e) {
                     e.printStackTrace();
-                    System.out.println("An error occurred while updating the user.");
+                    System.out.println("Une erreur s'est produite lors de la mise à jour de l'utilisateur.");
                 }
             } else {
-                System.out.println("Ban operation cancelled.");
+                System.out.println("Opération d'interdiction annulée.");
             }
         } else {
-            System.out.println("No user selected.");
+            System.out.println("Aucun utilisateur sélectionné.");
         }
     }
 
+    /**
+     * Modifies the details of a user.
+     * Prompts the user to choose which field to modify and updates the user information accordingly.
+     *
+     * @param user the user whose details are to be modified
+     * @throws SQLException if there is an error with database operations
+     */
     public static void modifyUser(User user) throws SQLException {
-        System.out.println("Current user information:");
-        System.out.println("1. Last Name: " + user.getLastName());
-        System.out.println("2. First Name: " + user.getFirstName());
+        System.out.println("Informations sur l'utilisateur actuel:");
+        System.out.println("1. Nom de famille: " + user.getLastName());
+        System.out.println("2. Prénom: " + user.getFirstName());
         System.out.println("3. Email: " + user.getEmail());
 
-        System.out.println("Enter the number corresponding to the field you want to edit (or 0 to cancel):");
+        System.out.println("Saisissez le numéro correspondant au champ que vous souhaitez modifier (ou 0 pour annuler):");
         int choice = scanner.nextInt();
         scanner.nextLine(); // Consume newline left-over
 
         switch (choice) {
             case 1:
-                System.out.print("Enter new Last Name: ");
+                System.out.print("Entrez un nouveau nom de famille: ");
                 String newLastName = scanner.nextLine();
                 user = updateUser(user, newLastName, user.getFirstName(), user.getEmail());
                 break;
             case 2:
-                System.out.print("Enter new First Name: ");
+                System.out.print("Entrez un nouveau prénom: ");
                 String newFirstName = scanner.nextLine();
                 user = updateUser(user, user.getLastName(), newFirstName, user.getEmail());
                 break;
             case 3:
-                System.out.print("Enter new Email: ");
+                System.out.print("Entrez un nouvel e-mail: ");
                 String newEmail = scanner.nextLine();
                 if (!User.isValidEmail(newEmail)) {
-                    System.out.println("Invalid email format. Please enter a valid email address.");
+                    System.out.println("Format d'email invalide. S'il vous plaît, mettez une adresse email valide.");
                     return;
                 }
                 user = updateUser(user, user.getLastName(), user.getFirstName(), newEmail);
                 break;
             case 0:
-                System.out.println("Edit cancelled.");
+                System.out.println("Personnaliser la barre d'outils...");
                 return;
             default:
-                System.out.println("Invalid choice.");
+                System.out.println("Choix invalide.");
                 return;
         }
 
-        System.out.println("Updated user information:");
-        System.out.println("Last Name: " + user.getLastName());
-        System.out.println("First Name: " + user.getFirstName());
+        System.out.println("Informations utilisateur mises à jour:");
+        System.out.println("Nom de famille: " + user.getLastName());
+        System.out.println("Prénom: " + user.getFirstName());
         System.out.println("Email: " + user.getEmail());
     }
-
+    /**
+     * Updates the user's information in the database with the provided last name, first name, and email.
+     *
+     * @param user      The user object containing the current user information.
+     * @param lastName  The new last name for the user.
+     * @param firstName The new first name for the user.
+     * @param email     The new email for the user.
+     * @return The updated user object with the new email set.
+     * @throws SQLException If an SQL error occurs while updating the user information in the database.
+     */
     private static User updateUser(User user, String lastName, String firstName, String email) throws SQLException {
         user.setEmail(email);
-        user.setLastname(lastName);
-        user.setFirstName(firstName);
         DatabaseConnection.modifyUser(user, email);
         return user;
     }
-
+    /**
+     * Loads and displays the borrowing history of the specified user.
+     *
+     * @param user The user whose borrowing history is to be loaded and displayed.
+     */
     private static void loadHistory(User user) {
         try {
-            // Charger l'historique des emprunts de l'utilisateur
+            // Load the user's borrowing history
             List<Book> historyList = DatabaseConnection.loadBorrowHistory(user.getEmail());
 
-            // Afficher l'historique des emprunts dans la console
-            System.out.println("Borrow History for " + user.getFirstName() + " " + user.getLastName() + ":");
+            // View borrowing history in the console
+            System.out.println("Historique d'emprunt pour" + user.getFirstName() + " " + user.getLastName() + ":");
             if (historyList.isEmpty()) {
-                System.out.println("No borrow history found.");
+                System.out.println("Aucun historique d'emprunt trouvé.");
             } else {
                 for (Book book : historyList) {
-                    System.out.println("- Title: " + book.getTitle() + ", Borrowed on: " + book.getDateBorrow() + ", Returned on: " + book.getDateGB());
+                    System.out.println("- Titre: " + book.getTitle() + ", Emprunté le: " + book.getDateBorrow() + ", retourner le: " + book.getDateGB());
                 }
             }
         } catch (SQLException e) {
@@ -478,4 +584,3 @@ public class MainTerminal {
 
 
 }
-
