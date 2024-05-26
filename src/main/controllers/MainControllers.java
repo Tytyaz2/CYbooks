@@ -14,6 +14,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import main.API.SearchBookAPI;
+import main.dataBase.DatabaseConnection;
 import main.models.*;
 import javafx.scene.paint.Color;
 import javafx.scene.control.TableCell;
@@ -478,15 +480,15 @@ public class MainControllers {
     }
 
     /**
-     * Handles the event when the "New Borrow" button is clicked to show the emprunt.fxml page.
-     * This method loads the emprunt.fxml file and replaces the current scene's children with those of the new view.
+     * Handles the event when the "New Borrow" button is clicked to show the Borrow.fxml page.
+     * This method loads the Borrow.fxml file and replaces the current scene's children with those of the new view.
      *
      * @param event The ActionEvent representing the button click event.
      */
     @FXML
     void handleNewBorrowButtonClick(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/emprunt.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/Borrow.fxml"));
             Parent empruntRoot = loader.load();
             AnchorPane root = (AnchorPane) ((Node) event.getSource()).getScene().getRoot();
             root.getChildren().setAll(empruntRoot);
@@ -499,11 +501,11 @@ public class MainControllers {
 
     /**
      * Shows the adherent page.
-     * This method loads the pageadherent.fxml file, displays the details of the selected user, and sets it as the scene.
+     * This method loads the AdherentPage.fxml file, displays the details of the selected user, and sets it as the scene.
      */
     public void showAdherentPage() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/pageadherent.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/AdherentPage.fxml"));
             Parent root = loader.load();
             UserController userController = loader.getController();
             userController.displayUserDetails(selectedUser);

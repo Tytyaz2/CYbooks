@@ -13,6 +13,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import main.API.SearchBookAPI;
+import main.dataBase.DatabaseConnection;
 import main.models.*;
 
 import java.io.IOException;
@@ -380,7 +382,7 @@ public class BorrowController {
     private void handleReturnButtonClick(ActionEvent event) {
         try {
             // Load the view of the main page
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/pageprincipal.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/MainPage.fxml"));
             Parent root = loader.load();
 
             // Get the current stage from any scene component

@@ -1,5 +1,7 @@
 package main.models;
 
+import main.dataBase.DatabaseConnection;
+
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
@@ -11,8 +13,8 @@ import java.util.regex.Pattern;
  */
 public class User {
     private String email;
-    private final String firstName;
-    private final String lastName;
+    private String firstName;
+    private String lastName;
     private int state;
     private int maxBorrow; // Initialized to 5
 
@@ -43,12 +45,29 @@ public class User {
     }
 
     /**
+     * Sets the Firstname of the user.
+     *
+     * @param firstname the state to set
+     */
+    public void setFirstName(String firstname) {
+        this.firstName = firstname;
+    }
+
+    /**
      * Returns the last name of the user.
      *
      * @return the last name
      */
     public String getLastName() {
         return lastName;
+    }
+    /**
+     * Sets the lastname of the user.
+     *
+     * @param lastname the state to set
+     */
+    public void setLastname(String lastname) {
+        this.lastName = lastname;
     }
 
     /**

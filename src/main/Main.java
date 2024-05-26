@@ -3,6 +3,8 @@ package main;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import main.controllers.ConnexionController;
+import main.dataBase.DatabaseConnection;
+import main.dataBase.MySQLStarter;
 import main.models.*;
 import java.sql.SQLException;
 

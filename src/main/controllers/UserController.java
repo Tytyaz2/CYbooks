@@ -15,7 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import main.models.User;
-import main.models.DatabaseConnection;
+import main.dataBase.DatabaseConnection;
 import main.models.Book;
 import javafx.event.ActionEvent;
 import java.io.IOException;
@@ -239,6 +239,8 @@ public class UserController {
             int state = user.getState(); // Assuming `state` is part of your user object
             int maxBorrow = DatabaseConnection.getUserMaxBorrow(user); // Assuming `maxBorrow` is part of your user object
             user.setEmail(newEmail);
+            user.setFirstName(newFirstName);
+            user.setLastname(newLastName);
 
             // Modify user information in the database
             try {
@@ -369,7 +371,7 @@ public class UserController {
     private void handleReturnButtonClick(ActionEvent event) {
         try {
             // Load the main page view
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/pageprincipal.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/MainPage.fxml"));
             Parent root = loader.load();
             // Get the current stage from any scene component
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

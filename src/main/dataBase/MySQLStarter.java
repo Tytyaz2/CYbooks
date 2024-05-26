@@ -1,4 +1,4 @@
-package main.models;
+package main.dataBase;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

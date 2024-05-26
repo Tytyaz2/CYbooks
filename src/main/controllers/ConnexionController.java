@@ -46,7 +46,7 @@ public class ConnexionController extends Application {
             // Charger la nouvelle page
 // Charger la nouvelle page
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/pageprincipal.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/MainPage.fxml"));
                 Parent root = loader.load();
                 Scene scene = new Scene(root);
                 Stage stage = new Stage();
@@ -82,7 +82,7 @@ public class ConnexionController extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         // Charger le fichier FXML
-        Parent root = FXMLLoader.load(getClass().getResource("/main/views/connexion.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/main/views/connection.fxml"));
 
         // Créer une scène
         Scene scene = new Scene(root, 1280, 720);

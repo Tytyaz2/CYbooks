@@ -1,18 +1,15 @@
-package main.controllers;
 import javafx.collections.ObservableList;
 import main.models.*;
-
+import main.API.SearchBookAPI;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 import java.time.LocalDate;
-import main.models.User;
-import main.models.DatabaseConnection;
-import main.models.Book;
+import main.dataBase.DatabaseConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
-public class MainControllersTerminal {
+public class MainTerminal {
 
     private static List<Book> books;
     protected static ObservableList<Book> borrowList;
@@ -29,7 +26,6 @@ public class MainControllersTerminal {
             System.out.println("4. Ajout");
             System.out.println("5. Emprunter un livre");
             System.out.println("6. Selectionner un utilisateur");
-
             System.out.println("7. Quitter");
             System.out.print("Choisissez une option : ");
             int choice = scanner.nextInt();
@@ -455,6 +451,8 @@ public class MainControllersTerminal {
 
     private static User updateUser(User user, String lastName, String firstName, String email) throws SQLException {
         user.setEmail(email);
+        user.setLastname(lastName);
+        user.setFirstName(firstName);
         DatabaseConnection.modifyUser(user, email);
         return user;
     }

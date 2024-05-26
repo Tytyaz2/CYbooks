@@ -1,7 +1,10 @@
-package main.models;
+package main.dataBase;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import main.models.Book;
+import main.models.Borrow;
+import main.models.User;
 
 import java.sql.*;
 import java.time.LocalDate;

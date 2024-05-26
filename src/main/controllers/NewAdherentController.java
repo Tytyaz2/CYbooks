@@ -9,7 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
-import main.models.DatabaseConnection;
+import main.dataBase.DatabaseConnection;
 import javafx.scene.control.Label;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -66,7 +66,7 @@ public class NewAdherentController {
                 }
 
                 // Redirect to the main page after adding the user
-                changeScene(event, "/main/views/pageprincipal.fxml", "Page Principale");
+                changeScene(event, "/main/views/MainPage.fxml", "Page Principale");
 
             } catch (SQLException e) {
                 // Display failure message
@@ -93,7 +93,7 @@ public class NewAdherentController {
      */
     @FXML
     private void handleReturnButtonClick(ActionEvent event) {
-        changeScene(event, "/main/views/pageprincipal.fxml", "Page Principale");
+        changeScene(event, "/main/views/MainPage.fxml", "Page Principale");
     }
 
     /**

@@ -1,4 +1,6 @@
-package main.models;
+package main.API;
+
+import main.models.Book;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -41,9 +43,7 @@ public class SearchBookAPI {
         // getting the response
         try {
             response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
         // writing the response in a file and then parsing the file to get usable
