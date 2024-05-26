@@ -3,13 +3,12 @@ package main;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import main.controllers.ConnexionController;
-import main.models.DatabaseConnection;
-import main.models.MySQLStarter;
-import main.models.User;
-
+import main.models.*;
 import java.sql.SQLException;
 
+
 public class Main extends Application {
+    static User Nadir = new User("nadir14@gmail.com", "Nadir", "NEHILI", 0, 5);
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -21,12 +20,10 @@ public class Main extends Application {
         try {
 
             MySQLStarter.startMySQL();
-            // Perform necessary database operations
-            DatabaseConnection.insertUserData(new User("nadir1401@gmail.com", "Nadir", "NEHILI",0,5));
-            DatabaseConnection.insertUserData(new User("flavio2002@gmail.com", "Flavio", "Soares",0,5));
+            // Initialize with 1 user
+                DatabaseConnection.insertUserData(Nadir);
 
-
-        } catch (SQLException e) {
+        }catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 

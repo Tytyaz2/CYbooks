@@ -22,14 +22,14 @@
       <TextArea fx:id="lastNameTextArea" layoutX="272.0" layoutY="259.0" prefHeight="31.0" prefWidth="201.0" />
       <TextArea fx:id="mailTextArea" layoutX="271.0" layoutY="351.0" prefHeight="40.0" prefWidth="202.0" />
       <TextArea fx:id="firstNameTextArea" layoutX="272.0" layoutY="306.0" prefHeight="31.0" prefWidth="201.0" />
-      <Text layoutX="117.0" layoutY="418.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15;" text="Nombre d'borrow" />
+      <Text layoutX="117.0" layoutY="418.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15;" text="Nombre d'emprunt" />
       <Button layoutX="186.0" layoutY="455.0" mnemonicParsing="false" onMouseClicked="#modifyUser" prefHeight="58.0" prefWidth="171.0" text="modifier " />
       <TableView fx:id="bookTableView" layoutX="503.0" layoutY="113.0" onMouseClicked="#handleBookSelection" prefHeight="443.0" prefWidth="722.0">
          <columns>
             <TableColumn fx:id="titleColumn" prefWidth="217.73193359375" text="Titre" />
             <TableColumn fx:id="authorColumn" minWidth="1.9793701171875" prefWidth="188.0411376953125" text="Auteur" />
             <TableColumn fx:id="isbnColumn" minWidth="0.0" prefWidth="207.83502197265625" text="ISBN" />
-            <TableColumn fx:id="start" prefWidth="108.865966796875" text="Date d'borrow" />
+            <TableColumn fx:id="start" prefWidth="108.865966796875" text="Date d'emprunt" />
             <TableColumn fx:id="end" prefWidth="254.3505859375" text="Date de rendu" />
          </columns>
       </TableView>

@@ -1,4 +1,5 @@
 package main.controllers;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -10,18 +11,19 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import main.models.User;
 import main.models.DatabaseConnection;
 import main.models.Book;
 import javafx.event.ActionEvent;
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class UserController {
@@ -128,6 +130,22 @@ public class UserController {
         firstNameLabel.setVisible(true);
         mailLabel.setVisible(true);
 
+        // Set custom cell value factories for each column
+        titleColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTitle()));
+        authorColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAuthors()));
+        isbnColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getIsbn()));
+        start.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDateBorrow()));
+        end.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDateGB()));
+
+
+        // Apply custom cell factories to change color based on status
+        titleColumn.setCellFactory(getColorCellFactory());
+        authorColumn.setCellFactory(getColorCellFactory());
+        isbnColumn.setCellFactory(getColorCellFactory());
+        start.setCellFactory(getColorCellFactory());
+        end.setCellFactory(getColorCellFactory());
+
+
         bookTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         borrowList = bookTableView.getItems();
@@ -138,6 +156,34 @@ public class UserController {
                 handleBookSelection();
             }
         });
+    }
+    /**
+     * Returns a TableCell factory to set text color based on user status.
+     *
+     * @return TableCell factory
+     */
+    private Callback<TableColumn<Book, String>, TableCell<Book, String>> getColorCellFactory() {
+        return column -> new TableCell<Book, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    setText(item);
+                    Book book = getTableView().getItems().get(getIndex());
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    LocalDate dateTime = LocalDate.parse(book.getDateGB(), formatter);
+                    if (LocalDate.now().isBefore(dateTime)) {
+                        setTextFill(Color.BLACK);
+                    }
+                    else{
+                        setTextFill(Color.RED);
+                    }
+                }
+            }
+        };
     }
 
 
@@ -242,7 +288,7 @@ public class UserController {
             DatabaseConnection.giveBackSelectedBooks(user, books);
             DatabaseConnection.updateUserMaxBorrow(user, DatabaseConnection.getUserMaxBorrow(user) + 1);
 
-
+            DatabaseConnection.updateUserMaxBorrow(user, DatabaseConnection.getUserMaxBorrow(user) + 1);
             // Update the user interface
             borrowList.removeAll(books);
             nbBorrowsLabel.setText(String.valueOf(5 - DatabaseConnection.getUserMaxBorrow(user)));

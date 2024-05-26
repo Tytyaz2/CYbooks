@@ -98,7 +98,7 @@ public class Book {
      * @return the return date of the book
      */
     public String getDateGB() {
-        return dateGB;
+        return  dateGB;
     }
 
 

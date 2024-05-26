@@ -2,288 +2,288 @@
 <srw:version>1.2</srw:version>
 <srw:echoedSearchRetrieveRequest>
 <srw:version>1.2</srw:version>
-<srw:query>bib.doctype any "a" and bib.title all "e"</srw:query>
+<srw:query>bib.doctype any "a" and bib.title all "a"</srw:query>
 </srw:echoedSearchRetrieveRequest>
-<srw:numberOfRecords>313880</srw:numberOfRecords>
+<srw:numberOfRecords>1894612</srw:numberOfRecords>
 <srw:records>
 <srw:record>
 <srw:recordSchema>dc</srw:recordSchema>
 <srw:recordPacking>xml</srw:recordPacking>
 <srw:recordData>
-<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb46518407t</dc:identifier>   <dc:title>E-marketing &amp; e-business / [directeur de la publication Dominique Zalewski]</dc:title>   <dc:description>Variante(s) de titre : E-marketing &amp; e-business</dc:description>   <dc:description>Variante(s) de titre : GFM E-marketing &amp; e-business</dc:description>   <dc:publisher>GFM - Lettra Système (Montrouge)</dc:publisher>   <dc:date>201.</dc:date>   <dc:language>fre</dc:language>   <dc:language>français</dc:language>   <dc:type xml:lang="fre">publication en série imprimée</dc:type>   <dc:type xml:lang="eng">printed serial</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb43440653n</dc:identifier>   <dc:title>Arnie et l'A.A.A.A.A.A.A. / Pierre Levie ; illustrations de Nadine Forster</dc:title>   <dc:creator>Levie, Pierre (1916-2010). Auteur du texte</dc:creator>   <dc:contributor>Forster, Nadine (1931-2023). Illustrateur</dc:contributor>   <dc:publisher>Dargaud éditeur (Neuilly s/Seine)</dc:publisher>   <dc:language>fre</dc:language>   <dc:language>français</dc:language>   <dc:type xml:lang="fre">texte imprimé</dc:type>   <dc:type xml:lang="eng">printed text</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
 </oai_dc:dc>      </srw:recordData>
-<srw:recordIdentifier>ark:/12148/cb46518407t</srw:recordIdentifier>
+<srw:recordIdentifier>ark:/12148/cb43440653n</srw:recordIdentifier>
 <srw:recordPosition>1</srw:recordPosition>
 <srw:extraRecordData>
-<ixm:attr name="CreationDate">20200212</ixm:attr>
-<ixm:attr name="LastModificationDate">20200212</ixm:attr>
-<mn:score>3.3506126</mn:score>
+<ixm:attr name="CreationDate">20140820</ixm:attr>
+<ixm:attr name="LastModificationDate">20140820</ixm:attr>
+<mn:score>1.753366</mn:score>
 </srw:extraRecordData>
 </srw:record>
 <srw:record>
 <srw:recordSchema>dc</srw:recordSchema>
 <srw:recordPacking>xml</srw:recordPacking>
 <srw:recordData>
-<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb39007146w</dc:identifier>   <dc:title>Collection é- : é-crits, é-crans, é-crins</dc:title>   <dc:description>Variante(s) de titre : É- (Trézélan)</dc:description>   <dc:publisher>Filigranes éd. (Trézélan)</dc:publisher>   <dc:date>2001</dc:date>   <dc:identifier>ISSN 17613965</dc:identifier>   <dc:language>fre</dc:language>   <dc:language>français</dc:language>   <dc:type xml:lang="fre">publication en série imprimée</dc:type>   <dc:type xml:lang="eng">printed serial</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb34394193c</dc:identifier>   <dc:title>[A &amp; A]</dc:title>   <dc:description>Variante(s) de titre : A et A</dc:description>   <dc:publisher>Librairie F. Valéry (Bordeaux)</dc:publisher>   <dc:date>19??-1990</dc:date>   <dc:identifier>ISSN 0764437X</dc:identifier>   <dc:language>fre</dc:language>   <dc:language>français</dc:language>   <dc:type xml:lang="fre">publication en série imprimée</dc:type>   <dc:type xml:lang="eng">printed serial</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
 </oai_dc:dc>      </srw:recordData>
-<srw:recordIdentifier>ark:/12148/cb39007146w</srw:recordIdentifier>
+<srw:recordIdentifier>ark:/12148/cb34394193c</srw:recordIdentifier>
 <srw:recordPosition>2</srw:recordPosition>
 <srw:extraRecordData>
-<ixm:attr name="CreationDate">20030602</ixm:attr>
-<ixm:attr name="LastModificationDate">20130628</ixm:attr>
-<mn:score>3.335632</mn:score>
+<ixm:attr name="CreationDate">19860728</ixm:attr>
+<ixm:attr name="LastModificationDate">20200107</ixm:attr>
+<mn:score>1.7495595</mn:score>
 </srw:extraRecordData>
 </srw:record>
 <srw:record>
 <srw:recordSchema>dc</srw:recordSchema>
 <srw:recordPacking>xml</srw:recordPacking>
 <srw:recordData>
-<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb369438204</dc:identifier>   <dc:title>Markaz-e farhangī-e našr-e qeble</dc:title>   <dc:publisher>Našr-e qeble (Tehrān)</dc:publisher>   <dc:date>1996</dc:date>   <dc:language>per</dc:language>   <dc:language>persan </dc:language>   <dc:type xml:lang="fre">publication en série imprimée</dc:type>   <dc:type xml:lang="eng">printed serial</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb424202848</dc:identifier>   <dc:title>A&amp;a monografie</dc:title>   <dc:description>Variante(s) de titre : A&amp;A monografie</dc:description>   <dc:description>Variante(s) de titre : AEta monografie</dc:description>   <dc:description>Variante(s) de titre : A Et a monografie</dc:description>   <dc:publisher>Mondadori Electa (Milano)</dc:publisher>   <dc:date>2010</dc:date>   <dc:language>ita</dc:language>   <dc:language>italien</dc:language>   <dc:type xml:lang="fre">publication en série imprimée</dc:type>   <dc:type xml:lang="eng">printed serial</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
 </oai_dc:dc>      </srw:recordData>
-<srw:recordIdentifier>ark:/12148/cb369438204</srw:recordIdentifier>
+<srw:recordIdentifier>ark:/12148/cb424202848</srw:recordIdentifier>
 <srw:recordPosition>3</srw:recordPosition>
 <srw:extraRecordData>
-<ixm:attr name="CreationDate">19990401</ixm:attr>
-<ixm:attr name="LastModificationDate">20230609</ixm:attr>
-<mn:score>3.302031</mn:score>
+<ixm:attr name="CreationDate">20110428</ixm:attr>
+<ixm:attr name="LastModificationDate">20110718</ixm:attr>
+<mn:score>1.7406992</mn:score>
 </srw:extraRecordData>
 </srw:record>
 <srw:record>
 <srw:recordSchema>dc</srw:recordSchema>
 <srw:recordPacking>xml</srw:recordPacking>
 <srw:recordData>
-<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb36944814f</dc:identifier>   <dc:title>Daftar-e moṭāleʿāt-e dīni-e honar</dc:title>   <dc:publisher>ḥowze-ye honari (Tehrān)</dc:publisher>   <dc:date>1996</dc:date>   <dc:language>per</dc:language>   <dc:language>persan </dc:language>   <dc:type xml:lang="fre">publication en série imprimée</dc:type>   <dc:type xml:lang="eng">printed serial</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb34362474t</dc:identifier>   <dc:title>A-Â (Elancourt)</dc:title>   <dc:title>[A-Â]</dc:title>   <dc:description>Variante(s) de titre : A-Ja (Elancourt)</dc:description>   <dc:description>Variante(s) de titre : A-Ya (Elancourt)</dc:description>   <dc:description>Variante(s) de titre : A-Ia (Elancourt)</dc:description>   <dc:publisher>[s.n] (Elancourt)</dc:publisher>   <dc:date>1979-1986</dc:date>   <dc:identifier>ISSN 02418185</dc:identifier>   <dc:language>mul</dc:language>   <dc:type xml:lang="fre">publication en série imprimée</dc:type>   <dc:type xml:lang="eng">printed serial</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
 </oai_dc:dc>      </srw:recordData>
-<srw:recordIdentifier>ark:/12148/cb36944814f</srw:recordIdentifier>
+<srw:recordIdentifier>ark:/12148/cb34362474t</srw:recordIdentifier>
 <srw:recordPosition>4</srw:recordPosition>
 <srw:extraRecordData>
-<ixm:attr name="CreationDate">19990716</ixm:attr>
-<ixm:attr name="LastModificationDate">20230602</ixm:attr>
-<mn:score>3.3019216</mn:score>
+<ixm:attr name="CreationDate">19860728</ixm:attr>
+<ixm:attr name="LastModificationDate">20130611</ixm:attr>
+<mn:score>1.7291185</mn:score>
 </srw:extraRecordData>
 </srw:record>
 <srw:record>
 <srw:recordSchema>dc</srw:recordSchema>
 <srw:recordPacking>xml</srw:recordPacking>
 <srw:recordData>
-<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb365904946</dc:identifier>   <dc:title>Sāzmān-e mīrāt̲-e farhangī-e kešvar</dc:title>   <dc:publisher>vezārat-e farhang va aršad-e eslāmī (Tehrān)</dc:publisher>   <dc:date>19  </dc:date>   <dc:language>per</dc:language>   <dc:language>persan </dc:language>   <dc:type xml:lang="fre">publication en série imprimée</dc:type>   <dc:type xml:lang="eng">printed serial</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb409661318</dc:identifier>   <dc:title>A à Z</dc:title>   <dc:description>Variante(s) de titre : Collection De A à Z</dc:description>   <dc:description>Variante(s) de titre : De A à Z (Rueil-Malmaison)</dc:description>   <dc:publisher>Groupe Liaisons (Rueil-Malmaison)</dc:publisher>   <dc:date>2006</dc:date>   <dc:identifier>ISSN 19540973</dc:identifier>   <dc:language>fre</dc:language>   <dc:language>français</dc:language>   <dc:type xml:lang="fre">publication en série imprimée</dc:type>   <dc:type xml:lang="eng">printed serial</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
 </oai_dc:dc>      </srw:recordData>
-<srw:recordIdentifier>ark:/12148/cb365904946</srw:recordIdentifier>
+<srw:recordIdentifier>ark:/12148/cb409661318</srw:recordIdentifier>
 <srw:recordPosition>5</srw:recordPosition>
 <srw:extraRecordData>
-<ixm:attr name="CreationDate">19980806</ixm:attr>
-<ixm:attr name="LastModificationDate">20230613</ixm:attr>
-<mn:score>3.3019216</mn:score>
+<ixm:attr name="CreationDate">20070111</ixm:attr>
+<ixm:attr name="LastModificationDate">20130629</ixm:attr>
+<mn:score>1.7244245</mn:score>
 </srw:extraRecordData>
 </srw:record>
 <srw:record>
 <srw:recordSchema>dc</srw:recordSchema>
 <srw:recordPacking>xml</srw:recordPacking>
 <srw:recordData>
-<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb370425001</dc:identifier>   <dc:title>Dīdār-e bīni / Moḥammad Madadpūr</dc:title>   <dc:creator>Madadpūr, Moḥammad. Auteur du texte</dc:creator>   <dc:publisher>Ḥowze-e honari-e sāzmān-e tablīġāt-e eslāmi (Tehrān)</dc:publisher>   <dc:date>1996</dc:date>   <dc:description>Collection : Daftar-e moṭāleʿāt-e dīni-e honar</dc:description>   <dc:format>211 p. ; 22 cm</dc:format>   <dc:language>per</dc:language>   <dc:language>persan </dc:language>   <dc:type xml:lang="fre">texte imprimé</dc:type>   <dc:type xml:lang="eng">printed text</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb47265543w</dc:identifier>   <dc:title>Collection À lire, à écrire et à méditer</dc:title>   <dc:description>Variante(s) de titre : À lire, à écrire et à méditer</dc:description>   <dc:publisher>Éditions Solid'air (Dullin)</dc:publisher>   <dc:date>2022</dc:date>   <dc:language>fre</dc:language>   <dc:language>français</dc:language>   <dc:type xml:lang="fre">publication en série imprimée</dc:type>   <dc:type xml:lang="eng">printed serial</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
 </oai_dc:dc>      </srw:recordData>
-<srw:recordIdentifier>ark:/12148/cb370425001</srw:recordIdentifier>
+<srw:recordIdentifier>ark:/12148/cb47265543w</srw:recordIdentifier>
 <srw:recordPosition>6</srw:recordPosition>
 <srw:extraRecordData>
-<ixm:attr name="CreationDate">19990716</ixm:attr>
-<ixm:attr name="LastModificationDate">19990721</ixm:attr>
-<mn:score>3.2956996</mn:score>
+<ixm:attr name="CreationDate">20230612</ixm:attr>
+<ixm:attr name="LastModificationDate">20230811</ixm:attr>
+<mn:score>1.703564</mn:score>
 </srw:extraRecordData>
 </srw:record>
 <srw:record>
 <srw:recordSchema>dc</srw:recordSchema>
 <srw:recordPacking>xml</srw:recordPacking>
 <srw:recordData>
-<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb36984347v</dc:identifier>   <dc:title>Ketābšenassi-e enqelāb-e mašrūṭiyat-e Irān / ʿAli Pūrṣafar</dc:title>   <dc:creator>Pūrṣafar, ʿAli. Auteur du texte</dc:creator>   <dc:publisher>Markaz-e našr-e dānešgāhi (Tehrān)</dc:publisher>   <dc:date>1995</dc:date>   <dc:description>Collection : Markaz-e našr-e dānešgāhi</dc:description>   <dc:subject xml:lang="fre">Perse. Constitution (1906)</dc:subject>   <dc:identifier>ISBN 9640107328</dc:identifier>   <dc:format>VIII-342 p. ; 24 cm</dc:format>   <dc:language>per</dc:language>   <dc:language>persan </dc:language>   <dc:type xml:lang="fre">texte imprimé</dc:type>   <dc:type xml:lang="eng">printed text</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb388595384</dc:identifier>   <dc:title>La parola perduta : (da Bassani, a Borges, a F. Bruno, a Buzzati, a Canetti, a Casanova, a García Lorca, a Luzi, a Montale, a Pasolini, a Paz, a Saba, a Sereni, a Svevo, etc.) / Carlo Felice Colluci</dc:title>   <dc:creator>Colucci, Carlo Felice. Auteur du texte</dc:creator>   <dc:publisher>A. Guida (Napoli)</dc:publisher>   <dc:date>2001</dc:date>   <dc:description>Collection : Focus</dc:description>   <dc:subject xml:lang="fre">Littérature -- 1945-....</dc:subject>   <dc:identifier>ISBN 8871885465</dc:identifier>   <dc:format>176 p. ; 21 cm</dc:format>   <dc:language>ita</dc:language>   <dc:language>italien</dc:language>   <dc:type xml:lang="fre">texte imprimé</dc:type>   <dc:type xml:lang="eng">printed text</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
 </oai_dc:dc>      </srw:recordData>
-<srw:recordIdentifier>ark:/12148/cb36984347v</srw:recordIdentifier>
+<srw:recordIdentifier>ark:/12148/cb388595384</srw:recordIdentifier>
 <srw:recordPosition>7</srw:recordPosition>
 <srw:extraRecordData>
-<ixm:attr name="CreationDate">19980626</ixm:attr>
-<ixm:attr name="LastModificationDate">20190919</ixm:attr>
-<mn:score>3.2955155</mn:score>
+<ixm:attr name="CreationDate">20020726</ixm:attr>
+<ixm:attr name="LastModificationDate">20191031</ixm:attr>
+<mn:score>1.6995928</mn:score>
 </srw:extraRecordData>
 </srw:record>
 <srw:record>
 <srw:recordSchema>dc</srw:recordSchema>
 <srw:recordPacking>xml</srw:recordPacking>
 <srw:recordData>
-<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb36991514x</dc:identifier>   <dc:title>Ketābšenāssī-e sekke / Farāmarz Ṭālebī, Farzāneh Qāʼīnī</dc:title>   <dc:creator>Ṭālebī, Farāmarz. Auteur du texte</dc:creator>   <dc:creator>Qāʼīnī, Farzāneh. Auteur du texte</dc:creator>   <dc:publisher>vezārat-e farhang va eršād eslāmi (Tehrān)</dc:publisher>   <dc:date>1995</dc:date>   <dc:description>Collection : Sāzmān-e mīrā̄t̲-e farhangi-e kešvar</dc:description>   <dc:subject xml:lang="fre">Monnaies -- Iran</dc:subject>   <dc:format>247 p. ; 24 cm</dc:format>   <dc:language>per</dc:language>   <dc:language>persan </dc:language>   <dc:type xml:lang="fre">texte imprimé</dc:type>   <dc:type xml:lang="eng">printed text</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb365903075</dc:identifier>   <dc:title>De A à Z (Genève)</dc:title>   <dc:title>De A à Z</dc:title>   <dc:description>Variante(s) de titre : De A à Z (Genève)</dc:description>   <dc:publisher>Minerva (Genève)</dc:publisher>   <dc:date>1998</dc:date>   <dc:language>fre</dc:language>   <dc:language>français</dc:language>   <dc:type xml:lang="fre">publication en série imprimée</dc:type>   <dc:type xml:lang="eng">printed serial</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
 </oai_dc:dc>      </srw:recordData>
-<srw:recordIdentifier>ark:/12148/cb36991514x</srw:recordIdentifier>
+<srw:recordIdentifier>ark:/12148/cb365903075</srw:recordIdentifier>
 <srw:recordPosition>8</srw:recordPosition>
 <srw:extraRecordData>
-<ixm:attr name="CreationDate">19980916</ixm:attr>
-<ixm:attr name="LastModificationDate">20190917</ixm:attr>
-<mn:score>3.295342</mn:score>
+<ixm:attr name="CreationDate">19980720</ixm:attr>
+<ixm:attr name="LastModificationDate">20230602</ixm:attr>
+<mn:score>1.6926079</mn:score>
 </srw:extraRecordData>
 </srw:record>
 <srw:record>
 <srw:recordSchema>dc</srw:recordSchema>
 <srw:recordPacking>xml</srw:recordPacking>
 <srw:recordData>
-<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb369435836</dc:identifier>   <dc:title>Daftar-e adabiyāt-e enqelāb-e eslāmī : taḥqīq</dc:title>   <dc:publisher>Entešārāt-e ḥowze-ye honarī-e sāzmān-e tablīġāt-e eslāmī (Tehrān)</dc:publisher>   <dc:date>1996</dc:date>   <dc:language>per</dc:language>   <dc:language>persan </dc:language>   <dc:type xml:lang="fre">publication en série imprimée</dc:type>   <dc:type xml:lang="eng">printed serial</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb40947431x</dc:identifier>   <dc:title>Annuaire de l'A.A.A. : ressources naturelles en droit international</dc:title>   <dc:title xml:lang="eng">Yearbook of the A.A.A. : natural resources in international law</dc:title>   <dc:creator>Association des auditeurs et anciens auditeurs de l'Académie de droit international de La Haye. Auteur du texte</dc:creator>   <dc:publisher>Martinus Nijhoff publishers (London)</dc:publisher>   <dc:date>1930-1987</dc:date>   <dc:identifier>ISSN 01676660</dc:identifier>   <dc:language>eng</dc:language>   <dc:type xml:lang="fre">publication en série imprimée</dc:type>   <dc:type xml:lang="eng">printed serial</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
 </oai_dc:dc>      </srw:recordData>
-<srw:recordIdentifier>ark:/12148/cb369435836</srw:recordIdentifier>
+<srw:recordIdentifier>ark:/12148/cb40947431x</srw:recordIdentifier>
 <srw:recordPosition>9</srw:recordPosition>
 <srw:extraRecordData>
-<ixm:attr name="CreationDate">19990311</ixm:attr>
-<ixm:attr name="LastModificationDate">20230602</ixm:attr>
-<mn:score>3.2906363</mn:score>
+<ixm:attr name="CreationDate">20061127</ixm:attr>
+<ixm:attr name="LastModificationDate">20130327</ixm:attr>
+<mn:score>1.6922704</mn:score>
 </srw:extraRecordData>
 </srw:record>
 <srw:record>
 <srw:recordSchema>dc</srw:recordSchema>
 <srw:recordPacking>xml</srw:recordPacking>
 <srw:recordData>
-<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb41091453d</dc:identifier>   <dc:title>e.chroniques</dc:title>   <dc:description>Variante(s) de titre : e-chroniques</dc:description>   <dc:description>Variante(s) de titre : e chroniques</dc:description>   <dc:description>Variante(s) de titre : e.chroniques Marabout</dc:description>   <dc:description>Variante(s) de titre : E.chroniques</dc:description>   <dc:description>Variante(s) de titre : i.chroniques</dc:description>   <dc:publisher>Marabout (Paris)</dc:publisher>   <dc:date>2007</dc:date>   <dc:language>fre</dc:language>   <dc:language>français</dc:language>   <dc:type xml:lang="fre">publication en série imprimée</dc:type>   <dc:type xml:lang="eng">printed serial</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb42713619z</dc:identifier>   <dc:title>De A à Z (Paris)</dc:title>   <dc:title>De A à Z</dc:title>   <dc:description>Variante(s) de titre : Collection De A à Z (Paris)</dc:description>   <dc:publisher>Ramsay (Paris)</dc:publisher>   <dc:date>2012</dc:date>   <dc:identifier>ISSN 22610685</dc:identifier>   <dc:language>fre</dc:language>   <dc:language>français</dc:language>   <dc:type xml:lang="fre">publication en série imprimée</dc:type>   <dc:type xml:lang="eng">printed serial</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
 </oai_dc:dc>      </srw:recordData>
-<srw:recordIdentifier>ark:/12148/cb41091453d</srw:recordIdentifier>
+<srw:recordIdentifier>ark:/12148/cb42713619z</srw:recordIdentifier>
 <srw:recordPosition>10</srw:recordPosition>
 <srw:extraRecordData>
-<ixm:attr name="CreationDate">20070814</ixm:attr>
-<ixm:attr name="LastModificationDate">20181113</ixm:attr>
-<mn:score>3.2814734</mn:score>
+<ixm:attr name="CreationDate">20120719</ixm:attr>
+<ixm:attr name="LastModificationDate">20130703</ixm:attr>
+<mn:score>1.6919057</mn:score>
 </srw:extraRecordData>
 </srw:record>
 <srw:record>
 <srw:recordSchema>dc</srw:recordSchema>
 <srw:recordPacking>xml</srw:recordPacking>
 <srw:recordData>
-<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb42499251x</dc:identifier>   <dc:title>E.M.E. Société / coll. dirigée par Paul Vanderhaeghen, Luc Nefontaine, Baudouin Decharneux</dc:title>   <dc:publisher>Ed. modulaires européennes (Bruxelles-Fernelmont)</dc:publisher>   <dc:date>2008</dc:date>   <dc:language>fre</dc:language>   <dc:language>français</dc:language>   <dc:type xml:lang="fre">publication en série imprimée</dc:type>   <dc:type xml:lang="eng">printed serial</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb41253970c</dc:identifier>   <dc:title>A à Z (Paris)</dc:title>   <dc:title>A à Z</dc:title>   <dc:publisher>Solar (Paris)</dc:publisher>   <dc:date>2008</dc:date>   <dc:identifier>ISSN 21100098</dc:identifier>   <dc:language>fre</dc:language>   <dc:language>français</dc:language>   <dc:type xml:lang="fre">publication en série imprimée</dc:type>   <dc:type xml:lang="eng">printed serial</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
 </oai_dc:dc>      </srw:recordData>
-<srw:recordIdentifier>ark:/12148/cb42499251x</srw:recordIdentifier>
+<srw:recordIdentifier>ark:/12148/cb41253970c</srw:recordIdentifier>
 <srw:recordPosition>11</srw:recordPosition>
 <srw:extraRecordData>
-<ixm:attr name="CreationDate">20110905</ixm:attr>
-<ixm:attr name="LastModificationDate">20111108</ixm:attr>
-<mn:score>3.2669814</mn:score>
+<ixm:attr name="CreationDate">20080507</ixm:attr>
+<ixm:attr name="LastModificationDate">20130701</ixm:attr>
+<mn:score>1.6900085</mn:score>
 </srw:extraRecordData>
 </srw:record>
 <srw:record>
 <srw:recordSchema>dc</srw:recordSchema>
 <srw:recordPacking>xml</srw:recordPacking>
 <srw:recordData>
-<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb371675522</dc:identifier>   <dc:title>Dar bāre-ye adabiyāt-e novīn-e Irān pīš az nohḍat-e mašruṭe / Hedāyat Allah Behbūdī</dc:title>   <dc:creator>Behbūdī, Hedāyat Allah. Auteur du texte</dc:creator>   <dc:publisher>Entešārāt-e ḥowze-ye honarī-e sāzmān-e tablīġāt-e eslāmī (Tehrān)</dc:publisher>   <dc:date>1996</dc:date>   <dc:description>Collection : Daftar-e adabiyāt-e enqelāb-e eslāmī</dc:description>   <dc:format>241 p. ; 22 cm</dc:format>   <dc:language>per</dc:language>   <dc:language>persan </dc:language>   <dc:type xml:lang="fre">texte imprimé</dc:type>   <dc:type xml:lang="eng">printed text</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb321299090</dc:identifier>   <dc:title>Choses vues. I : A Marrakeck. II : A Naples. III : A Stamboul. IV : A Moscou. V : A Thèbes / Ernest Fréville</dc:title>   <dc:creator>Fréville, Ernest (18..-19.. ; membre de l'Académie nationale de Reims). Auteur du texte</dc:creator>   <dc:date>1923</dc:date>   <dc:language>fre</dc:language>   <dc:language>français</dc:language>   <dc:type xml:lang="fre">texte imprimé</dc:type>   <dc:type xml:lang="eng">printed text</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
 </oai_dc:dc>      </srw:recordData>
-<srw:recordIdentifier>ark:/12148/cb371675522</srw:recordIdentifier>
+<srw:recordIdentifier>ark:/12148/cb321299090</srw:recordIdentifier>
 <srw:recordPosition>12</srw:recordPosition>
 <srw:extraRecordData>
-<ixm:attr name="CreationDate">19990311</ixm:attr>
-<ixm:attr name="LastModificationDate">19991020</ixm:attr>
-<mn:score>3.266709</mn:score>
+<ixm:attr name="CreationDate">19970701</ixm:attr>
+<ixm:attr name="LastModificationDate">20180606</ixm:attr>
+<mn:score>1.6900029</mn:score>
 </srw:extraRecordData>
 </srw:record>
 <srw:record>
 <srw:recordSchema>dc</srw:recordSchema>
 <srw:recordPacking>xml</srw:recordPacking>
 <srw:recordData>
-<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb369688918</dc:identifier>   <dc:title>Tārīh̲-e taḥlīlī-e eslām tā pāyān-e omūyān / Ǧaʿfar Šahīdī</dc:title>   <dc:creator>Šahīdi, Ǧaʿfar. Auteur du texte</dc:creator>   <dc:publisher>markaz-e našr-e dānešgāhī (Tehrān)</dc:publisher>   <dc:date>1996</dc:date>   <dc:description>Collection : Markaz-e našr-e dānešgāhi</dc:description>   <dc:subject xml:lang="fre">Omeyyades (dynastie)</dc:subject>   <dc:subject xml:lang="fre">Islam -- Histoire</dc:subject>   <dc:identifier>ISBN 9640181102</dc:identifier>   <dc:format>240 p. ; 23 cm</dc:format>   <dc:language>fre</dc:language>   <dc:language>français</dc:language>   <dc:type xml:lang="fre">texte imprimé</dc:type>   <dc:type xml:lang="eng">printed text</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb32716064r</dc:identifier>   <dc:title>Briefly speaking. A.A.A. [Agricultural adjustment administration]</dc:title>   <dc:creator>A.A.A. [Agricultural adjustment administration]. Auteur du texte</dc:creator>   <dc:publisher>[s.n.?] (Washington)</dc:publisher>   <dc:date>1937</dc:date>   <dc:language>eng</dc:language>   <dc:language>anglais</dc:language>   <dc:type xml:lang="fre">publication en série imprimée</dc:type>   <dc:type xml:lang="eng">printed serial</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
 </oai_dc:dc>      </srw:recordData>
-<srw:recordIdentifier>ark:/12148/cb369688918</srw:recordIdentifier>
+<srw:recordIdentifier>ark:/12148/cb32716064r</srw:recordIdentifier>
 <srw:recordPosition>13</srw:recordPosition>
 <srw:extraRecordData>
-<ixm:attr name="CreationDate">19980310</ixm:attr>
-<ixm:attr name="LastModificationDate">19990115</ixm:attr>
-<mn:score>3.2603922</mn:score>
+<ixm:attr name="CreationDate">19970701</ixm:attr>
+<ixm:attr name="LastModificationDate">20230601</ixm:attr>
+<mn:score>1.6861391</mn:score>
 </srw:extraRecordData>
 </srw:record>
 <srw:record>
 <srw:recordSchema>dc</srw:recordSchema>
 <srw:recordPacking>xml</srw:recordPacking>
 <srw:recordData>
-<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb37035461g</dc:identifier>   <dc:title>Dāstānhā-ye zanān-e šāhnāmeh / Zahrā Mahz̲ab</dc:title>   <dc:creator>Mahz̲ab, Zahrā. Auteur du texte</dc:creator>   <dc:publisher>Našr-e qeble (Tehrān)</dc:publisher>   <dc:date>1996</dc:date>   <dc:description>Collection : Markaz-e farhangī-e našr-e qeble</dc:description>   <dc:format>242 p. ; 24 cm</dc:format>   <dc:language>per</dc:language>   <dc:language>persan </dc:language>   <dc:type xml:lang="fre">texte imprimé</dc:type>   <dc:type xml:lang="eng">printed text</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb36618604d</dc:identifier>   <dc:title>De A à Z. 1, [A-D] / Lt colonel Fouët Alix</dc:title>   <dc:creator>Fouet, Alix. Auteur du texte</dc:creator>   <dc:publisher>Éd. du Glaive (Sens)</dc:publisher>   <dc:date>1984</dc:date>   <dc:format>323 p. : couv. ill. ; 28 cm</dc:format>   <dc:language>fre</dc:language>   <dc:language>français</dc:language>   <dc:type xml:lang="fre">texte imprimé</dc:type>   <dc:type xml:lang="eng">printed text</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
 </oai_dc:dc>      </srw:recordData>
-<srw:recordIdentifier>ark:/12148/cb37035461g</srw:recordIdentifier>
+<srw:recordIdentifier>ark:/12148/cb36618604d</srw:recordIdentifier>
 <srw:recordPosition>14</srw:recordPosition>
 <srw:extraRecordData>
-<ixm:attr name="CreationDate">19990401</ixm:attr>
-<ixm:attr name="LastModificationDate">19990627</ixm:attr>
-<mn:score>3.2603922</mn:score>
+<ixm:attr name="CreationDate">19860720</ixm:attr>
+<ixm:attr name="LastModificationDate">19960419</ixm:attr>
+<mn:score>1.6860365</mn:score>
 </srw:extraRecordData>
 </srw:record>
 <srw:record>
 <srw:recordSchema>dc</srw:recordSchema>
 <srw:recordPacking>xml</srw:recordPacking>
 <srw:recordData>
-<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb40177354j</dc:identifier>   <dc:title>Mestiço é que é bom ! / Darcy Ribeiro ; participam, Antonio Callado... [et al.]</dc:title>   <dc:creator>Ribeiro, Darcy (1922-1997). Auteur du texte</dc:creator>   <dc:publisher>Revan (Rio de Janeiro)</dc:publisher>   <dc:date>1997</dc:date>   <dc:description>Collection : Quem é</dc:description>   <dc:subject xml:lang="fre">Ribeiro, Darcy (1922-1997)</dc:subject>   <dc:identifier>ISBN 8571061149</dc:identifier>   <dc:format>1 vol. (157 p.) ; 21 cm</dc:format>   <dc:language>por</dc:language>   <dc:language>portugais</dc:language>   <dc:type xml:lang="fre">texte imprimé</dc:type>   <dc:type xml:lang="eng">printed text</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb41462272f</dc:identifier>   <dc:title>Les aromatiques de A à Z / Laurent Bourgeois</dc:title>   <dc:creator>Bourgeois, Laurent (1968-....). Auteur du texte</dc:creator>   <dc:publisher>"Rustica" éd. (Paris)</dc:publisher>   <dc:date>2009</dc:date>   <dc:description>Collection : De A à Z</dc:description>   <dc:subject xml:lang="fre">Plantes aromatiques</dc:subject>   <dc:subject xml:lang="fre">Plantes condimentaires</dc:subject>   <dc:identifier>ISBN 9782840389415</dc:identifier>   <dc:description>Code à barres commercial : EAN 9782840389415</dc:description>   <dc:format>1 vol. (191 p.) : ill. en noir et en coul., couv. ill. en coul. ; 17 cm</dc:format>   <dc:language>fre</dc:language>   <dc:language>français</dc:language>   <dc:type xml:lang="fre">texte imprimé</dc:type>   <dc:type xml:lang="eng">printed text</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
 </oai_dc:dc>      </srw:recordData>
-<srw:recordIdentifier>ark:/12148/cb40177354j</srw:recordIdentifier>
+<srw:recordIdentifier>ark:/12148/cb41462272f</srw:recordIdentifier>
 <srw:recordPosition>15</srw:recordPosition>
 <srw:extraRecordData>
-<ixm:attr name="CreationDate">20060612</ixm:attr>
-<ixm:attr name="LastModificationDate">20190927</ixm:attr>
-<mn:score>3.2499673</mn:score>
+<ixm:attr name="CreationDate">20090408</ixm:attr>
+<ixm:attr name="LastModificationDate">20090820</ixm:attr>
+<mn:score>1.685483</mn:score>
 </srw:extraRecordData>
 </srw:record>
 <srw:record>
 <srw:recordSchema>dc</srw:recordSchema>
 <srw:recordPacking>xml</srw:recordPacking>
 <srw:recordData>
-<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb390738120</dc:identifier>   <dc:title>Henri / Brigitte Ollier ; dessins, Pierre Deltombe</dc:title>   <dc:creator>Ollier, Brigitte. Auteur du texte</dc:creator>   <dc:contributor>Deltombe, Pierre. Illustrateur</dc:contributor>   <dc:publisher>Filigranes éd. (Trézélan)</dc:publisher>   <dc:date>2003</dc:date>   <dc:description>Collection : Collection é- ; 5</dc:description>   <dc:subject xml:lang="fre">Cartier-Bresson, Henri (1908-2004)</dc:subject>   <dc:identifier>ISBN 291438159X</dc:identifier>   <dc:format>63 p. : ill., couv. ill. ; 16 cm</dc:format>   <dc:language>fre</dc:language>   <dc:language>français</dc:language>   <dc:type xml:lang="fre">texte imprimé</dc:type>   <dc:type xml:lang="eng">printed text</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb41231087q</dc:identifier>   <dc:title>Le potager de A à Z / Michel Caron</dc:title>   <dc:creator>Caron, Michel (1940-....). Auteur du texte</dc:creator>   <dc:publisher>"Rustica" éd. (Paris)</dc:publisher>   <dc:date>2008</dc:date>   <dc:description>Collection : De A à Z</dc:description>   <dc:subject xml:lang="fre">Cultures potagères</dc:subject>   <dc:identifier>ISBN 9782840388104</dc:identifier>   <dc:description>Code à barres commercial : EAN 9782840388104</dc:description>   <dc:format>1 vol. (223 p.) : ill. en coul., couv. ill. en coul. ; 17 cm</dc:format>   <dc:language>fre</dc:language>   <dc:language>français</dc:language>   <dc:type xml:lang="fre">texte imprimé</dc:type>   <dc:type xml:lang="eng">printed text</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
 </oai_dc:dc>      </srw:recordData>
-<srw:recordIdentifier>ark:/12148/cb390738120</srw:recordIdentifier>
+<srw:recordIdentifier>ark:/12148/cb41231087q</srw:recordIdentifier>
 <srw:recordPosition>16</srw:recordPosition>
 <srw:extraRecordData>
-<ixm:attr name="CreationDate">20031015</ixm:attr>
-<ixm:attr name="LastModificationDate">20031031</ixm:attr>
-<mn:score>3.2460015</mn:score>
+<ixm:attr name="CreationDate">20080401</ixm:attr>
+<ixm:attr name="LastModificationDate">20080618</ixm:attr>
+<mn:score>1.6851646</mn:score>
 </srw:extraRecordData>
 </srw:record>
 <srw:record>
 <srw:recordSchema>dc</srw:recordSchema>
 <srw:recordPacking>xml</srw:recordPacking>
 <srw:recordData>
-<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb34229989x</dc:identifier>   <dc:title>Collection E.E.A. / sous la dir. de F. Milsant</dc:title>   <dc:description>Variante(s) de titre : Collection Electronique, électrotechnique, automatisme</dc:description>   <dc:publisher>Eyrolles (Paris)</dc:publisher>   <dc:date>1973-1979</dc:date>   <dc:identifier>ISSN 02973065</dc:identifier>   <dc:language>fre</dc:language>   <dc:language>français</dc:language>   <dc:type xml:lang="fre">publication en série imprimée</dc:type>   <dc:type xml:lang="eng">printed serial</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb41231107h</dc:identifier>   <dc:title>Le jardin de A à Z / Valérie Garnaud-d'Ersu</dc:title>   <dc:creator>Garnaud, Valérie (1958-....). Auteur du texte</dc:creator>   <dc:publisher>"Rustica" éd. (Paris)</dc:publisher>   <dc:date>2008</dc:date>   <dc:description>Collection : De A à Z</dc:description>   <dc:subject xml:lang="fre">Plantes d'ornement</dc:subject>   <dc:subject xml:lang="fre">Cultures potagères</dc:subject>   <dc:identifier>ISBN 9782840388180</dc:identifier>   <dc:description>Code à barres commercial : EAN 9782840388180</dc:description>   <dc:format>1 vol. (223 p.) : ill. en coul., couv. ill. en coul. ; 17 cm</dc:format>   <dc:language>fre</dc:language>   <dc:language>français</dc:language>   <dc:type xml:lang="fre">texte imprimé</dc:type>   <dc:type xml:lang="eng">printed text</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
 </oai_dc:dc>      </srw:recordData>
-<srw:recordIdentifier>ark:/12148/cb34229989x</srw:recordIdentifier>
+<srw:recordIdentifier>ark:/12148/cb41231107h</srw:recordIdentifier>
 <srw:recordPosition>17</srw:recordPosition>
 <srw:extraRecordData>
-<ixm:attr name="CreationDate">19860728</ixm:attr>
-<ixm:attr name="LastModificationDate">20130610</ixm:attr>
-<mn:score>3.2449565</mn:score>
+<ixm:attr name="CreationDate">20080401</ixm:attr>
+<ixm:attr name="LastModificationDate">20080618</ixm:attr>
+<mn:score>1.6850182</mn:score>
 </srw:extraRecordData>
 </srw:record>
 <srw:record>
 <srw:recordSchema>dc</srw:recordSchema>
 <srw:recordPacking>xml</srw:recordPacking>
 <srw:recordData>
-<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb36968754s</dc:identifier>   <dc:title>Daftar-e sorūdehā / Moḥammad Ḥasan Morteǧā</dc:title>   <dc:creator>Morteǧā, Moḥammad Ḥasan. Auteur du texte</dc:creator>   <dc:publisher>Entešārāt-e rūšangarān (Tehrān)</dc:publisher>   <dc:date>1994</dc:date>   <dc:description>Collection : Adabiyāt-e emrūz-e irān</dc:description>   <dc:format>151 p. : couv. ill. en coul. ; 21 cm</dc:format>   <dc:language>per</dc:language>   <dc:language>persan </dc:language>   <dc:type xml:lang="fre">texte imprimé</dc:type>   <dc:type xml:lang="eng">printed text</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb41439639s</dc:identifier>   <dc:title>Les orchidées de A à Z / Valérie Garnaud-d'Ersu</dc:title>   <dc:creator>Garnaud, Valérie (1958-....). Auteur du texte</dc:creator>   <dc:publisher>"Rustica" éd. (Paris)</dc:publisher>   <dc:date>2009</dc:date>   <dc:description>Collection : De A à Z</dc:description>   <dc:subject xml:lang="fre">Orchidées -- Cultures</dc:subject>   <dc:subject xml:lang="fre">Orchidées -- Variétés</dc:subject>   <dc:identifier>ISBN 9782840388982</dc:identifier>   <dc:description>Code à barres commercial : EAN 9782840388982</dc:description>   <dc:format>1 vol. (191 p.) : ill. en coul., couv. ill. en coul. ; 17 cm</dc:format>   <dc:language>fre</dc:language>   <dc:language>français</dc:language>   <dc:type xml:lang="fre">texte imprimé</dc:type>   <dc:type xml:lang="eng">printed text</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
 </oai_dc:dc>      </srw:recordData>
-<srw:recordIdentifier>ark:/12148/cb36968754s</srw:recordIdentifier>
+<srw:recordIdentifier>ark:/12148/cb41439639s</srw:recordIdentifier>
 <srw:recordPosition>18</srw:recordPosition>
 <srw:extraRecordData>
-<ixm:attr name="CreationDate">19980306</ixm:attr>
-<ixm:attr name="LastModificationDate">19980610</ixm:attr>
-<mn:score>3.244552</mn:score>
+<ixm:attr name="CreationDate">20090304</ixm:attr>
+<ixm:attr name="LastModificationDate">20090615</ixm:attr>
+<mn:score>1.6848793</mn:score>
 </srw:extraRecordData>
 </srw:record>
 <srw:record>
 <srw:recordSchema>dc</srw:recordSchema>
 <srw:recordPacking>xml</srw:recordPacking>
 <srw:recordData>
-<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb34232367g</dc:identifier>   <dc:title>ENST. E / École nationale supérieure des télécommunications</dc:title>   <dc:description>Variante(s) de titre : Ecole nationale supérieure des télécommunications. E</dc:description>   <dc:description>Variante(s) de titre : Télécom Paris. E</dc:description>   <dc:description>Variante(s) de titre : E</dc:description>   <dc:creator>Télécom Paris Tech. Auteur du texte</dc:creator>   <dc:publisher>ENST (Paris)</dc:publisher>   <dc:date>197?</dc:date>   <dc:identifier>ISSN 07511353</dc:identifier>   <dc:language>fre</dc:language>   <dc:language>français</dc:language>   <dc:type xml:lang="fre">publication en série imprimée</dc:type>   <dc:type xml:lang="eng">printed serial</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb434830526</dc:identifier>   <dc:title>A-a-a-a-atchoum ! / texte de Philip C. Stead ; illustrations d'Erin E. Stead ; texte traduit de l'anglais par Elisabeth Duval</dc:title>   <dc:creator>Stead, Philip Christian (1982-....). Auteur du texte</dc:creator>   <dc:contributor>Stead, Erin E.. Illustrateur</dc:contributor>   <dc:contributor>Duval, Élisabeth (1952-....). Traducteur</dc:contributor>   <dc:publisher>Ecole des loisirs (Paris)</dc:publisher>   <dc:date>2012</dc:date>   <dc:description>Collection : Lutin poche</dc:description>   <dc:identifier>ISBN 9782211209700</dc:identifier>   <dc:description>Code à barres commercial : EAN 9782211209700</dc:description>   <dc:format>1 vol. : illustrations en noir et blanc ; 15 x 19 cm</dc:format>   <dc:language>fre</dc:language>   <dc:language>français</dc:language>   <dc:type xml:lang="fre">texte imprimé</dc:type>   <dc:type xml:lang="eng">printed text</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
 </oai_dc:dc>      </srw:recordData>
-<srw:recordIdentifier>ark:/12148/cb34232367g</srw:recordIdentifier>
+<srw:recordIdentifier>ark:/12148/cb434830526</srw:recordIdentifier>
 <srw:recordPosition>19</srw:recordPosition>
 <srw:extraRecordData>
-<ixm:attr name="CreationDate">19860728</ixm:attr>
-<ixm:attr name="LastModificationDate">20200831</ixm:attr>
-<mn:score>3.2440305</mn:score>
+<ixm:attr name="CreationDate">20140820</ixm:attr>
+<ixm:attr name="LastModificationDate">20151221</ixm:attr>
+<mn:score>1.6833472</mn:score>
 </srw:extraRecordData>
 </srw:record>
 <srw:record>
 <srw:recordSchema>dc</srw:recordSchema>
 <srw:recordPacking>xml</srw:recordPacking>
 <srw:recordData>
-<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb37544387q</dc:identifier>   <dc:title>Kolliyāt-e ġazaliyyāt-e ʿerfānī-e Šams-e Tabrīzī / Ǧalǎl al-Dīn Rūmī ; bā enteh̲āb va taṣḥīḥ Moḥammad Moḥammad ʿAbbāsi...</dc:title>   <dc:creator>Ǧalāl al-Dīn Rūmī (1207-1273). Auteur du texte</dc:creator>   <dc:contributor>ʿAbbasī, Moḥammad Moḥammad. Éditeur scientifique</dc:contributor>   <dc:publisher>Čāp va našr-e armaġān (Tehrān)</dc:publisher>   <dc:date>1996</dc:date>   <dc:format>830 p. : couv. ill. en coul. ; 25cm</dc:format>   <dc:language>per</dc:language>   <dc:language>persan </dc:language>   <dc:type xml:lang="fre">texte imprimé</dc:type>   <dc:type xml:lang="eng">printed text</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">   <dc:identifier>http://catalogue.bnf.fr/ark:/12148/cb34499935s</dc:identifier>   <dc:title>1000 maisons à acheter, à installer, à décorer / dir. Jean Haski</dc:title>   <dc:description>Variante(s) de titre : Mille maisons à acheter, à installer, à décorer</dc:description>   <dc:publisher>[s.n.] (Paris)</dc:publisher>   <dc:date>1969-1970</dc:date>   <dc:language>fre</dc:language>   <dc:language>français</dc:language>   <dc:type xml:lang="fre">publication en série imprimée</dc:type>   <dc:type xml:lang="eng">printed serial</dc:type>   <dc:type xml:lang="eng">text</dc:type>   <dc:rights xml:lang="fre">Catalogue en ligne de la Bibliothèque nationale de France</dc:rights>   <dc:rights xml:lang="eng">French National Library online Catalog</dc:rights>
 </oai_dc:dc>      </srw:recordData>
-<srw:recordIdentifier>ark:/12148/cb37544387q</srw:recordIdentifier>
+<srw:recordIdentifier>ark:/12148/cb34499935s</srw:recordIdentifier>
 <srw:recordPosition>20</srw:recordPosition>
 <srw:extraRecordData>
-<ixm:attr name="CreationDate">19981203</ixm:attr>
-<ixm:attr name="LastModificationDate">19991007</ixm:attr>
-<mn:score>3.2402742</mn:score>
+<ixm:attr name="CreationDate">19940308</ixm:attr>
+<ixm:attr name="LastModificationDate">20230530</ixm:attr>
+<mn:score>1.680881</mn:score>
 </srw:extraRecordData>
 </srw:record>
 </srw:records>

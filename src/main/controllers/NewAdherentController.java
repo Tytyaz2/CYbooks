@@ -11,8 +11,6 @@ import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import main.models.DatabaseConnection;
 import javafx.scene.control.Label;
-
-import javax.print.MultiDocPrintService;
 import java.io.IOException;
 import java.sql.SQLException;
 
