@@ -15,9 +15,19 @@ public class Emprunt {
         this.endDate = endDate;
     }
 
+
     public Book getBook() {
         return book;
     }
+    public String getBookTitle(){
+        return book.getTitle();
+    }
+
+    public String getBorrowerName() {
+        return user.getPrenom() + " " + user.getNom();
+    }
+
+
 
     public LocalDate getEndDate() {
         return endDate;

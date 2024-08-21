@@ -36,6 +36,7 @@ import java.util.TimerTask;
 import java.util.Objects;
 
 public class MainControllers {
+    public Button showLateBooksButton;
     private int startIndex = 0;
     private final int pageSize = 20;
 
@@ -214,6 +215,11 @@ public class MainControllers {
             }
         });
 
+
+
+
+
+
         prenom.setCellFactory(column -> new TableCell<Utilisateur, String>() {
             @Override
             protected void updateItem(String item, boolean empty) {
@@ -282,6 +288,30 @@ public class MainControllers {
             }
         });
     }
+
+    // This method will be called when you want to show the Late Loans view
+    public void showLateLoansView() {
+        try {
+            // Load the FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/views/lateBorrow.fxml"));
+            Parent root = loader.load();
+
+            // Create a new scene with the loaded FXML
+            Scene scene = new Scene(root);
+
+            // Create a new stage (window) and set the scene
+            Stage stage = new Stage();
+            stage.setTitle("Late Loans");
+            stage.setScene(scene);
+
+            // Show the new stage
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Handle the exception, maybe show an alert to the user
+        }
+    }
+
 
 
 

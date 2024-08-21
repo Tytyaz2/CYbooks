@@ -24,6 +24,43 @@ public class DatabaseConnection {
         }
     }
 
+    public static List<Emprunt> getLateLoans() throws SQLException {
+        List<Emprunt> lateLoans = new ArrayList<>();
+        LocalDate today = LocalDate.now();
+
+        String query = "SELECT e.user_email, e.livre_isbn, e.date_debut, e.date_fin, u.prenom, u.nom, b.titre " +
+                "FROM Emprunt e " +
+                "JOIN Utilisateur u ON e.user_email = u.email " +
+                "JOIN Livre b ON e.livre_isbn = b.isbn " +
+                "WHERE e.date_fin < ?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setDate(1, Date.valueOf(today));
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    String userEmail = resultSet.getString("user_email");
+                    String bookIsbn = resultSet.getString("livre_isbn");
+                    LocalDate startDate = resultSet.getDate("date_debut").toLocalDate();
+                    LocalDate endDate = resultSet.getDate("date_fin").toLocalDate();
+                    String firstName = resultSet.getString("prenom");
+                    String lastName = resultSet.getString("nom");
+                    String title = resultSet.getString("titre");
+
+                    Utilisateur user = new Utilisateur(userEmail, firstName, lastName, 0, 0); // Status and maxLoan are placeholders
+                    Book book = new Book(bookIsbn, title, ""); // Author is a placeholder
+                    Emprunt loan = new Emprunt(user, book, startDate, endDate);
+
+                    lateLoans.add(loan);
+                }
+            }
+        }
+        return lateLoans;
+    }
+
+
     private static void createDatabaseIfNotExists() throws SQLException {
         try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
             String createDatabaseQuery = "CREATE DATABASE IF NOT EXISTS " + DATABASE_NAME;
